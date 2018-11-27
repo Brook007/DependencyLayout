@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="dependency_padding" format="string" />
+    <attr name="dependency_paddingLeft" format="string" />
+    <attr name="dependency_paddingTop" format="string" />
+    <attr name="dependency_paddingRight" format="string" />
+    <attr name="dependency_paddingBottom" format="string" />
+
+
+    <declare-styleable name="DependentLayout">
+        <attr name="designWidth" format="string" />
+        <attr name="designHeight" format="string" />
+
+        <attr name="dependency_padding" />
+        <attr name="dependency_paddingLeft" />
+        <attr name="dependency_paddingTop" />
+        <attr name="dependency_paddingRight" />
+        <attr name="dependency_paddingBottom" />
+
+        <attr name="android:padding" />
+        <attr name="android:paddingLeft" />
+        <attr name="android:paddingTop" />
+        <attr name="android:paddingRight" />
+        <attr name="android:paddingBottom" />
+
+    </declare-styleable>
+
+    <declare-styleable name="DependentLayout_Layout">
+
+        <attr name="alignParentLeft" format="boolean" />
+        <attr name="alignParentTop" format="boolean" />
+        <attr name="alignParentRight" format="boolean" />
+        <attr name="alignParentBottom" format="boolean" />
+
+        <attr name="toParentCenterVerticalLeft" format="boolean" />
+        <attr name="toParentCenterVerticalRight" format="boolean" />
+        <attr name="alignParentCenterHorizontalTop" format="boolean" />
+        <attr name="alignParentCenterHorizontalBottom" format="boolean" />
+
+        <attr name="centerInParentHorizontal" format="boolean" />
+        <attr name="centerInParentVertical" format="boolean" />
+        <attr name="centerInParent" format="boolean" />
+
+        <attr name="aboveTo" format="reference" />
+        <attr name="toRightOf" format="reference" />
+        <attr name="belowTo" format="reference" />
+        <attr name="toLeftOf" format="reference" />
+
+        <attr name="alignTop" format="reference" />
+        <attr name="alignRight" format="reference" />
+        <attr name="alignBottom" format="reference" />
+        <attr name="alignLeft" format="reference" />
+
+        <attr name="toCenterVerticalLeft" format="reference" />
+        <attr name="toCenterVerticalRight" format="reference" />
+        <attr name="alignCenterHorizontalTop" format="reference" />
+        <attr name="alignCenterHorizontalBottom" format="reference" />
+
+        <attr name="centerVerticalOf" format="reference" />
+        <attr name="centerHorizontalOf" format="reference" />
+        <attr name="centerOf" format="reference" />
+
+        <attr name="dependency_marginLeft" format="string" />
+        <attr name="dependency_marginTop" format="string" />
+        <attr name="dependency_marginRight" format="string" />
+        <attr name="dependency_marginBottom" format="string" />
+
+
+        <attr name="dependency_padding" />
+        <attr name="dependency_paddingLeft" />
+        <attr name="dependency_paddingTop" />
+        <attr name="dependency_paddingRight" />
+        <attr name="dependency_paddingBottom" />
+
+        <attr name="selfWidth" format="string" />
+        <attr name="selfHeight" format="string" />
+
+        <attr name="android:layout_width" />
+        <attr name="android:layout_height" />
+
+        <attr name="android:layout_marginLeft" />
+        <attr name="android:layout_marginRight" />
+        <attr name="android:layout_marginTop" />
+        <attr name="android:layout_marginBottom" />
+
+        <attr name="android:padding" />
+        <attr name="android:paddingLeft" />
+        <attr name="android:paddingTop" />
+        <attr name="android:paddingRight" />
+        <attr name="android:paddingBottom" />
+
+        <!--1、相对于某个View的宽度-->
+        <!--2、相对于某个View的高度-->
+        <!--3、相对于自身的宽度-->
+        <!--4、相对于自身的高度-->
+        <!--5、相对于父View的宽度-->
+        <!--6、相对于父View的宽度-->
+
+    </declare-styleable>
+</resources>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="click"
+            android:text="system" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:onClick="click"
+            android:text="match" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:onClick="click"
+            android:text="info" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="720px"
+        android:layout_height="1280px"
+        android:layout_gravity="center"
+        android:background="#cebabc">
+
+
+        <com.brook.app.android.supportlibrary.view.DependentLayout
+            android:id="@+id/dependencies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#e9e9e9"
+            android:clipToPadding="true"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            app:designHeight="1280"
+            app:designWidth="720">
+
+
+            <TextView
+                android:id="@+id/one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="#CCCCCC"
+                android:paddingLeft="10dp"
+                android:text="第一个"
+                app:dependency_marginBottom="10"
+                app:dependency_marginLeft="50%pw"
+                app:dependency_padding="100"
+                app:dependency_paddingLeft="50%mw"
+                app:selfHeight="33.4%ph"
+                app:selfWidth="240" />
+
+            <TextView
+                android:id="@+id/two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#BFEFFF"
+                android:text="第二个View"
+                app:belowTo="@id/one"
+                app:dependency_marginTop="720"
+                app:selfHeight="33.4%ph"
+                app:selfWidth="480" />
+
+            <TextView
+                android:id="@+id/three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#CAFF70"
+                android:text="第三个View"
+                app:belowTo="@id/two"
+                app:dependency_marginTop="30%pw"
+                app:selfHeight="33.4%ph"
+                app:selfWidth="720" />
+
+
+        </com.brook.app.android.supportlibrary.view.DependentLayout>
+
+    </ScrollView>
+
+</LinearLayout>
