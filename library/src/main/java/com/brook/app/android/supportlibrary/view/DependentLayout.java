@@ -46,9 +46,14 @@ public class DependentLayout extends ViewGroup {
      */
 
     // 设计图的宽度
-    private String designWidth;
+    public static String sDesignWidth = "750";
     // 设计图的高度
-    private String designHeight;
+    public static String sDesignHeight = "1344";
+
+    // 设计图的宽度
+    private String mDesignWidth;
+    // 设计图的高度
+    private String mDesignHeight;
 
     // 屏幕的宽度
     private int screenWidth;
@@ -113,9 +118,18 @@ public class DependentLayout extends ViewGroup {
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DependentLayout);
-            designWidth = typedArray.getString(R.styleable.DependentLayout_designWidth);
-            designHeight = typedArray.getString(R.styleable.DependentLayout_designHeight);
-
+            String designWidth = typedArray.getString(R.styleable.DependentLayout_designWidth);
+            if (designWidth == null) {
+                mDesignWidth = sDesignWidth;
+            }else {
+                mDesignWidth = designWidth;
+            }
+            String designHeight = typedArray.getString(R.styleable.DependentLayout_designHeight);
+            if (designHeight == null) {
+                mDesignHeight = sDesignHeight;
+            } else {
+                mDesignHeight = designHeight;
+            }
             String padding = typedArray.getString(R.styleable.DependentLayout_dependency_padding);
             if (padding != null) {
                 paddingLeftSource = paddingTopSource = paddingRightSource = paddingBottomSource = padding;
@@ -166,25 +180,25 @@ public class DependentLayout extends ViewGroup {
 
 
         if (paddingLeftSource != null) {
-            paddingLeft = (int) calculation(paddingLeftSource, designWidth, designHeight, this, this, HORIZONTAL);
+            paddingLeft = (int) calculation(paddingLeftSource, mDesignWidth, mDesignHeight, this, this, HORIZONTAL);
         } else {
             paddingLeft = (int) systemPaddingLeft;
         }
 
         if (paddingTopSource != null) {
-            paddingTop = (int) calculation(paddingTopSource, designWidth, designHeight, this, this, HORIZONTAL);
+            paddingTop = (int) calculation(paddingTopSource, mDesignWidth, mDesignHeight, this, this, HORIZONTAL);
         } else {
             paddingTop = (int) systemPaddingTop;
         }
 
         if (paddingRightSource != null) {
-            paddingRight = (int) calculation(paddingRightSource, designWidth, designHeight, this, this, HORIZONTAL);
+            paddingRight = (int) calculation(paddingRightSource, mDesignWidth, mDesignHeight, this, this, HORIZONTAL);
         } else {
             paddingRight = (int) systemPaddingRight;
         }
 
         if (paddingBottomSource != null) {
-            paddingBottom = (int) calculation(paddingBottomSource, designWidth, designHeight, this, this, HORIZONTAL);
+            paddingBottom = (int) calculation(paddingBottomSource, mDesignWidth, mDesignHeight, this, this, HORIZONTAL);
         } else {
             paddingBottom = (int) systemPaddingBottom;
         }
@@ -284,7 +298,7 @@ public class DependentLayout extends ViewGroup {
                     }
                     child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
                     // 计算高度
-                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, designWidth, designHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
                     //                    child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
                 } else {
                     if (layoutParams.selfHeight == null) {
@@ -299,7 +313,7 @@ public class DependentLayout extends ViewGroup {
                         }
                         child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
                         // 计算高度
-                        layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, designWidth, designHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                        layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                         //                    child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
                     } else {
                         // 指定了自定义宽高 layoutParams.selfHeight != null
@@ -308,18 +322,18 @@ public class DependentLayout extends ViewGroup {
                                 // ERROR，不能互相依赖自身的宽高
                                 throw new IllegalArgumentException("参数异常");
                             } else {
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, designWidth, designHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
                                 child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
-                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, designWidth, designHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                             }
                         } else {
                             if (layoutParams.selfHeight.endsWith("%mw")) {
-                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, designWidth, designHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                                 child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, designWidth, designHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
                             } else {
-                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, designWidth, designHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, designWidth, designHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
                             }
                         }
                     }
@@ -331,50 +345,50 @@ public class DependentLayout extends ViewGroup {
 
             // Margin
             if (layoutParams.marginLeftSource != null) {
-                layoutParams.marginLeft = calculation(layoutParams.marginLeftSource, designWidth, designHeight, this, child, HORIZONTAL);
+                layoutParams.marginLeft = calculation(layoutParams.marginLeftSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.marginLeft = layoutParams.systemMarginLeft;
             }
 
             if (layoutParams.marginTopSource != null) {
-                layoutParams.marginTop = calculation(layoutParams.marginTopSource, designWidth, designHeight, this, child, HORIZONTAL);
+                layoutParams.marginTop = calculation(layoutParams.marginTopSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.marginTop = layoutParams.systemMarginTop;
             }
 
             if (layoutParams.marginRightSource != null) {
-                layoutParams.marginRight = calculation(layoutParams.marginRightSource, designWidth, designHeight, this, child, HORIZONTAL);
+                layoutParams.marginRight = calculation(layoutParams.marginRightSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.marginRight = layoutParams.systemMarginRight;
             }
 
             if (layoutParams.marginBottomSource != null) {
-                layoutParams.marginBottom = calculation(layoutParams.marginBottomSource, designWidth, designHeight, this, child, HORIZONTAL);
+                layoutParams.marginBottom = calculation(layoutParams.marginBottomSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.marginBottom = layoutParams.systemMarginBottom;
             }
 
             // Padding
             if (layoutParams.paddingLeftSource != null) {
-                layoutParams.paddingLeft = (int) calculation(layoutParams.paddingLeftSource, designWidth, designHeight, this, child, HORIZONTAL);
+                layoutParams.paddingLeft = (int) calculation(layoutParams.paddingLeftSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.paddingLeft = (int) layoutParams.systemPaddingLeft;
             }
 
             if (layoutParams.paddingTopSource != null) {
-                layoutParams.paddingTop = (int) calculation(layoutParams.paddingTopSource, designWidth, designHeight, this, child, HORIZONTAL);
+                layoutParams.paddingTop = (int) calculation(layoutParams.paddingTopSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.paddingTop = (int) layoutParams.systemPaddingTop;
             }
 
             if (layoutParams.paddingRightSource != null) {
-                layoutParams.paddingRight = (int) calculation(layoutParams.paddingRightSource, designWidth, designHeight, this, child, HORIZONTAL);
+                layoutParams.paddingRight = (int) calculation(layoutParams.paddingRightSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.paddingRight = (int) layoutParams.systemPaddingRight;
             }
 
             if (layoutParams.paddingBottomSource != null) {
-                layoutParams.paddingBottom = (int) calculation(layoutParams.paddingBottomSource, designWidth, designHeight, this, child, HORIZONTAL);
+                layoutParams.paddingBottom = (int) calculation(layoutParams.paddingBottomSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.paddingBottom = (int) layoutParams.systemPaddingBottom;
             }

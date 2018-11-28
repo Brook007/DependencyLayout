@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/License-Apache_2-brightgreen.svg)](https://github.com/Brook007/DependentLayout/blob/master/LICENSE)
 [![](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-Brook007-orange.svg)](https://github.com/Brook007)
 
-一个相对布局容器,，继承自ViewGroup，并支持百分比布局缩放
+一个相对布局容器,，继承自ViewGroup，并支持百分比布局缩放，下面有一些介绍，对于代码中的问题，欢迎大家提Issue
 
 ## 效果预览
 ### 下面是在几个分辨率屏幕适配的对比图
@@ -41,7 +41,7 @@ allprojects {
 }
 ```
 
-然后在需要使用的项目中添加以下代码
+然后在需要使用的模块的build.gradle中添加以下代码
 ```groovy
 dependencies {
     implementation 'com.github.Brook007:DependentLayout:0.8.1'
@@ -116,6 +116,41 @@ dependencies {
 | android:paddingRight | dimension | 使用系统设置的内右边距 |
 | android:paddingBottom | dimension | 使用系统设置的内下边距 |
 
+## 特性
+
+对于使用，基本类似于RelativeLayout，但是比RelativeLayout多一些功能，不然的话也没必要写这个了
+对于DependentLayout上面的属性中，除了designWidth，和designHeight外，其他的类型是string的属性都支持以下几种写法
+
+```
+首字母的含义
+// 倒数第二位首字母
+p->parent 父View
+s->screen 屏幕
+m->myself 自身
+// 倒数第一位首字母
+w->width  宽度
+h->height 高度
+```
+
+* xx%pw 父View宽度的xx%
+* xx%ph 父View高度的xx%
+* xx%sw 屏幕宽度的xx%
+* xx%sh 屏幕高度的xx%
+* xx%mw 自身宽度的xx%
+* xx%mh 自身高度的xx%
+* xxdp  
+* xxpx
+* xx    与设计图单位自动匹配
+
+### 注意事项
+
+* 当设置DependentLayout中的高度为wrap_content的时候，那么子View中不能设置xx%ph属性，否则会出错，同理，当设置DependentLayout中的宽度为wrap_content的时候，那么子View中不能设置xx%pw属性
+
+
+
+## 联系作者
+
+Email:brook999999@qq.com
 
 ## 开源协议  LICENSE
 
