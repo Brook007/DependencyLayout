@@ -1,7 +1,7 @@
 # DependentLayout
 
 ## 概述
-[![](https://img.shields.io/badge/LibVersion-0.8.0-brightgreen.svg)](https://github.com/Brook007/DependentLayout)
+[![](https://jitpack.io/v/Brook007/DependentLayout.svg)](https://github.com/Brook007/DependentLayout)
 [![](https://img.shields.io/badge/Platform-Android-brightgreen.svg)](https://github.com/Brook007/DependentLayout)
 [![](https://img.shields.io/badge/API_Live-14+-brightgreen.svg)](https://github.com/Brook007/DependentLayout)
 [![](https://img.shields.io/badge/License-Apache_2-brightgreen.svg)](https://github.com/Brook007/DependentLayout/blob/master/LICENSE)
@@ -44,7 +44,7 @@ allprojects {
 然后在需要使用的项目中添加以下代码
 ```groovy
 dependencies {
-    implementation 'com.github.Brook007:DependentLayout:0.8.0'
+    implementation 'com.github.Brook007:DependentLayout:0.8.1'
 }
 ```
 
