@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/License-Apache_2-brightgreen.svg)](https://github.com/Brook007/DependentLayout/blob/master/LICENSE)
 [![](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-Brook007-orange.svg)](https://github.com/Brook007)
 
-一个相对布局容器,，继承自ViewGroup，并支持百分比布局缩放，下面有一些介绍，对于代码中的问题，欢迎大家提Issue
+一个相对布局容器,，继承自ViewGroup，并支持百分比布局缩放，下面有一些介绍，对于代码中的问题，欢迎大家提Issue，喜欢的朋友可以Star一下，您的Star是对开源作者最好的支持
 
 ## 效果预览
 ### 下面是在几个分辨率屏幕适配的对比图
