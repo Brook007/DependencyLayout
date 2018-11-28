@@ -146,7 +146,7 @@ h->height 高度
 
 * 当设置DependentLayout中的高度为wrap_content的时候，那么子View中不能设置xx%ph属性，否则会出错，同理，当设置DependentLayout中的宽度为wrap_content的时候，那么子View中不能设置xx%pw属性
 
-
+* 由于计算精度与类型转换为，计算出的实际大小可能会有1个像素的差别
 
 ## 联系作者
 
