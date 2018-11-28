@@ -7,10 +7,31 @@
 [![](https://img.shields.io/badge/License-Apache_2-brightgreen.svg)](https://github.com/Brook007/DependentLayout/blob/master/LICENSE)
 [![](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-Brook007-orange.svg)](https://github.com/Brook007)
 
-一个类似于RelativeLayout的Layout，继承自ViewGroup，并支持百分比布局缩放
+一个相对布局容器,，继承自ViewGroup，并支持百分比布局缩放
+
+## 效果预览
+> 下面是在几个分辨率屏幕适配的对比图
+
+标准720P分辨率和1080P分辨率的对比
+
+[![](/picture/720_1280_AND_1080_1920.png)](https://github.com/Brook007/DependentLayout)
+
+标准2K分辨率和目前最常见的全面屏分辨率(1080x2340)的对比
+
+[![](/picture/1440_2560_AND_1080_2340.png)](https://github.com/Brook007/DependentLayout)
+
+分辨率差距极大的480P分辨率和2K分辨率对比的对比
+
+[![](/picture/480_800_AND_1440_2560.png)](https://github.com/Brook007/DependentLayout)
+
+以及你现在找都找不到的QVGA分辨率和WVGA分辨率对比（也许有些手表是这个级别的分辨率吧）
+
+[![](/picture/240_320_AND_480_800.png)](https://github.com/Brook007/DependentLayout)
+
+
 
 ## 引用
-### Gradle方式--Android Studio使用者
+### Gradle方式--适合Android Studio用户
 在根项目的build.gradle中添加下面的代码
 ```groovy
 allprojects {
@@ -26,8 +47,6 @@ dependencies {
     implementation 'com.github.Brook007:DependentLayout:0.8.0'
 }
 ```
-### AAR,Jar方式
-
 
 ## DependentLayout支持的属性
 |属性|类型|描述|
@@ -96,6 +115,7 @@ dependencies {
 | android:paddingTop | dimension | 使用系统设置的内上边距 |
 | android:paddingRight | dimension | 使用系统设置的内右边距 |
 | android:paddingBottom | dimension | 使用系统设置的内下边距 |
+
 
 ## 开源协议  LICENSE
 

@@ -7,7 +7,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.brook.app.android.dependentlayout"
-        minSdkVersion 23
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -28,6 +28,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.github.jitpack:android-example:1.0.1'
+//    implementation 'com.github.jitpack:android-example:1.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

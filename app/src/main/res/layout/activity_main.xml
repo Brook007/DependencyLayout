@@ -6,36 +6,17 @@
     android:background="#FFFFFF"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="click"
-            android:text="system" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:onClick="click"
-            android:text="match" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:onClick="click"
-            android:text="info" />
-
-    </LinearLayout>
+        android:layout_height="100px"
+        android:gravity="center"
+        android:background="#F5F5F5"
+        android:text="@string/app_name"
+        android:textSize="17dp" />
 
     <ScrollView
-        android:layout_width="720px"
-        android:layout_height="1280px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="#cebabc">
 
@@ -64,9 +45,8 @@
                 android:text="第一个"
                 app:dependency_marginBottom="10"
                 app:dependency_marginLeft="50%pw"
-                app:dependency_padding="100"
-                app:dependency_paddingLeft="50%mw"
-                app:selfHeight="33.4%ph"
+                app:dependency_padding="10dp"
+                app:selfHeight="50%pw"
                 app:selfWidth="240" />
 
             <TextView
@@ -76,8 +56,7 @@
                 android:background="#BFEFFF"
                 android:text="第二个View"
                 app:belowTo="@id/one"
-                app:dependency_marginTop="720"
-                app:selfHeight="33.4%ph"
+                app:selfHeight="50%pw"
                 app:selfWidth="480" />
 
             <TextView
@@ -89,7 +68,7 @@
                 android:text="第三个View"
                 app:belowTo="@id/two"
                 app:dependency_marginTop="30%pw"
-                app:selfHeight="33.4%ph"
+                app:selfHeight="50%pw"
                 app:selfWidth="720" />
 
 

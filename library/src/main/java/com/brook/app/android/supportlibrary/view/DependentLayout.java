@@ -882,7 +882,7 @@ public class DependentLayout extends ViewGroup {
                 paddingBottomSource = typedArray.getString(R.styleable.DependentLayout_Layout_dependency_paddingBottom);
             }
 
-            float systemPadding = typedArray.getDimension(R.styleable.DependentLayout_android_padding, 0);
+            float systemPadding = typedArray.getDimension(R.styleable.DependentLayout_Layout_android_padding, 0);
             if (systemPadding > 0) {
                 systemPaddingLeft = systemPaddingTop = systemPaddingRight = systemPaddingBottom = systemPadding;
             } else {
