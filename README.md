@@ -30,7 +30,7 @@
 
 
 
-## 引用
+## 引入依赖
 ### Gradle方式--适合Android Studio用户
 在根项目的build.gradle中添加下面的代码
 ```groovy
