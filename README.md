@@ -44,9 +44,11 @@ allprojects {
 然后在需要使用的模块的build.gradle中添加以下代码
 ```groovy
 dependencies {
-    implementation 'com.github.Brook007:DependentLayout:0.8.2'
+    implementation 'com.github.Brook007:DependentLayout:0.9.0'
 }
 ```
+
+具体使用与其他的View没什么区别，在需要使用的XML的布局中引用即可
 
 ## DependentLayout支持的属性
 |属性|类型|描述|
@@ -133,21 +135,23 @@ h->height 高度
 ```
 |格式|介绍|
 |---|---|
-|xx%pw | 父View宽度的xx%|
-| xx%ph| 父View高度的xx%|
-| xx%sw| 屏幕宽度的xx%|
-| xx%sh| 屏幕高度的xx%|
-| xx%mw| 自身宽度的xx%|
-| xx%mh| 自身高度的xx%|
+|xx%pw | 父View宽度的xx% |
+| xx%ph| 父View高度的xx% |
+| xx%sw| 屏幕宽度的xx% |
+| xx%sh| 屏幕高度的xx% |
+| xx%mw| 自身宽度的xx% |
+| xx%mh| 自身高度的xx% |
 | xxdp|
 | xxpx|
-| xx  |  与设计图单位自动匹配|
+| xx  | 与设计图单位自动匹配 |
 
 ### 注意事项
 
 * 当设置DependentLayout中的高度为wrap_content的时候，那么子View中不能设置xx%ph属性，否则会出错，同理，当设置DependentLayout中的宽度为wrap_content的时候，那么子View中不能设置xx%pw属性
 
 * 由于计算精度与类型转换为，计算出的实际大小可能会有1个像素的差别
+
+* 属性间存在优先级问题，如当设置了dependency_paddingBottom时，android:paddingBottom属性就会失效，同理，当设置selfWidth的时候android:layout_width属性就会失效
 
 ## 联系作者
 

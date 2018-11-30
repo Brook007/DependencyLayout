@@ -16,12 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.brook.app.android.AboveToActivity"/>
-        <activity android:name="com.brook.app.android.AlignActivity"/>
-        <activity android:name="com.brook.app.android.AlignParentActivity"/>
-        <activity android:name="com.brook.app.android.MarginAndPaddingActivity"/>
-        <activity android:name="com.brook.app.android.ToCenterActivity"/>
-        <activity android:name="com.brook.app.android.ToParentCenterActivity"/>
+        <activity android:name="com.brook.app.android.AboveToActivity" />
+        <activity android:name="com.brook.app.android.AlignActivity" />
+        <activity android:name="com.brook.app.android.AlignParentActivity" />
+        <activity android:name="com.brook.app.android.MarginAndPaddingActivity" />
+        <activity android:name="com.brook.app.android.ToCenterActivity" />
+        <activity android:name="com.brook.app.android.ToParentCenterActivity" />
+        <activity android:name="com.brook.app.android.SimpleActivity"></activity>
     </application>
 
 </manifest>

@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
             "margin_padding".toLowerCase() -> startActivity(Intent(this, MarginAndPaddingActivity::class.java))
             "to_Center".toLowerCase() -> startActivity(Intent(this, ToCenterActivity::class.java))
             "to_Parent_Center".toLowerCase() -> startActivity(Intent(this, ToParentCenterActivity::class.java))
+            "simple".toLowerCase() -> startActivity(Intent(this, SimpleActivity::class.java))
         }
     }
 }
