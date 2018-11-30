@@ -121,7 +121,7 @@ public class DependentLayout extends ViewGroup {
             String designWidth = typedArray.getString(R.styleable.DependentLayout_designWidth);
             if (designWidth == null) {
                 mDesignWidth = sDesignWidth;
-            }else {
+            } else {
                 mDesignWidth = designWidth;
             }
             String designHeight = typedArray.getString(R.styleable.DependentLayout_designHeight);
@@ -477,7 +477,7 @@ public class DependentLayout extends ViewGroup {
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.bottom = params.top + dependencies.getMeasuredHeight() / 2 - layoutParams.marginBottom;
                 if (!layoutParams.hasVerticalAttr(layoutParams)) {
-                    layoutParams.top = layoutParams.bottom + child.getMeasuredHeight();
+                    layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
             // 在某个View水平中线的的下面
@@ -578,7 +578,7 @@ public class DependentLayout extends ViewGroup {
             if (layoutParams.toCenterVerticalLeft > 0) {
                 View dependencies = findViewById(layoutParams.toCenterVerticalLeft);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.right = params.left + dependencies.getMeasuredWidth();
+                layoutParams.right = params.left + dependencies.getMeasuredWidth() / 2 - layoutParams.marginLeft;
                 if (!layoutParams.hasHorizontalAttr(layoutParams)) {
                     layoutParams.left = layoutParams.right - child.getMeasuredWidth();
                 }

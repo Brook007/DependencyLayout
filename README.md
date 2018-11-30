@@ -131,16 +131,17 @@ m->myself 自身
 w->width  宽度
 h->height 高度
 ```
-
-* xx%pw 父View宽度的xx%
-* xx%ph 父View高度的xx%
-* xx%sw 屏幕宽度的xx%
-* xx%sh 屏幕高度的xx%
-* xx%mw 自身宽度的xx%
-* xx%mh 自身高度的xx%
-* xxdp  
-* xxpx
-* xx    与设计图单位自动匹配
+|格式|介绍|
+|---|---|
+|xx%pw | 父View宽度的xx%|
+| xx%ph| 父View高度的xx%|
+| xx%sw| 屏幕宽度的xx%|
+| xx%sh| 屏幕高度的xx%|
+| xx%mw| 自身宽度的xx%|
+| xx%mh| 自身高度的xx%|
+| xxdp|
+| xxpx|
+| xx  |  与设计图单位自动匹配|
 
 ### 注意事项
 

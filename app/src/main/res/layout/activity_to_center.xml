@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.brook.app.android.supportlibrary.view.DependentLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/one"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="#ADD8E6"
+        android:text="第一一个View"
+        app:centerInParent="true" />
+
+    <TextView
+        android:id="@+id/two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#EE82EE"
+        android:text="第二个View"
+        app:toCenterVerticalLeft="@id/one" />
+
+    <TextView
+        android:id="@+id/three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#A8A8A8"
+        android:text="第三个View"
+        app:alignCenterHorizontalTop="@id/one" />
+
+</com.brook.app.android.supportlibrary.view.DependentLayout>

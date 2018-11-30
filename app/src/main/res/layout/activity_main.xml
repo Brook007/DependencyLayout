@@ -1,79 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:gravity="center"
-        android:background="#F5F5F5"
-        android:text="@string/app_name"
-        android:textSize="17dp" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="#cebabc">
-
-
-        <com.brook.app.android.supportlibrary.view.DependentLayout
-            android:id="@+id/dependencies"
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#e9e9e9"
-            android:clipToPadding="true"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"
-            app:designHeight="1280"
-            app:designWidth="720">
+            android:onClick="click"
+            android:text="align_Parent" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="click"
+            android:text="to_Parent_Center" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="click"
+            android:text="above" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="click"
+            android:text="align" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="click"
+            android:text="to_Center" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="click"
+            android:text="margin_padding" />
+
+    </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="#CCCCCC"
-                android:paddingLeft="10dp"
-                android:text="第一个"
-                app:dependency_marginBottom="10"
-                app:dependency_marginLeft="50%pw"
-                app:dependency_padding="10dp"
-                app:selfHeight="50%pw"
-                app:selfWidth="240" />
-
-            <TextView
-                android:id="@+id/two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#BFEFFF"
-                android:text="第二个View"
-                app:belowTo="@id/one"
-                app:selfHeight="50%pw"
-                app:selfWidth="480" />
-
-            <TextView
-                android:id="@+id/three"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="#CAFF70"
-                android:text="第三个View"
-                app:belowTo="@id/two"
-                app:dependency_marginTop="30%pw"
-                app:selfHeight="50%pw"
-                app:selfWidth="720" />
-
-
-        </com.brook.app.android.supportlibrary.view.DependentLayout>
-
-    </ScrollView>
-
-</LinearLayout>
+</ScrollView>
