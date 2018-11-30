@@ -24,7 +24,7 @@
 
 [![](/picture/480_800_AND_1440_2560.png)](https://github.com/Brook007/DependentLayout)
 
-<b/>以及你现在找都找不到的QVGA分辨率和WVGA分辨率对比（也许有些手表是这个级别的分辨率吧
+<b/>以及你现在找都找不到的QVGA分辨率和WVGA分辨率对比（也许有些手表是这个级别的分辨率吧）
 
 [![](/picture/240_320_AND_480_800.png)](https://github.com/Brook007/DependentLayout)
 
