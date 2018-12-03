@@ -23,11 +23,24 @@ allprojects {
 然后在需要使用的模块的build.gradle中添加以下代码
 ```groovy
 dependencies {
-    implementation 'com.github.Brook007:DependentLayout:0.9.5'
+    implementation 'com.github.Brook007:DependentLayout:1.0.0'
 }
 ```
 
-具体使用与其他的View没什么区别，在需要使用的XML的布局中引用即可
+## 使用
+
+在实例化DependentLayout之前加入以下代码
+```java
+DependentLayout.sDesignWidth = "设计图中的宽度,750px"
+DependentLayout.sDesignHeight = "设计图中高度,如1294px"
+```
+也可以在XML布局文件中配置
+```xml
+app:designHeight="1294px"
+app:designWidth="750px"
+```
+
+单两个同时配置时，默认优先选择Xml中的配置，其他相关可参考[activity_simple.xml](https://github.com/Brook007/DependentLayout/blob/master/app/src/main/res/layout/activity_simple.xml)
 
 ## 效果预览
 ### 下面是在几个分辨率屏幕适配的对比图
@@ -169,11 +182,12 @@ h->height 高度
 
 Email:brook999999@qq.com
 
-## 前辈项目
+## 关于屏幕适配的前辈方案
 
 1. AutoLayout https://github.com/hongyangAndroid/AndroidAutoLayout
 2. ScaleLayout https://github.com/gavinliu/Android-ScaleLayout
 3. percent-support-lib https://github.com/JulienGenoud/android-percent-support-lib-sample
+4. AutoSize https://github.com/JessYanCoding/AndroidAutoSize
 
 ## 开源协议  LICENSE
 

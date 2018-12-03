@@ -421,23 +421,26 @@ public class DependentLayout extends ViewGroup {
                 layoutParams.top = getPaddingLeft() + layoutParams.marginLeft;
             }
 
+
+            boolean hasVerticalAttr = !layoutParams.hasVerticalAttr(layoutParams);
+
             if (layoutParams.alignParentBottom) {
                 layoutParams.bottom = getMeasuredHeight() - getPaddingBottom() - layoutParams.marginBottom;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
 
             if (layoutParams.alignParentCenterHorizontalTop) {
                 layoutParams.bottom = getMeasuredHeight() / 2 - layoutParams.marginBottom;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
 
             if (layoutParams.alignParentCenterHorizontalBottom) {
                 layoutParams.top = getMeasuredHeight() / 2 + layoutParams.marginTop;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
                 }
             }
@@ -453,7 +456,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.aboveTo);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.bottom = params.top - params.marginTop - layoutParams.marginBottom;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
@@ -462,7 +465,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.belowTo);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.top = params.bottom + params.marginBottom + layoutParams.marginTop;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
                 }
             }
@@ -471,7 +474,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.alignTop);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.top = params.top + layoutParams.marginTop;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
                 }
             }
@@ -480,7 +483,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.alignBottom);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.bottom = params.bottom - layoutParams.marginBottom;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
@@ -489,7 +492,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.alignCenterHorizontalTop);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.bottom = params.top + dependencies.getMeasuredHeight() / 2 - layoutParams.marginBottom;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
@@ -498,7 +501,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.alignCenterHorizontalBottom);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.top = params.top + dependencies.getMeasuredHeight() / 2 + layoutParams.marginTop;
-                if (!layoutParams.hasVerticalAttr(layoutParams)) {
+                if (hasVerticalAttr) {
                     layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
                 }
             }
@@ -511,25 +514,26 @@ public class DependentLayout extends ViewGroup {
             }
 
             ////////////////////////////////////////////////////////////////
+            boolean hasHorizontalAttr = !layoutParams.hasHorizontalAttr(layoutParams);
             // 水平属性
             if (layoutParams.alignParentLeft) {
                 layoutParams.left = getPaddingLeft() + layoutParams.marginLeft;
                 //                layoutParams.left = 0;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.right = layoutParams.left + child.getMeasuredWidth();
                 }
             }
 
             if (layoutParams.alignParentRight) {
                 layoutParams.right = getMeasuredWidth() - getPaddingRight() - layoutParams.marginRight;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.left = layoutParams.right - child.getMeasuredWidth();
                 }
             }
 
             if (layoutParams.toParentCenterVerticalLeft) {
                 layoutParams.right = getMeasuredWidth() / 2 - layoutParams.marginRight;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.left = layoutParams.right - child.getMeasuredWidth();
                 }
             }
@@ -537,7 +541,7 @@ public class DependentLayout extends ViewGroup {
             // 对齐父View水平中线的右边
             if (layoutParams.toParentCenterVerticalRight) {
                 layoutParams.left = getMeasuredWidth() / 2 + layoutParams.marginLeft;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.right = layoutParams.left + child.getMeasuredWidth();
                 }
             }
@@ -552,7 +556,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.toRightOf);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.left = params.right + params.marginRight + layoutParams.marginLeft;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.right = layoutParams.left + child.getMeasuredWidth();
                 }
             }
@@ -562,7 +566,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.toLeftOf);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.right = params.left - params.marginLeft - layoutParams.marginRight;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.left = layoutParams.right - child.getMeasuredWidth();
                 }
             }
@@ -572,7 +576,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.alignRight);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.right = params.right - layoutParams.marginRight;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.left = layoutParams.right - child.getMeasuredWidth();
                 }
             }
@@ -582,7 +586,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.alignLeft);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.left = params.left + layoutParams.marginLeft;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.right = layoutParams.left + child.getMeasuredWidth();
                 }
             }
@@ -592,7 +596,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.toCenterVerticalLeft);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.right = params.left + dependencies.getMeasuredWidth() / 2 - layoutParams.marginLeft;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.left = layoutParams.right - child.getMeasuredWidth();
                 }
             }
@@ -602,7 +606,7 @@ public class DependentLayout extends ViewGroup {
                 View dependencies = findViewById(layoutParams.toCenterVerticalRight);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
                 layoutParams.left = params.left + dependencies.getMeasuredWidth() / 2;
-                if (!layoutParams.hasHorizontalAttr(layoutParams)) {
+                if (hasHorizontalAttr) {
                     layoutParams.right = layoutParams.left + child.getMeasuredWidth();
                 }
             }
@@ -835,6 +839,7 @@ public class DependentLayout extends ViewGroup {
 
         private float systemWidth;
         private float systemHeight;
+
 
         public LayoutParams(int width, int height) {
             super(width, height);
