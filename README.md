@@ -44,7 +44,7 @@ allprojects {
 然后在需要使用的模块的build.gradle中添加以下代码
 ```groovy
 dependencies {
-    implementation 'com.github.Brook007:DependentLayout:0.9.0'
+    implementation 'com.github.Brook007:DependentLayout:0.9.5'
 }
 ```
 
