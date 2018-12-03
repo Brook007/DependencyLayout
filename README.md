@@ -163,7 +163,7 @@ h->height 高度
 
 [![](/picture/text_measure.png)](https://github.com/Brook007/DependentLayout)
 
-实际的情况可以看上面的实际运行效果中的最右边的开启了布局边界的部分
+实际的情况可以看上面的效果预览图中最后一图中的最右边的开启了布局边界的部分，可以验证这个说法
 
 ## 联系作者
 
