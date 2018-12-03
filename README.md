@@ -172,7 +172,7 @@ h->height 高度
 
 * 属性间存在优先级问题，如当设置了dependency_paddingBottom时，android:paddingBottom属性就会失效，同理，当设置selfWidth的时候android:layout_width属性就会失效
 
-* TextView字体问题，TextView的字体绘制可见下图
+* **关于演示图中的偏差，由于TextView字体问题，TextView的字体绘制可见下图**
 
 [![](/picture/text_measure.png)](https://github.com/Brook007/DependentLayout)
 
