@@ -159,9 +159,20 @@ h->height 高度
 
 * 属性间存在优先级问题，如当设置了dependency_paddingBottom时，android:paddingBottom属性就会失效，同理，当设置selfWidth的时候android:layout_width属性就会失效
 
+* TextView字体问题，TextView的字体绘制可见下图
+
+[![](/picture/text_measure.png)](https://github.com/Brook007/DependentLayout)
+实际的情况可以看上面的实际运行效果中的最右边的开启了布局边界的部分
+
 ## 联系作者
 
 Email:brook999999@qq.com
+
+## 前辈项目
+
+1. AutoLayout https://github.com/hongyangAndroid/AndroidAutoLayout
+2. ScaleLayout https://github.com/gavinliu/Android-ScaleLayout
+3. percent-support-lib https://github.com/JulienGenoud/android-percent-support-lib-sample
 
 ## 开源协议  LICENSE
 
