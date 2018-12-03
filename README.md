@@ -162,6 +162,7 @@ h->height 高度
 * TextView字体问题，TextView的字体绘制可见下图
 
 [![](/picture/text_measure.png)](https://github.com/Brook007/DependentLayout)
+
 实际的情况可以看上面的实际运行效果中的最右边的开启了布局边界的部分
 
 ## 联系作者
