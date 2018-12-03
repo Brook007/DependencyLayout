@@ -9,27 +9,6 @@
 
 一个相对布局容器,，继承自ViewGroup，并支持百分比布局缩放，下面有一些介绍，对于代码中的问题，欢迎大家提Issue，喜欢的朋友可以Star一下，您的Star是对开源作者最好的支持
 
-## 效果预览
-### 下面是在几个分辨率屏幕适配的对比图
-
-<b/>标准720P分辨率和1080P分辨率的对比
-
-[![](/picture/720_1280_AND_1080_1920.png)](https://github.com/Brook007/DependentLayout)
-
-<b/>标准2K分辨率和目前最常见的全面屏分辨率(1080x2340)的对比
-
-[![](/picture/1440_2560_AND_1080_2340.png)](https://github.com/Brook007/DependentLayout)
-
-<b/>分辨率差距极大的480P分辨率和2K分辨率对比的对比
-
-[![](/picture/480_800_AND_1440_2560.png)](https://github.com/Brook007/DependentLayout)
-
-<b/>以及你现在找都找不到的QVGA分辨率和WVGA分辨率对比（也许有些手表是这个级别的分辨率吧）
-
-[![](/picture/240_320_AND_480_800.png)](https://github.com/Brook007/DependentLayout)
-
-
-
 ## 引入依赖
 ### Gradle方式--适合Android Studio用户
 在根项目的build.gradle中添加下面的代码
@@ -49,6 +28,33 @@ dependencies {
 ```
 
 具体使用与其他的View没什么区别，在需要使用的XML的布局中引用即可
+
+## 效果预览
+### 下面是在几个分辨率屏幕适配的对比图
+
+<b/>标准720P分辨率和1080P分辨率的对比
+
+[![](/picture/720_1280_AND_1080_1920.png)](https://github.com/Brook007/DependentLayout)
+
+<b/>标准2K分辨率和目前最常见的全面屏分辨率(1080x2340)的对比
+
+[![](/picture/1440_2560_AND_1080_2340.png)](https://github.com/Brook007/DependentLayout)
+
+<b/>分辨率差距极大的480P分辨率和2K分辨率对比的对比
+
+[![](/picture/480_800_AND_1440_2560.png)](https://github.com/Brook007/DependentLayout)
+
+<b/>以及你现在找都找不到的QVGA分辨率和WVGA分辨率对比（也许有些手表是这个级别的分辨率吧）
+
+[![](/picture/240_320_AND_480_800.png)](https://github.com/Brook007/DependentLayout)
+
+### 设计图与实际效果对比
+
+[![](/picture/comparison.png)](https://github.com/Brook007/DependentLayout)
+
+### 示例下载
+
+<a href="/demo/demo.apk">Demo.apk</a>
 
 ## DependentLayout支持的属性
 |属性|类型|描述|
