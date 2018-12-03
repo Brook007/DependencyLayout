@@ -1,9 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.brook.app.android.supportlibrary.view.DependentLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    app:designHeight="1294px"
+    app:designWidth="750px"
     tools:context="com.brook.app.android.SimpleActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@mipmap/ic_close"
+        app:dependency_marginLeft="39px"
+        app:dependency_marginTop="28px"
+        app:selfHeight="33px"
+        app:selfWidth="32px" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:includeFontPadding="false"
+        android:text="手机验证登录"
+        android:textColor="#333333"
+        android:textSize="24sp"
+        app:belowTo="@id/close"
+        app:centerInParentHorizontal="true"
+        app:dependency_marginTop="102px" />
+
+    <View
+        android:id="@+id/phone_number_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dddddd"
+        app:belowTo="@id/title"
+        app:dependency_marginLeft="84px"
+        app:dependency_marginRight="84px"
+        app:dependency_marginTop="235px"
+        app:selfHeight="1px" />
+
+    <TextView
+        android:id="@+id/phone_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:text="+86"
+        android:textColor="#333333"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:textSize="15sp"
+        app:aboveTo="@id/phone_number_line"
+        app:alignLeft="@id/phone_number_line"
+        app:dependency_marginBottom="-235px"
+        app:selfHeight="120px" />
+
+    <EditText
+        android:id="@+id/phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="请输入手机号"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        app:aboveTo="@id/phone_number_line"
+        app:alignRight="@id/phone_number_line"
+        app:dependency_marginBottom="-235px"
+        app:dependency_marginLeft="66px"
+        app:selfHeight="120px"
+        app:toRightOf="@id/phone_area" />
+
+    <TextView
+        android:id="@+id/verify_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:text="验证码"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:maxLines="1"
+        app:alignLeft="@id/phone_number_line"
+        app:belowTo="@id/phone_number_line"
+        app:dependency_marginBottom="-235px"
+        app:selfHeight="120px" />
+
+    <TextView
+        android:id="@+id/get_verify_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_43ac43_cccccc"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="false"
+        android:text="获取验证码"
+        android:textColor="#ffffff"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:textSize="11sp"
+        app:alignRight="@id/phone_number_line"
+        app:centerVerticalOf="@id/verify_code"
+        app:dependency_paddingBottom="20px"
+        app:dependency_paddingLeft="16px"
+        app:dependency_paddingRight="16px"
+        app:dependency_paddingTop="20px" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-235px"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="请输入验证码"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        app:alignLeft="@id/phone_number"
+        app:belowTo="@id/phone_number_line"
+        app:selfHeight="120px"
+        app:toLeftOf="@id/get_verify_code"
+        app:toRightOf="@id/phone_area" />
+
+    <View
+        android:id="@+id/verify_code_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dddddd"
+        app:belowTo="@id/verify_code"
+        app:dependency_marginLeft="84px"
+        app:dependency_marginRight="84px"
+        app:dependency_marginTop="235px"
+        app:selfHeight="1px" />
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_43ac43_cccccc"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:text="验证并登录"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        app:alignLeft="@id/verify_code_line"
+        app:alignRight="@id/verify_code_line"
+        app:belowTo="@id/verify_code_line"
+        app:dependency_marginTop="61px"
+        app:selfHeight="82px" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="注册并使用代表您已同意《用户协议》"
+        android:textColor="#999999"
+        android:textSize="12sp"
+        app:belowTo="@id/login"
+        app:centerInParentHorizontal="true"
+        app:dependency_marginTop="13px" />
+
+    <TextView
+        android:id="@+id/wechat_login"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="60px"
+        android:background="@null"
+        android:drawableTop="@mipmap/ic_wechat"
+        android:drawablePadding="10dp"
+        android:gravity="center_horizontal"
+        android:text="微信登录"
+        android:textColor="#b0b0b0"
+        android:textSize="12sp"
+        app:alignParentBottom="true"
+        app:dependency_marginBottom="40px"
+        app:toParentCenterVerticalLeft="true" />
+
+    <TextView
+        android:id="@+id/qq_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:layout_marginLeft="60px"
+        android:background="@null"
+        android:drawableTop="@mipmap/ic_qq"
+        android:drawablePadding="10dp"
+        android:gravity="center_horizontal"
+        android:text="QQ登录"
+        android:textColor="#b0b0b0"
+        android:textSize="12sp"
+        app:alignParentBottom="true"
+        app:dependency_marginBottom="40px"
+        app:toParentCenterVerticalRight="true" />
+
+    <TextView
+        android:id="@+id/other_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:includeFontPadding="false"
+        android:text="使用第三方快读登录"
+        android:textColor="#b0b0b0"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:textSize="13sp"
+        app:aboveTo="@id/wechat_login"
+        app:centerInParentHorizontal="true"
+        app:dependency_marginBottom="40px" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24px"
+        android:background="#b0b0b0"
+        app:centerVerticalOf="@id/other_login"
+        app:selfHeight="1px"
+        app:selfWidth="150px"
+        app:toLeftOf="@id/other_login" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#b0b0b0"
+        app:centerVerticalOf="@id/other_login"
+        app:dependency_marginLeft="24px"
+        app:selfHeight="1px"
+        app:selfWidth="150px"
+        app:toRightOf="@id/other_login" />
+
+</com.brook.app.android.supportlibrary.view.DependentLayout>

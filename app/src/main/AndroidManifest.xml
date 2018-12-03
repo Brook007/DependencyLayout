@@ -22,7 +22,9 @@
         <activity android:name="com.brook.app.android.MarginAndPaddingActivity" />
         <activity android:name="com.brook.app.android.ToCenterActivity" />
         <activity android:name="com.brook.app.android.ToParentCenterActivity" />
-        <activity android:name="com.brook.app.android.SimpleActivity"></activity>
+        <activity
+            android:name="com.brook.app.android.SimpleActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

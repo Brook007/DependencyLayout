@@ -28,7 +28,6 @@ import android.view.WindowManager;
 
 import com.brook.app.android.supportlibrary.R;
 
-
 /**
  * @author Brook
  * @time 2018/9/26 10:41
@@ -340,6 +339,33 @@ public class DependentLayout extends ViewGroup {
                 }
             }
 
+            // Padding
+            if (layoutParams.paddingLeftSource != null) {
+                layoutParams.paddingLeft = (int) calculation(layoutParams.paddingLeftSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+            } else {
+                layoutParams.paddingLeft = (int) layoutParams.systemPaddingLeft;
+            }
+
+            if (layoutParams.paddingTopSource != null) {
+                layoutParams.paddingTop = (int) calculation(layoutParams.paddingTopSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+            } else {
+                layoutParams.paddingTop = (int) layoutParams.systemPaddingTop;
+            }
+
+            if (layoutParams.paddingRightSource != null) {
+                layoutParams.paddingRight = (int) calculation(layoutParams.paddingRightSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+            } else {
+                layoutParams.paddingRight = (int) layoutParams.systemPaddingRight;
+            }
+
+            if (layoutParams.paddingBottomSource != null) {
+                layoutParams.paddingBottom = (int) calculation(layoutParams.paddingBottomSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+            } else {
+                layoutParams.paddingBottom = (int) layoutParams.systemPaddingBottom;
+            }
+
+            child.setPadding(layoutParams.paddingLeft, layoutParams.paddingTop, layoutParams.paddingRight, layoutParams.paddingBottom);
+
             child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
 
 
@@ -368,39 +394,26 @@ public class DependentLayout extends ViewGroup {
                 layoutParams.marginBottom = layoutParams.systemMarginBottom;
             }
 
-            // Padding
-            if (layoutParams.paddingLeftSource != null) {
-                layoutParams.paddingLeft = (int) calculation(layoutParams.paddingLeftSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
-            } else {
-                layoutParams.paddingLeft = (int) layoutParams.systemPaddingLeft;
-            }
-
-            if (layoutParams.paddingTopSource != null) {
-                layoutParams.paddingTop = (int) calculation(layoutParams.paddingTopSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
-            } else {
-                layoutParams.paddingTop = (int) layoutParams.systemPaddingTop;
-            }
-
-            if (layoutParams.paddingRightSource != null) {
-                layoutParams.paddingRight = (int) calculation(layoutParams.paddingRightSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
-            } else {
-                layoutParams.paddingRight = (int) layoutParams.systemPaddingRight;
-            }
-
-            if (layoutParams.paddingBottomSource != null) {
-                layoutParams.paddingBottom = (int) calculation(layoutParams.paddingBottomSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
-            } else {
-                layoutParams.paddingBottom = (int) layoutParams.systemPaddingBottom;
-            }
 
             if (child.getMeasuredWidth() <= 0 && child.getMeasuredHeight() <= 0) {
                 continue;
             }
 
             layoutParams.left = getPaddingLeft() + layoutParams.marginLeft;
-            layoutParams.right = layoutParams.left + child.getMeasuredWidth() + getPaddingLeft();
+            float tempRight = layoutParams.left + child.getMeasuredWidth();
+            if (tempRight > parentWidth - layoutParams.marginRight) {
+                layoutParams.right = parentWidth - layoutParams.marginRight;
+            } else {
+                layoutParams.right = tempRight;
+            }
+
             layoutParams.top = getPaddingTop() + layoutParams.marginTop;
-            layoutParams.bottom = layoutParams.top + child.getMeasuredHeight() + getPaddingTop();
+            float tempBottom = layoutParams.top + child.getMeasuredHeight();
+            if (tempBottom > parentHeight - layoutParams.marginBottom) {
+                layoutParams.bottom = parentHeight - layoutParams.marginBottom;
+            } else {
+                layoutParams.bottom = tempBottom;
+            }
 
 
             // dependencies
@@ -493,8 +506,8 @@ public class DependentLayout extends ViewGroup {
             if (layoutParams.centerVerticalOf > 0) {
                 View dependencies = findViewById(layoutParams.centerVerticalOf);
                 LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.bottom = params.top + dependencies.getMeasuredHeight() / 2;
-                layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
+                layoutParams.top = params.top + dependencies.getMeasuredHeight() / 2 - child.getMeasuredHeight() / 2;
+                layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
             }
 
             ////////////////////////////////////////////////////////////////
@@ -636,6 +649,7 @@ public class DependentLayout extends ViewGroup {
             layoutParams.width = (int) (layoutParams.right - layoutParams.left);
             layoutParams.height = (int) (layoutParams.bottom - layoutParams.top);
 
+            //            child.measure(MeasureSpec.makeMeasureSpec(layoutParams.width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(layoutParams.height, MeasureSpec.EXACTLY));
             child.setLayoutParams(layoutParams);
         }
     }
@@ -717,7 +731,7 @@ public class DependentLayout extends ViewGroup {
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
             LayoutParams layoutParams = (LayoutParams) child.getLayoutParams();
-            child.setPadding(layoutParams.paddingLeft, layoutParams.paddingTop, layoutParams.paddingRight, layoutParams.paddingBottom);
+            //            child.setPadding(layoutParams.paddingLeft, layoutParams.paddingTop, layoutParams.paddingRight, layoutParams.paddingBottom);
             child.layout((int) layoutParams.left, (int) layoutParams.top, (int) layoutParams.right, (int) layoutParams.bottom);
         }
     }
