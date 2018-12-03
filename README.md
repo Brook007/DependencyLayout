@@ -54,7 +54,7 @@ dependencies {
 
 ### 示例下载
 
-<a href="/demo/demo.apk">Demo.apk</a>
+<a href="/demo/demo.apk" download="Demo" alt="Demo.apk">Demo.apk</a>
 
 ## DependentLayout支持的属性
 |属性|类型|描述|
