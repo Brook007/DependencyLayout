@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/License-Apache_2-brightgreen.svg)](https://github.com/Brook007/DependentLayout/blob/master/LICENSE)
 [![](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-Brook007-orange.svg)](https://github.com/Brook007)
 
-一个相对布局容器,，继承自ViewGroup，并支持百分比布局缩放，下面有一些介绍，对于代码中的问题，欢迎大家提Issue，喜欢的朋友可以Star一下，您的Star是对开源作者最好的支持
+一个相对布局容器,，继承自ViewGroup，并支持百分比布局缩放，下面是关于Library的简单介绍，对于代码中的问题，欢迎大家反馈问题并提Issue，喜欢的朋友可以Star一下，您的Star是对开源作者最好的支持
 
 ## 引入依赖
 ### Gradle方式--适合Android Studio用户
@@ -130,7 +130,7 @@ dependencies {
 对于DependentLayout上面的属性中，除了designWidth，和designHeight外，其他的类型是string的属性都支持以下几种写法
 
 ```
-首字母的含义
+字母的含义
 // 倒数第二位首字母
 p->parent 父View
 s->screen 屏幕
