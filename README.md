@@ -53,7 +53,7 @@ dependencies {
 [![](/picture/comparison.png)](https://github.com/Brook007/DependentLayout)
 
 ### 示例下载
-[Demo.apl](https://github.com/Brook007/DependentLayout/blob/master/demo/demo.apk)
+
 <a href="/demo/demo.apk" download="Demo.apk" alt="Demo.apk">Demo.apk</a>
 
 ## DependentLayout支持的属性
