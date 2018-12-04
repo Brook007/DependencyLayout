@@ -28,6 +28,7 @@ import android.view.WindowManager;
 
 import com.brook.app.android.supportlibrary.R;
 
+
 /**
  * @author Brook
  * @time 2018/9/26 10:41
@@ -399,16 +400,19 @@ public class DependentLayout extends ViewGroup {
                 continue;
             }
 
-            layoutParams.left = getPaddingLeft() + layoutParams.marginLeft;
+            float tempLeft = getPaddingLeft() + layoutParams.marginLeft;
             float tempRight = layoutParams.left + child.getMeasuredWidth();
+            layoutParams.left = tempLeft;
             if (tempRight > parentWidth - layoutParams.marginRight) {
                 layoutParams.right = parentWidth - layoutParams.marginRight;
             } else {
                 layoutParams.right = tempRight;
             }
 
-            layoutParams.top = getPaddingTop() + layoutParams.marginTop;
+            float tempTop = getPaddingTop() + layoutParams.marginTop;
             float tempBottom = layoutParams.top + child.getMeasuredHeight();
+
+            layoutParams.top = tempTop;
             if (tempBottom > parentHeight - layoutParams.marginBottom) {
                 layoutParams.bottom = parentHeight - layoutParams.marginBottom;
             } else {
@@ -650,11 +654,13 @@ public class DependentLayout extends ViewGroup {
                 maxHeight = layoutParams.bottom + layoutParams.marginBottom;
             }
 
-            layoutParams.width = (int) (layoutParams.right - layoutParams.left);
-            layoutParams.height = (int) (layoutParams.bottom - layoutParams.top);
-
-            //            child.measure(MeasureSpec.makeMeasureSpec(layoutParams.width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(layoutParams.height, MeasureSpec.EXACTLY));
+            layoutParams.width = (int) Math.ceil(layoutParams.right - layoutParams.left);
+            layoutParams.height = (int) Math.ceil(layoutParams.bottom - layoutParams.top);
             child.setLayoutParams(layoutParams);
+
+            if (tempLeft != layoutParams.left || tempRight != layoutParams.right || tempTop != layoutParams.top || tempBottom != layoutParams.bottom) {
+                child.measure(MeasureSpec.makeMeasureSpec(layoutParams.width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(layoutParams.height, MeasureSpec.EXACTLY));
+            }
         }
     }
 
@@ -735,7 +741,6 @@ public class DependentLayout extends ViewGroup {
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
             LayoutParams layoutParams = (LayoutParams) child.getLayoutParams();
-            //            child.setPadding(layoutParams.paddingLeft, layoutParams.paddingTop, layoutParams.paddingRight, layoutParams.paddingBottom);
             child.layout((int) layoutParams.left, (int) layoutParams.top, (int) layoutParams.right, (int) layoutParams.bottom);
         }
     }
