@@ -401,16 +401,17 @@ public class DependentLayout extends ViewGroup {
             }
 
             float tempLeft = getPaddingLeft() + layoutParams.marginLeft;
-            float tempRight = layoutParams.left + child.getMeasuredWidth();
+            float tempRight = tempLeft + child.getMeasuredWidth();
             layoutParams.left = tempLeft;
             if (tempRight > parentWidth - layoutParams.marginRight) {
                 layoutParams.right = parentWidth - layoutParams.marginRight;
             } else {
                 layoutParams.right = tempRight;
             }
+            tempRight = layoutParams.right;
 
             float tempTop = getPaddingTop() + layoutParams.marginTop;
-            float tempBottom = layoutParams.top + child.getMeasuredHeight();
+            float tempBottom = tempTop + child.getMeasuredHeight();
 
             layoutParams.top = tempTop;
             if (tempBottom > parentHeight - layoutParams.marginBottom) {
@@ -418,6 +419,7 @@ public class DependentLayout extends ViewGroup {
             } else {
                 layoutParams.bottom = tempBottom;
             }
+            tempBottom = layoutParams.bottom;
 
 
             // dependencies
@@ -658,7 +660,7 @@ public class DependentLayout extends ViewGroup {
             layoutParams.height = (int) Math.ceil(layoutParams.bottom - layoutParams.top);
             child.setLayoutParams(layoutParams);
 
-            if (tempLeft != layoutParams.left || tempRight != layoutParams.right || tempTop != layoutParams.top || tempBottom != layoutParams.bottom) {
+            if (Math.ceil(tempRight - tempLeft) != layoutParams.width || Math.ceil(tempBottom - tempTop) != layoutParams.height) {
                 child.measure(MeasureSpec.makeMeasureSpec(layoutParams.width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(layoutParams.height, MeasureSpec.EXACTLY));
             }
         }
