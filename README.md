@@ -191,7 +191,7 @@ DependentLayoutConfig.getInstance(this)
 
 * **关于演示图中的偏差，由于TextView字体问题，TextView的字体绘制可见下图**
 
-[![](/picture/text_measure.png)](https://github.com/Brook007/DependentLayout)
+[![](/picture/android_text_measure.png)](https://github.com/Brook007/DependentLayout)
 
 实际的情况可以看上面的效果预览图中最后一图中的最右边的开启了布局边界的部分，可以验证这个说法
 
