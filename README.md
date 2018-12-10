@@ -203,7 +203,7 @@ DependentLayoutConfig.getInstance(this)
 
 Email:brook999999@qq.com
 
-QQ群交流：651080648 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=f91d47f1f3b88cb1cf2915f3ac4fc8c9e2fa77f964c8f81128ca77b095387b52"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="Android交流反馈群" title="Android交流反馈群"></a>
+QQ群交流：651080648 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=f91d47f1f3b88cb1cf2915f3ac4fc8c9e2fa77f964c8f81128ca77b095387b52"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="Android交流反馈群" title="Android交流反馈群"></a>
 
 ## 关于屏幕适配的前辈方案
 
