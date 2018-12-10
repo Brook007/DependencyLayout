@@ -197,7 +197,7 @@ DependentLayoutConfig.getInstance(this)
 
 ## 更新预告
  - ~~添加TextView字体的支持~~
-- 修复BUG
+- 代码优化与BUG修复
 
 ## 联系作者
 
