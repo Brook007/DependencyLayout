@@ -23,7 +23,7 @@ allprojects {
 然后在需要使用的模块的build.gradle中添加以下代码
 ```groovy
 dependencies {
-    implementation 'com.github.Brook007:DependentLayout:1.0.2'
+    implementation 'com.github.Brook007:DependentLayout:1.0.3'
 }
 ```
 
@@ -179,12 +179,14 @@ h->height 高度
 实际的情况可以看上面的效果预览图中最后一图中的最右边的开启了布局边界的部分，可以验证这个说法
 
 ## 更新预告
-- 添加TextView字体的支持
+ - ~~添加TextView字体的支持~~
 - 修复BUG
 
 ## 联系作者
 
 Email:brook999999@qq.com
+
+QQ群交流：651080648 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=f91d47f1f3b88cb1cf2915f3ac4fc8c9e2fa77f964c8f81128ca77b095387b52"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="Android交流反馈群" title="Android交流反馈群"></a>
 
 ## 关于屏幕适配的前辈方案
 

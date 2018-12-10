@@ -27,6 +27,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.brook.app.android.supportlibrary.R;
+import com.brook.app.android.supportlibrary.adapter.ViewAdapter;
+import com.brook.app.android.supportlibrary.util.AttributeMap;
+import com.brook.app.android.supportlibrary.util.DependentLayoutConfig;
+import com.brook.app.android.supportlibrary.util.Metrics;
+import com.brook.app.android.supportlibrary.util.Util;
+
+import java.util.Map;
 
 
 /**
@@ -46,11 +53,6 @@ public class DependentLayout extends ViewGroup {
      */
 
     // 设计图的宽度
-    public static String sDesignWidth = "750";
-    // 设计图的高度
-    public static String sDesignHeight = "1344";
-
-    // 设计图的宽度
     private String mDesignWidth;
     // 设计图的高度
     private String mDesignHeight;
@@ -62,9 +64,9 @@ public class DependentLayout extends ViewGroup {
 
     //方向
     // 垂直方向
-    private final int VERTICAL = 0;
+    public static final int VERTICAL = 0;
     // 水平方向
-    private final int HORIZONTAL = 1;
+    public static final int HORIZONTAL = 1;
 
     // 左边距的设置参数
     private String paddingLeftSource;
@@ -98,6 +100,8 @@ public class DependentLayout extends ViewGroup {
     // 设置WarpContent时最大的高度
     private float maxHeight;
 
+    private Metrics metrics;
+
     public DependentLayout(Context context) {
         this(context, null);
     }
@@ -116,17 +120,19 @@ public class DependentLayout extends ViewGroup {
         screenWidth = metrics.widthPixels;
         screenHeight = metrics.heightPixels;
 
+        this.metrics = new Metrics();
+
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DependentLayout);
             String designWidth = typedArray.getString(R.styleable.DependentLayout_designWidth);
             if (designWidth == null) {
-                mDesignWidth = sDesignWidth;
+                mDesignWidth = DependentLayoutConfig.getInstance(getContext()).getDesignWidth();
             } else {
                 mDesignWidth = designWidth;
             }
             String designHeight = typedArray.getString(R.styleable.DependentLayout_designHeight);
             if (designHeight == null) {
-                mDesignHeight = sDesignHeight;
+                mDesignHeight = DependentLayoutConfig.getInstance(getContext()).getDesignHeight();
             } else {
                 mDesignHeight = designHeight;
             }
@@ -180,28 +186,35 @@ public class DependentLayout extends ViewGroup {
 
 
         if (paddingLeftSource != null) {
-            paddingLeft = (int) calculation(paddingLeftSource, mDesignWidth, mDesignHeight, this, this, HORIZONTAL);
+            paddingLeft = (int) Util.calculation(paddingLeftSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
         } else {
             paddingLeft = (int) systemPaddingLeft;
         }
 
         if (paddingTopSource != null) {
-            paddingTop = (int) calculation(paddingTopSource, mDesignWidth, mDesignHeight, this, this, HORIZONTAL);
+            paddingTop = (int) Util.calculation(paddingTopSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
         } else {
             paddingTop = (int) systemPaddingTop;
         }
 
         if (paddingRightSource != null) {
-            paddingRight = (int) calculation(paddingRightSource, mDesignWidth, mDesignHeight, this, this, HORIZONTAL);
+            paddingRight = (int) Util.calculation(paddingRightSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
         } else {
             paddingRight = (int) systemPaddingRight;
         }
 
         if (paddingBottomSource != null) {
-            paddingBottom = (int) calculation(paddingBottomSource, mDesignWidth, mDesignHeight, this, this, HORIZONTAL);
+            paddingBottom = (int) Util.calculation(paddingBottomSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
         } else {
             paddingBottom = (int) systemPaddingBottom;
         }
+
+        metrics.parentDesignWidth = mDesignWidth;
+        metrics.parentDesignHeight = mDesignHeight;
+        metrics.parentHeight = getMeasuredHeight();
+        metrics.parentWidth = getMeasuredWidth();
+        metrics.screenWidth = screenWidth;
+        metrics.screenHeight = screenHeight;
 
         setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
@@ -211,12 +224,10 @@ public class DependentLayout extends ViewGroup {
             // 宽度warp_content， 高度必须指定
             int widthMakeMeasureSpec = MeasureSpec.makeMeasureSpec((int) (maxWidth + getPaddingRight()), MeasureSpec.EXACTLY);
             this.setMeasuredDimension(widthMakeMeasureSpec, heightMeasureSpec);
-            //            measureChildren(widthMakeMeasureSpec, heightMeasureSpec);
         } else if (heightMode != MeasureSpec.EXACTLY) {
             // 高度warp_content， 宽度必须指定
             int heightMakeMeasureSpec = MeasureSpec.makeMeasureSpec((int) (maxHeight + getPaddingBottom()), MeasureSpec.EXACTLY);
             this.setMeasuredDimension(widthMeasureSpec, heightMakeMeasureSpec);
-            //            measureChildren(widthMeasureSpec, heightMeasureSpec);
         }
     }
 
@@ -298,7 +309,7 @@ public class DependentLayout extends ViewGroup {
                     }
                     child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
                     // 计算高度
-                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
                     //                    child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
                 } else {
                     if (layoutParams.selfHeight == null) {
@@ -313,7 +324,7 @@ public class DependentLayout extends ViewGroup {
                         }
                         child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
                         // 计算高度
-                        layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                        layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                         //                    child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
                     } else {
                         // 指定了自定义宽高 layoutParams.selfHeight != null
@@ -322,18 +333,18 @@ public class DependentLayout extends ViewGroup {
                                 // ERROR，不能互相依赖自身的宽高
                                 throw new IllegalArgumentException("参数异常");
                             } else {
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
                                 child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
-                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                             }
                         } else {
                             if (layoutParams.selfHeight.endsWith("%mw")) {
-                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                                 child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
                             } else {
-                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
                             }
                         }
                     }
@@ -342,55 +353,64 @@ public class DependentLayout extends ViewGroup {
 
             // Padding
             if (layoutParams.paddingLeftSource != null) {
-                layoutParams.paddingLeft = (int) calculation(layoutParams.paddingLeftSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+                layoutParams.paddingLeft = (int) Util.calculation(layoutParams.paddingLeftSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.paddingLeft = (int) layoutParams.systemPaddingLeft;
             }
 
             if (layoutParams.paddingTopSource != null) {
-                layoutParams.paddingTop = (int) calculation(layoutParams.paddingTopSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+                layoutParams.paddingTop = (int) Util.calculation(layoutParams.paddingTopSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.paddingTop = (int) layoutParams.systemPaddingTop;
             }
 
             if (layoutParams.paddingRightSource != null) {
-                layoutParams.paddingRight = (int) calculation(layoutParams.paddingRightSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+                layoutParams.paddingRight = (int) Util.calculation(layoutParams.paddingRightSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.paddingRight = (int) layoutParams.systemPaddingRight;
             }
 
             if (layoutParams.paddingBottomSource != null) {
-                layoutParams.paddingBottom = (int) calculation(layoutParams.paddingBottomSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+                layoutParams.paddingBottom = (int) Util.calculation(layoutParams.paddingBottomSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.paddingBottom = (int) layoutParams.systemPaddingBottom;
             }
 
             child.setPadding(layoutParams.paddingLeft, layoutParams.paddingTop, layoutParams.paddingRight, layoutParams.paddingBottom);
 
+            Map<Class<? extends View>, ViewAdapter> viewAdapterMap = DependentLayoutConfig.getInstance(getContext()).getViewAdapterMap();
+
+            for (Map.Entry<Class<? extends View>, ViewAdapter> next : viewAdapterMap.entrySet()) {
+                if (next.getKey().isInstance(child)) {
+                    ViewAdapter value = next.getValue();
+                    value.convert(getContext(), child, layoutParams.attrs, metrics);
+                }
+            }
+
             child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
 
 
             // Margin
             if (layoutParams.marginLeftSource != null) {
-                layoutParams.marginLeft = calculation(layoutParams.marginLeftSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+                layoutParams.marginLeft = Util.calculation(layoutParams.marginLeftSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.marginLeft = layoutParams.systemMarginLeft;
             }
 
             if (layoutParams.marginTopSource != null) {
-                layoutParams.marginTop = calculation(layoutParams.marginTopSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+                layoutParams.marginTop = Util.calculation(layoutParams.marginTopSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.marginTop = layoutParams.systemMarginTop;
             }
 
             if (layoutParams.marginRightSource != null) {
-                layoutParams.marginRight = calculation(layoutParams.marginRightSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+                layoutParams.marginRight = Util.calculation(layoutParams.marginRightSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.marginRight = layoutParams.systemMarginRight;
             }
 
             if (layoutParams.marginBottomSource != null) {
-                layoutParams.marginBottom = calculation(layoutParams.marginBottomSource, mDesignWidth, mDesignHeight, this, child, HORIZONTAL);
+                layoutParams.marginBottom = Util.calculation(layoutParams.marginBottomSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL);
             } else {
                 layoutParams.marginBottom = layoutParams.systemMarginBottom;
             }
@@ -660,81 +680,11 @@ public class DependentLayout extends ViewGroup {
             layoutParams.height = (int) Math.ceil(layoutParams.bottom - layoutParams.top);
             child.setLayoutParams(layoutParams);
 
+
             if (Math.ceil(tempRight - tempLeft) != layoutParams.width || Math.ceil(tempBottom - tempTop) != layoutParams.height) {
                 child.measure(MeasureSpec.makeMeasureSpec(layoutParams.width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(layoutParams.height, MeasureSpec.EXACTLY));
             }
         }
-    }
-
-    /**
-     * 仅支持xx%sw,xx%sh,xx%pw,xx%ph,xx%mw,xx%mh
-     * xx%sw（xx,xxdp,xxpx,xxdip）
-     * xx%sh
-     * xx%pw
-     * xx%ph
-     * xx%mw
-     * xx%mh
-     */
-    private float calculation(String source, String pdw, String pdh, View parent, View child, int orientation) {
-        float size = 0;
-
-        float sw = screenWidth;
-        float sh = screenHeight;
-        float pw = parent.getMeasuredWidth();
-        float ph = parent.getMeasuredHeight();
-        float mw = child.getMeasuredWidth();
-        float mh = child.getMeasuredHeight();
-
-        if (source.endsWith("%sw")) {
-            size = Util.getValueToFloat(source) / 100F * sw;
-        } else if (source.endsWith("%sh")) {
-            size = Util.getValueToFloat(source) / 100F * sh;
-        } else if (source.endsWith("%pw")) {
-            size = Util.getValueToFloat(source) / 100F * pw;
-        } else if (source.endsWith("%ph")) {
-            size = Util.getValueToFloat(source) / 100F * ph;
-        } else if (source.endsWith("%mw")) {
-            size = Util.getValueToFloat(source) / 100F * mw;
-        } else if (source.endsWith("%mh")) {
-            size = Util.getValueToFloat(source) / 100F * mh;
-        } else if (source.endsWith("px")) {
-            if (orientation == VERTICAL) {
-                if (pdh.endsWith("px")) {
-                    size = ph / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
-                } else if (pdh.endsWith("dp") || pdh.endsWith("dip")) {
-                    size = ph / Util.dp2px(getContext(), Util.getValueToFloat(pdh)) * Util.getValueToFloat(source);
-                }
-            } else {
-                if (pdw.endsWith("px")) {
-                    size = pw / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
-                } else if (pdw.endsWith("dp") || pdw.endsWith("dip")) {
-                    size = pw / Util.dp2px(getContext(), Util.getValueToFloat(pdw)) * Util.getValueToFloat(source);
-                }
-            }
-        } else if (source.endsWith("dp") || source.endsWith("dip")) {
-            if (orientation == VERTICAL) {
-                if (pdh.endsWith("px")) {
-                    size = ph / Util.getValueToFloat(pdh) * Util.dp2px(getContext(), Util.getValueToFloat(source));
-                } else if (pdh.endsWith("dp") || pdh.endsWith("dip")) {
-                    size = ph / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
-                }
-            } else {
-                if (pdw.endsWith("px")) {
-                    size = pw / Util.getValueToFloat(pdw) * Util.dp2px(getContext(), Util.getValueToFloat(source));
-                } else if (pdw.endsWith("dp") || pdw.endsWith("dip")) {
-                    size = pw / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
-                }
-            }
-        } else if (source.matches("^\\d+$")) {
-            if (orientation == VERTICAL) {
-                size = ph / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
-            } else {
-                size = pw / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
-            }
-        } else {
-            throw new IllegalArgumentException("参数错误");
-        }
-        return size;
     }
 
     @Override
@@ -847,6 +797,7 @@ public class DependentLayout extends ViewGroup {
         private float systemWidth;
         private float systemHeight;
 
+        private AttributeMap attrs;
 
         public LayoutParams(int width, int height) {
             super(width, height);
@@ -854,6 +805,9 @@ public class DependentLayout extends ViewGroup {
 
         public LayoutParams(Context context, AttributeSet attrs) {
             super(context, attrs);
+
+            this.attrs = new AttributeMap(attrs);
+
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DependentLayout_Layout);
 
             alignParentLeft = typedArray.getBoolean(R.styleable.DependentLayout_Layout_alignParentLeft, false);
@@ -896,7 +850,6 @@ public class DependentLayout extends ViewGroup {
 
             selfWidth = typedArray.getString(R.styleable.DependentLayout_Layout_selfWidth);
             selfHeight = typedArray.getString(R.styleable.DependentLayout_Layout_selfHeight);
-
 
             systemWidth = calculationSystem(typedArray, R.styleable.DependentLayout_Layout_android_layout_width, context.getResources().getDisplayMetrics());
             systemHeight = calculationSystem(typedArray, R.styleable.DependentLayout_Layout_android_layout_height, context.getResources().getDisplayMetrics());

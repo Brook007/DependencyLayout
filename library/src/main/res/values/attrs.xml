@@ -105,12 +105,5 @@
         <attr name="android:paddingRight" />
         <attr name="android:paddingBottom" />
 
-        <!--1、相对于某个View的宽度-->
-        <!--2、相对于某个View的高度-->
-        <!--3、相对于自身的宽度-->
-        <!--4、相对于自身的高度-->
-        <!--5、相对于父View的宽度-->
-        <!--6、相对于父View的宽度-->
-
     </declare-styleable>
 </resources>
