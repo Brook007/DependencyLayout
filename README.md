@@ -31,7 +31,11 @@ dependencies {
 
 在实例化DependentLayout之前加入以下代码
 ```java
-DependentLayoutConfig.getInstance(this).setDesignWidth("设计图中的宽度,750px").setDesignHeight("设计图中高度,如1294px");
+DependentLayoutConfig.getInstance(this)
+    // 设计图中的宽度
+    .setDesignWidth("750px")
+    // 设计图中高度
+    .setDesignHeight("1294px");
 ```
 也可以在XML布局文件中配置
 ```xml
