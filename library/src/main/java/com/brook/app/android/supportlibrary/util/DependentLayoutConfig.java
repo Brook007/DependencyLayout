@@ -41,22 +41,31 @@ public class DependentLayoutConfig {
         return designWidth;
     }
 
-    public void setDesignWidth(String designWidth) {
+    public DependentLayoutConfig setDesignWidth(String designWidth) {
         this.designWidth = designWidth;
+        return this;
     }
 
     public String getDesignHeight() {
         return designHeight;
     }
 
-    public void setDesignHeight(String designHeight) {
+    public DependentLayoutConfig setDesignHeight(String designHeight) {
         this.designHeight = designHeight;
+        return this;
     }
 
     private Map<Class<? extends View>, ViewAdapter> viewAdapterMap = new HashMap();
 
-    public void addViewAdapterHandler(Class<? extends View> target, ViewAdapter viewAdapter) {
+    /**
+     *
+     * @param target 需要是配的View的Class对象
+     * @param viewAdapter 实现了ViewAdapter接口的实现类
+     * @return
+     */
+    public DependentLayoutConfig addViewAdapterHandler(Class<? extends View> target, ViewAdapter viewAdapter) {
         viewAdapterMap.put(target, viewAdapter);
+        return this;
     }
 
     public Map<Class<? extends View>, ViewAdapter> getViewAdapterMap() {

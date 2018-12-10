@@ -31,8 +31,7 @@ dependencies {
 
 在实例化DependentLayout之前加入以下代码
 ```java
-DependentLayout.sDesignWidth = "设计图中的宽度,750px"
-DependentLayout.sDesignHeight = "设计图中高度,如1294px"
+DependentLayoutConfig.getInstance(this).setDesignWidth("设计图中的宽度,750px").setDesignHeight("设计图中高度,如1294px");
 ```
 也可以在XML布局文件中配置
 ```xml
@@ -163,6 +162,20 @@ h->height 高度
 | xxdp|
 | xxpx|
 | xx  | 与设计图单位自动匹配 |
+
+### 第三方View属性的适配
+
+有时我们可能需要对一些第三方的View的属性进行适配我们需要实现[ViewAdapter.java](https://github.com/Brook007/DependentLayout/blob/master/library/src/main/java/com/brook/app/android/supportlibrary/adapter/ViewAdapter.java)接口
+
+默认提供了一个TextView字体大小适配的实现类[TextViewImpl](https://github.com/Brook007/DependentLayout/blob/master/library/src/main/java/com/brook/app/android/supportlibrary/adapter/TextViewImpl.java)
+
+实现了接口后，需要添加到注册到DependentLayoutConfig类中，使用一下代码注册适配类
+```java
+DependentLayoutConfig.getInstance(this)
+    /*xxxxx*/
+    .addViewAdapterHandler(TextView.class, new TextViewImpl());
+```
+
 
 ### 注意事项
 

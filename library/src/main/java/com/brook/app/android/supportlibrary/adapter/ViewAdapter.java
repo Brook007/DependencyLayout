@@ -17,10 +17,10 @@ public interface ViewAdapter<T extends View> {
     /**
      * View的属性适配
      *
-     * @param context
-     * @param view
-     * @param attr
-     * @param metrics
+     * @param context context对象
+     * @param view    需要适配的View的实例
+     * @param attr    XML配置的属性
+     * @param metrics 配置信息
      */
     void convert(Context context, T view, AttributeMap attr, Metrics metrics);
 }

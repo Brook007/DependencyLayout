@@ -20,6 +20,7 @@ public class TextViewImpl implements ViewAdapter<TextView> {
 
     @Override
     public void convert(Context context, TextView view, AttributeMap attr, Metrics metrics) {
+        // 获取XML中的属性原始值，字符串形式，大小写敏感
         String textSize = attr.getString("textSize");
         if (textSize != null) {
             String value = Util.getValue(textSize);
