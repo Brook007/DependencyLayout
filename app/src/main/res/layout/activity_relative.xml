@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:padding="6dp"
+        android:src="@mipmap/ic_close" />
+
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/close"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:background="@null"
+        android:text="手机验证登录"
+        android:textColor="#333333"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/hint"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginRight="42dp"
+        android:layout_toRightOf="@id/rect"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="请输入手机号"
+        android:inputType="number"
+        android:maxLength="11"
+        android:paddingRight="15dp"
+        android:textColorHint="#999999"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/rect"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignTop="@id/phone"
+        android:layout_alignBottom="@id/phone"
+        android:layout_marginLeft="42dp"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:text="+86"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/phone"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:background="#cccccc" />
+
+    <TextView
+        android:id="@+id/check_code"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@+id/line1"
+        android:layout_marginLeft="42dp"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:text="验证码"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/code"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:background="#cccccc" />
+
+
+    <EditText
+        android:id="@+id/code"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@+id/phone"
+        android:layout_alignStart="@+id/phone"
+        android:layout_alignLeft="@+id/phone"
+        android:layout_toStartOf="@+id/sms_layout"
+        android:layout_toLeftOf="@+id/sms_layout"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="请输入验证码"
+        android:inputType="number"
+        android:maxLength="6"
+        android:paddingRight="23dp"
+        android:textColorHint="#999999"
+        android:textSize="14sp" />
+
+
+    <FrameLayout
+        android:id="@+id/sms_layout"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/line2"
+        android:layout_below="@id/line1"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="42dp"
+        android:background="@null">
+
+        <TextView
+            android:id="@+id/get_check_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line1"
+            android:layout_gravity="center|right"
+            android:background="@drawable/selector_43ac43_cccccc"
+            android:clickable="true"
+            android:enabled="false"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="获取验证码"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line2"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginRight="42dp"
+        android:background="@drawable/selector_43ac43_cccccc"
+        android:clickable="true"
+        android:enabled="false"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="9dp"
+        android:text="验证并登录"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submit"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:text="进入使用代表你已经同意《用户协议》"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:id="@+id/wechat_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/hint"
+        android:layout_alignLeft="@+id/hint"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:background="@null"
+        android:drawableTop="@mipmap/ic_wechat"
+        android:drawablePadding="5dp"
+        android:text="微信登录" />
+
+    <TextView
+        android:id="@+id/qq_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/wechat_login"
+        android:layout_alignEnd="@+id/hint"
+        android:layout_alignRight="@+id/hint"
+        android:background="@null"
+        android:drawableTop="@mipmap/ic_qq"
+        android:drawablePadding="5dp"
+        android:text="QQ登录" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/wechat_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginBottom="20dp"
+        android:background="@null">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="使用第三方登录"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="1px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="9dp"
+            android:layout_toLeftOf="@id/textView"
+            android:background="#cccccc" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="9dp"
+            android:layout_toRightOf="@id/textView"
+            android:background="#cccccc" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

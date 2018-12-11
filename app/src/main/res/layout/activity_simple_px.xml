@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.brook.app.android.supportlibrary.view.DependentLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     app:designHeight="1294px"
-    app:designWidth="750px"
-    tools:context="com.brook.app.android.SimpleActivity">
+    app:designWidth="750px">
 
     <ImageView
         android:id="@+id/close"

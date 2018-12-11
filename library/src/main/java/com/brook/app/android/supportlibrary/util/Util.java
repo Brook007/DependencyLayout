@@ -38,8 +38,9 @@ public class Util {
         sContext = context.getApplicationContext();
     }
 
+    private static Pattern pattern = Pattern.compile("(^-\\d+\\.\\d+)|(^\\d+\\.\\d+)|(^\\d+)|(^-\\d+)");
+
     public static String getValue(String text) {
-        Pattern pattern = Pattern.compile("(^-\\d+\\.\\d+)|(^\\d+\\.\\d+)|(^\\d+)|(^-\\d+)");
         Matcher matcher = pattern.matcher(text);
         if (matcher.find()) {
             return matcher.group();
@@ -59,56 +60,56 @@ public class Util {
      */
     public static float calculation(String source, String pdw, String pdh, float screenWidth, float screenHeight, View parent, View child, int orientation) {
         float size = 0;
-        float pw = parent.getMeasuredWidth();
-        float ph = parent.getMeasuredHeight();
-        float mw = child.getMeasuredWidth();
-        float mh = child.getMeasuredHeight();
+        float parentWidth = parent.getMeasuredWidth();
+        float parentHeight = parent.getMeasuredHeight();
+        float myWidth = child.getMeasuredWidth();
+        float myHeight = child.getMeasuredHeight();
 
         if (source.endsWith("%sw")) {
             size = Util.getValueToFloat(source) / 100F * screenWidth;
         } else if (source.endsWith("%sh")) {
             size = Util.getValueToFloat(source) / 100F * screenHeight;
         } else if (source.endsWith("%pw")) {
-            size = Util.getValueToFloat(source) / 100F * pw;
+            size = Util.getValueToFloat(source) / 100F * parentWidth;
         } else if (source.endsWith("%ph")) {
-            size = Util.getValueToFloat(source) / 100F * ph;
+            size = Util.getValueToFloat(source) / 100F * parentHeight;
         } else if (source.endsWith("%mw")) {
-            size = Util.getValueToFloat(source) / 100F * mw;
+            size = Util.getValueToFloat(source) / 100F * myWidth;
         } else if (source.endsWith("%mh")) {
-            size = Util.getValueToFloat(source) / 100F * mh;
+            size = Util.getValueToFloat(source) / 100F * myHeight;
         } else if (source.endsWith("px")) {
             if (orientation == DependentLayout.VERTICAL) {
                 if (pdh.endsWith("px")) {
-                    size = ph / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
+                    size = parentHeight / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
                 } else if (pdh.endsWith("dp") || pdh.endsWith("dip")) {
-                    size = ph / Util.dp2px(Util.getValueToFloat(pdh)) * Util.getValueToFloat(source);
+                    size = parentHeight / Util.dp2px(Util.getValueToFloat(pdh)) * Util.getValueToFloat(source);
                 }
             } else {
                 if (pdw.endsWith("px")) {
-                    size = pw / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
+                    size = parentWidth / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
                 } else if (pdw.endsWith("dp") || pdw.endsWith("dip")) {
-                    size = pw / Util.dp2px(Util.getValueToFloat(pdw)) * Util.getValueToFloat(source);
+                    size = parentWidth / Util.dp2px(Util.getValueToFloat(pdw)) * Util.getValueToFloat(source);
                 }
             }
         } else if (source.endsWith("dp") || source.endsWith("dip")) {
             if (orientation == DependentLayout.VERTICAL) {
                 if (pdh.endsWith("px")) {
-                    size = ph / Util.getValueToFloat(pdh) * Util.dp2px(Util.getValueToFloat(source));
+                    size = parentHeight / Util.getValueToFloat(pdh) * Util.dp2px(Util.getValueToFloat(source));
                 } else if (pdh.endsWith("dp") || pdh.endsWith("dip")) {
-                    size = ph / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
+                    size = parentHeight / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
                 }
             } else {
                 if (pdw.endsWith("px")) {
-                    size = pw / Util.getValueToFloat(pdw) * Util.dp2px(Util.getValueToFloat(source));
+                    size = parentWidth / Util.getValueToFloat(pdw) * Util.dp2px(Util.getValueToFloat(source));
                 } else if (pdw.endsWith("dp") || pdw.endsWith("dip")) {
-                    size = pw / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
+                    size = parentWidth / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
                 }
             }
         } else if (source.matches("^\\d+$")) {
             if (orientation == DependentLayout.VERTICAL) {
-                size = ph / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
+                size = parentHeight / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
             } else {
-                size = pw / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
+                size = parentWidth / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
             }
         } else {
             throw new IllegalArgumentException("参数错误");
