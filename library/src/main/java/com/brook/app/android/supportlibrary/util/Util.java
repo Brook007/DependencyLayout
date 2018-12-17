@@ -125,6 +125,14 @@ public class Util {
         }
     }
 
+    public static float toFloat(String text) {
+        try {
+            return Float.parseFloat(text);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
     public static String getText(TypedArray typedArray, @StyleableRes int index) {
         CharSequence temp = typedArray.getText(index);
         if (temp == null) {

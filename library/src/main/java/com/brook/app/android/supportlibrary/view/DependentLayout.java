@@ -513,6 +513,7 @@ public class DependentLayout extends ViewGroup {
                     layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
+
             // 在某个View水平中线的的上面
             if (layoutParams.alignCenterHorizontalTop > 0) {
                 View dependencies = findViewById(layoutParams.alignCenterHorizontalTop);
@@ -544,7 +545,6 @@ public class DependentLayout extends ViewGroup {
             // 水平属性
             if (layoutParams.alignParentLeft) {
                 layoutParams.left = getPaddingLeft() + layoutParams.marginLeft;
-                //                layoutParams.left = 0;
                 if (hasHorizontalAttr) {
                     layoutParams.right = layoutParams.left + child.getMeasuredWidth();
                 }
@@ -858,11 +858,6 @@ public class DependentLayout extends ViewGroup {
             systemMarginTop = typedArray.getDimension(R.styleable.DependentLayout_Layout_android_layout_marginTop, 0);
             systemMarginRight = typedArray.getDimension(R.styleable.DependentLayout_Layout_android_layout_marginRight, 0);
             systemMarginBottom = typedArray.getDimension(R.styleable.DependentLayout_Layout_android_layout_marginBottom, 0);
-
-            marginRightSource = typedArray.getString(R.styleable.DependentLayout_Layout_dependency_marginRight);
-            marginTopSource = typedArray.getString(R.styleable.DependentLayout_Layout_dependency_marginTop);
-            marginLeftSource = typedArray.getString(R.styleable.DependentLayout_Layout_dependency_marginLeft);
-            marginBottomSource = typedArray.getString(R.styleable.DependentLayout_Layout_dependency_marginBottom);
 
             // padding
             String dependencyPadding = typedArray.getString(R.styleable.DependentLayout_Layout_dependency_padding);

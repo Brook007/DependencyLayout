@@ -52,6 +52,7 @@
             android:onClick="click"
             android:text="margin_padding" />
 
+
     </LinearLayout>
 
 
