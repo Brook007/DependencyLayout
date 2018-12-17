@@ -48,8 +48,6 @@ app:designWidth="750px"
 ## 效果预览
 ### 下面是在几个分辨率屏幕适配的对比图(注意：示例图中的标题栏并未加入适配)
 
-<font color="#ff007f" size=6 face="微软雅黑">示例图中的标题栏并未加入适配</font>
-
 <b/>标准720P分辨率和1080P分辨率的对比
 
 [![](/picture/720_1280_AND_1080_1920.png)](https://github.com/Brook007/DependentLayout)
