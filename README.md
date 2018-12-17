@@ -46,7 +46,7 @@ app:designWidth="750px"
 当两个同时配置时，默认优先选择Xml中的配置，Demo中有一个简单的登录页面的实现，可以给大家一些参考[activity_simple.xml](https://github.com/Brook007/DependentLayout/blob/master/app/src/main/res/layout/activity_simple.xml)
 
 ## 效果预览
-### 下面是在几个分辨率屏幕适配的对比图
+### 下面是在几个分辨率屏幕适配的对比图(注意：示例图中的标题栏并未加入适配)
 
 <font color="#ff007f" size=6 face="微软雅黑">示例图中的标题栏并未加入适配</font>
 
