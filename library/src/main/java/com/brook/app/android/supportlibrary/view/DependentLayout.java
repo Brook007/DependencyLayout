@@ -307,9 +307,9 @@ public class DependentLayout extends ViewGroup {
                         // 指定了宽度值
                         layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
                     }
-                    child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
+                    //                    child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
                     // 计算高度
-                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                     //                    child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
                 } else {
                     if (layoutParams.selfHeight == null) {
@@ -322,7 +322,7 @@ public class DependentLayout extends ViewGroup {
                             // 指定了宽度值
                             layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
                         }
-                        child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
+                        //                        child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
                         // 计算高度
                         layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                         //                    child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
@@ -333,7 +333,7 @@ public class DependentLayout extends ViewGroup {
                                 // ERROR，不能互相依赖自身的宽高
                                 throw new IllegalArgumentException("参数异常");
                             } else {
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                                 child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
                                 layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                             }
@@ -341,10 +341,10 @@ public class DependentLayout extends ViewGroup {
                             if (layoutParams.selfHeight.endsWith("%mw")) {
                                 layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                                 child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                             } else {
                                 layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, VERTICAL), MeasureSpec.EXACTLY);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                             }
                         }
                     }
