@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.brook.app.android.MainActivity">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,7 +25,7 @@
         <activity android:name="com.brook.app.android.ToParentCenterActivity" />
         <activity
             android:name="com.brook.app.android.SimpleActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

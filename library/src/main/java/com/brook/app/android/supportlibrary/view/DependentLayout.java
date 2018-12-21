@@ -26,8 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.brook.app.android.supportlibrary.R;
 import com.brook.app.android.supportlibrary.adapter.ViewAdapter;
+import com.brook.app.android.supportlibrary.dependentlayout.R;
 import com.brook.app.android.supportlibrary.util.AttributeMap;
 import com.brook.app.android.supportlibrary.util.DependentLayoutConfig;
 import com.brook.app.android.supportlibrary.util.Metrics;
