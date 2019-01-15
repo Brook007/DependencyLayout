@@ -1,6 +1,5 @@
 package com.brook.app.android.supportlibrary.util;
 
-import android.content.Context;
 import android.view.View;
 
 import com.brook.app.android.supportlibrary.adapter.ViewAdapter;
@@ -17,25 +16,27 @@ public class DependentLayoutConfig {
 
     private static DependentLayoutConfig config;
 
-    private DependentLayoutConfig(Context context) {
-        Util.setContext(context);
+    // 设计图的宽度
+    private String designWidth = "750px";
+    // 设计图的高度
+    private String designHeight = "1294px";
+
+    private Map<Class<? extends View>, ViewAdapter> viewAdapterMap = new HashMap();
+
+    private DependentLayoutConfig() {
+
     }
 
-    public static DependentLayoutConfig getInstance(Context context) {
+    public static DependentLayoutConfig getInstance() {
         if (config == null) {
             synchronized (DependentLayoutConfig.class) {
                 if (config == null) {
-                    config = new DependentLayoutConfig(context);
+                    config = new DependentLayoutConfig();
                 }
             }
         }
         return config;
     }
-
-    // 设计图的宽度
-    private String designWidth = "750px";
-    // 设计图的高度
-    private String designHeight = "1294px";
 
     public String getDesignWidth() {
         return designWidth;
@@ -55,11 +56,8 @@ public class DependentLayoutConfig {
         return this;
     }
 
-    private Map<Class<? extends View>, ViewAdapter> viewAdapterMap = new HashMap();
-
     /**
-     *
-     * @param target 需要是配的View的Class对象
+     * @param target      需要是配的View的Class对象
      * @param viewAdapter 实现了ViewAdapter接口的实现类
      * @return
      */

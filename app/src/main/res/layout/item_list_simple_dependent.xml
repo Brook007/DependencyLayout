@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.brook.app.android.supportlibrary.view.DependentLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#dcdcdc"
+    android:orientation="vertical"
+    app:designHeight="1294px"
+    app:designWidth="750px">
+
+    <ImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用DependentLayout"
+        android:textColor="#333333"
+        android:textSize="14dp"
+        app:toRightOf="@id/user_avatar" />
+
+</com.brook.app.android.supportlibrary.view.DependentLayout>

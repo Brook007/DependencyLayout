@@ -122,17 +122,19 @@ public class DependentLayout extends ViewGroup {
 
         this.metrics = new Metrics();
 
+        Util.setContext(this.getContext());
+
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DependentLayout);
             String designWidth = typedArray.getString(R.styleable.DependentLayout_designWidth);
             if (designWidth == null) {
-                mDesignWidth = DependentLayoutConfig.getInstance(getContext()).getDesignWidth();
+                mDesignWidth = DependentLayoutConfig.getInstance().getDesignWidth();
             } else {
                 mDesignWidth = designWidth;
             }
             String designHeight = typedArray.getString(R.styleable.DependentLayout_designHeight);
             if (designHeight == null) {
-                mDesignHeight = DependentLayoutConfig.getInstance(getContext()).getDesignHeight();
+                mDesignHeight = DependentLayoutConfig.getInstance().getDesignHeight();
             } else {
                 mDesignHeight = designHeight;
             }
@@ -183,7 +185,6 @@ public class DependentLayout extends ViewGroup {
             this.setMeasuredDimension(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY));
         }
-
 
         if (paddingLeftSource != null) {
             paddingLeft = (int) Util.calculation(paddingLeftSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
@@ -259,7 +260,7 @@ public class DependentLayout extends ViewGroup {
                             layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
                         } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST);
+                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
                         } else {
                             // 高度设置了指定值
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
@@ -267,14 +268,14 @@ public class DependentLayout extends ViewGroup {
                         }
                     } else if (layoutParams.systemWidth == ViewGroup.LayoutParams.WRAP_CONTENT) {
                         if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST);
+                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
                             layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
                         } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST);
+                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
+                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
                         } else {
                             // 高度设置了指定值
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST);
+                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
                             layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
                         }
                     } else {
@@ -284,7 +285,7 @@ public class DependentLayout extends ViewGroup {
                             layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
                         } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST);
+                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
                         } else {
                             // 高度和宽度设置了指定值
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
@@ -302,7 +303,7 @@ public class DependentLayout extends ViewGroup {
                         if (layoutParams.systemWidth == ViewGroup.LayoutParams.MATCH_PARENT) {
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
                         } else if (layoutParams.systemWidth == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST);
+                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
                         } else {
                             // 指定了宽度值
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
@@ -317,7 +318,7 @@ public class DependentLayout extends ViewGroup {
                             if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
                                 layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
                             } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST);
+                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
                             } else {
                                 // 指定了宽度值
                                 layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
@@ -334,13 +335,13 @@ public class DependentLayout extends ViewGroup {
                                     throw new IllegalArgumentException("参数异常");
                                 } else {
                                     layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                    child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
+                                    child.measure(MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
                                     layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                                 }
                             } else {
                                 if (layoutParams.selfHeight.endsWith("%mw")) {
                                     layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                    child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
+                                    child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST));
                                     layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                                 } else {
                                     layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
@@ -379,7 +380,7 @@ public class DependentLayout extends ViewGroup {
 
                 child.setPadding(layoutParams.paddingLeft, layoutParams.paddingTop, layoutParams.paddingRight, layoutParams.paddingBottom);
 
-                Map<Class<? extends View>, ViewAdapter> viewAdapterMap = DependentLayoutConfig.getInstance(getContext()).getViewAdapterMap();
+                Map<Class<? extends View>, ViewAdapter> viewAdapterMap = DependentLayoutConfig.getInstance().getViewAdapterMap();
 
                 for (Map.Entry<Class<? extends View>, ViewAdapter> next : viewAdapterMap.entrySet()) {
                     if (next.getKey().isInstance(child)) {
@@ -424,7 +425,7 @@ public class DependentLayout extends ViewGroup {
             float tempLeft = getPaddingLeft() + layoutParams.marginLeft;
             float tempRight = tempLeft + child.getMeasuredWidth();
             layoutParams.left = tempLeft;
-            if (tempRight > parentWidth - layoutParams.marginRight) {
+            if (parentWidth > 0 && tempRight > parentWidth - layoutParams.marginRight) {
                 layoutParams.right = parentWidth - layoutParams.marginRight;
             } else {
                 layoutParams.right = tempRight;
@@ -435,7 +436,7 @@ public class DependentLayout extends ViewGroup {
             float tempBottom = tempTop + child.getMeasuredHeight();
 
             layoutParams.top = tempTop;
-            if (tempBottom > parentHeight - layoutParams.marginBottom) {
+            if (parentHeight > 0 && tempBottom > parentHeight - layoutParams.marginBottom) {
                 layoutParams.bottom = parentHeight - layoutParams.marginBottom;
             } else {
                 layoutParams.bottom = tempBottom;

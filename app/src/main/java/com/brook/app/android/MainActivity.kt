@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             "to_Center".toLowerCase() -> startActivity(Intent(this, ToCenterActivity::class.java))
             "to_Parent_Center".toLowerCase() -> startActivity(Intent(this, ToParentCenterActivity::class.java))
             "simple".toLowerCase() -> startActivity(Intent(this, SimpleActivity::class.java))
+            "list_simple".toLowerCase() -> startActivity(Intent(this, ListSimpleActivity::class.java))
         }
     }
 }

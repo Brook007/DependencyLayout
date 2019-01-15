@@ -26,6 +26,7 @@
         <activity
             android:name="com.brook.app.android.SimpleActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name="com.brook.app.android.ListSimpleActivity" />
     </application>
 
 </manifest>

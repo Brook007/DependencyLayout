@@ -20,6 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="click"
+            android:text="list_simple" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="click"
             android:text="align_Parent" />
 
         <Button
