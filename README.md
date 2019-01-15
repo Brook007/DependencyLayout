@@ -31,7 +31,7 @@ dependencies {
 
 在实例化DependentLayout之前加入以下代码
 ```java
-DependentLayoutConfig.getInstance(this)
+DependentLayoutConfig.getInstance()
     // 设计图中的宽度
     .setDesignWidth("750px")
     // 设计图中高度
