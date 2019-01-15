@@ -2,7 +2,6 @@ package com.brook.app.android.supportlibrary.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.StyleableRes;
 import android.view.View;
 
 import com.brook.app.android.supportlibrary.view.DependentLayout;
@@ -133,7 +132,13 @@ public class Util {
         }
     }
 
-    public static String getText(TypedArray typedArray, @StyleableRes int index) {
+    /**
+     *
+     * @param typedArray
+     * @param index @StyleableRes
+     * @return
+     */
+    public static String getText(TypedArray typedArray, int index) {
         CharSequence temp = typedArray.getText(index);
         if (temp == null) {
             return null;
