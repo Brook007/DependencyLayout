@@ -23,7 +23,7 @@ class ListSimpleActivity : AppCompatActivity() {
         recyclerView.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
                 return if (viewType == 0) {
-                    DependencyLayoutHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_simple_dependent, parent, false))
+                    DependencyLayoutHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_simple_dependency, parent, false))
                 } else {
                     RelativeHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_simple_relative, parent, false))
                 }

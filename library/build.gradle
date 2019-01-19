@@ -1,9 +1,15 @@
 apply plugin: 'com.android.library'
 
-//这个跟Jcenter一样的插件
-apply plugin: 'com.github.dcendents.android-maven'
-//你的Github用户名替换一下
-group = 'com.brook.app.android'
+try {
+    rootProject.ext.android
+    println "无需插件"
+} catch(e) {
+    println "添加插件"
+    //这个跟Jcenter一样的插件
+    apply plugin: 'com.github.dcendents.android-maven'
+    //你的Github用户名替换一下，这里换不换都一样，被强制指定了
+    group = 'com.brook.app.android'
+}
 
 android {
     compileSdkVersion 27

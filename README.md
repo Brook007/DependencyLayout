@@ -23,7 +23,7 @@ allprojects {
 然后在需要使用的模块的build.gradle中添加以下代码
 ```groovy
 dependencies {
-    implementation 'com.github.Brook007:DependencyLayout:0.8.0'
+    implementation 'com.github.Brook007:DependencyLayout:1.0.0'
 }
 ```
 
@@ -197,7 +197,6 @@ DependencyLayoutConfig.getInstance(this)
 
 ## 更新预告
  - ~~添加TextView字体的支持~~
- - 居中属性的修复
  - 代码优化与其他BUG修复
 
 ## 联系作者

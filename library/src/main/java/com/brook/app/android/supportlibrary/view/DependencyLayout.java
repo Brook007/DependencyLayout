@@ -227,10 +227,30 @@ public class DependencyLayout extends ViewGroup {
             // 宽度warp_content， 高度必须指定
             int widthMakeMeasureSpec = MeasureSpec.makeMeasureSpec((int) (maxWidth + getPaddingRight()), MeasureSpec.EXACTLY);
             this.setMeasuredDimension(widthMakeMeasureSpec, heightMeasureSpec);
+
+            int childCount = getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View child = getChildAt(i);
+                LayoutParams layoutParams = (LayoutParams) child.getLayoutParams();
+                if (layoutParams.centerInParentHorizontal || layoutParams.centerInParent) {
+                    layoutParams.left = (getMeasuredWidth() - child.getMeasuredWidth()) / 2 + layoutParams.marginLeft;
+                    layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+                }
+            }
         } else if (heightMode != MeasureSpec.EXACTLY) {
             // 高度warp_content， 宽度必须指定
             int heightMakeMeasureSpec = MeasureSpec.makeMeasureSpec((int) (maxHeight + getPaddingBottom()), MeasureSpec.EXACTLY);
             this.setMeasuredDimension(widthMeasureSpec, heightMakeMeasureSpec);
+
+            int childCount = getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View child = getChildAt(i);
+                LayoutParams layoutParams = (LayoutParams) child.getLayoutParams();
+                if (layoutParams.centerInParentVertical || layoutParams.centerInParent) {
+                    layoutParams.top = (getMeasuredHeight() - child.getMeasuredHeight()) / 2 + layoutParams.marginTop;
+                    layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
+                }
+            }
         }
     }
 
