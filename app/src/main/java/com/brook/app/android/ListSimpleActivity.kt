@@ -8,8 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
-import com.brook.app.android.dependentlayout.R
+import com.brook.app.android.dependencylayout.R
 
 
 class ListSimpleActivity : AppCompatActivity() {
@@ -24,7 +23,7 @@ class ListSimpleActivity : AppCompatActivity() {
         recyclerView.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
                 return if (viewType == 0) {
-                    DependentLayoutHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_simple_dependent, parent, false))
+                    DependencyLayoutHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_simple_dependent, parent, false))
                 } else {
                     RelativeHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_simple_relative, parent, false))
                 }
@@ -33,7 +32,7 @@ class ListSimpleActivity : AppCompatActivity() {
             override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
                 val viewType = getItemViewType(position)
                 if (viewType == 0) {
-                    val viewHolder = holder as DependentLayoutHolder
+                    val viewHolder = holder as DependencyLayoutHolder
 
                 } else {
                     val relativeHolder = holder as RelativeHolder
@@ -58,7 +57,7 @@ class ListSimpleActivity : AppCompatActivity() {
                 var position = itemView.findViewById<TextView>(R.id.position)
             }
 
-            inner class DependentLayoutHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+            inner class DependencyLayoutHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         }
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }

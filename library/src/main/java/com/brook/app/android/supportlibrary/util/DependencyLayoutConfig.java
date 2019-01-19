@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2016-present, Brook007 Contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.brook.app.android.supportlibrary.util;
 
 import android.view.View;
@@ -10,11 +26,11 @@ import java.util.Map;
 /**
  * @author Brook
  * @time 2018/12/5 16:00
- * @target DependentLayout
+ * @target DependencyLayout
  */
-public class DependentLayoutConfig {
+public class DependencyLayoutConfig {
 
-    private static DependentLayoutConfig config;
+    private static DependencyLayoutConfig config;
 
     // 设计图的宽度
     private String designWidth = "750px";
@@ -23,15 +39,15 @@ public class DependentLayoutConfig {
 
     private Map<Class<? extends View>, ViewAdapter> viewAdapterMap = new HashMap();
 
-    private DependentLayoutConfig() {
+    private DependencyLayoutConfig() {
 
     }
 
-    public static DependentLayoutConfig getInstance() {
+    public static DependencyLayoutConfig getInstance() {
         if (config == null) {
-            synchronized (DependentLayoutConfig.class) {
+            synchronized (DependencyLayoutConfig.class) {
                 if (config == null) {
-                    config = new DependentLayoutConfig();
+                    config = new DependencyLayoutConfig();
                 }
             }
         }
@@ -42,7 +58,7 @@ public class DependentLayoutConfig {
         return designWidth;
     }
 
-    public DependentLayoutConfig setDesignWidth(String designWidth) {
+    public DependencyLayoutConfig setDesignWidth(String designWidth) {
         this.designWidth = designWidth;
         return this;
     }
@@ -51,7 +67,7 @@ public class DependentLayoutConfig {
         return designHeight;
     }
 
-    public DependentLayoutConfig setDesignHeight(String designHeight) {
+    public DependencyLayoutConfig setDesignHeight(String designHeight) {
         this.designHeight = designHeight;
         return this;
     }
@@ -61,7 +77,7 @@ public class DependentLayoutConfig {
      * @param viewAdapter 实现了ViewAdapter接口的实现类
      * @return
      */
-    public DependentLayoutConfig addViewAdapterHandler(Class<? extends View> target, ViewAdapter viewAdapter) {
+    public DependencyLayoutConfig addViewAdapterHandler(Class<? extends View> target, ViewAdapter viewAdapter) {
         viewAdapterMap.put(target, viewAdapter);
         return this;
     }

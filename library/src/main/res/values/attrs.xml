@@ -23,7 +23,7 @@
     <attr name="dependency_paddingBottom" format="string" />
 
 
-    <declare-styleable name="DependentLayout">
+    <declare-styleable name="DependencyLayout">
         <attr name="designWidth" format="string" />
         <attr name="designHeight" format="string" />
 
@@ -41,7 +41,7 @@
 
     </declare-styleable>
 
-    <declare-styleable name="DependentLayout_Layout">
+    <declare-styleable name="DependencyLayout_Layout">
 
         <attr name="alignParentLeft" format="boolean" />
         <attr name="alignParentTop" format="boolean" />
