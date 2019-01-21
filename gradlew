@@ -6,9 +6,9 @@
 ##
 ##############################################################################
 
-yes | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-28"
+#yes | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-28"
 
-yes | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;27.0.3"
+#yes | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;27.0.3"
 
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
