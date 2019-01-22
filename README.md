@@ -11,7 +11,14 @@
 
 ## 引入依赖
 ### Gradle方式--适合Android Studio用户
-在根项目的build.gradle中添加下面的代码
+
+#### 方式一：使用jcenter仓库，在build.gradle中添加（推荐）
+
+```groovy
+implementation 'com.brook.android:DependencyLayout:1.0.1'
+```
+
+#### 方式二：使用jetpack仓库，在根项目的build.gradle中添加下面的代码
 ```groovy
 allprojects {
     repositories {
@@ -19,7 +26,6 @@ allprojects {
     }
 }
 ```
-
 然后在需要使用的模块的build.gradle中添加以下代码
 ```groovy
 dependencies {

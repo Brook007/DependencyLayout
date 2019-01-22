@@ -4,11 +4,21 @@ try {
     rootProject.ext.android
     println "无需插件"
 } catch(e) {
+    apply plugin: 'com.novoda.bintray-release'
     println "添加插件"
     //这个跟Jcenter一样的插件
     apply plugin: 'com.github.dcendents.android-maven'
     //你的Github用户名替换一下，这里换不换都一样，被强制指定了
     group = 'com.brook.app.android'
+
+    publish {
+        userOrg = 'brook007'      //bintray注册的用户名
+        groupId = 'com.brook.android'         //compile引用时的第1部分groupId
+        artifactId = 'DependencyLayout'     //compile引用时的第2部分项目名
+        publishVersion = '1.0.1'    //compile引用时的第3部分版本号
+        desc = 'android layout'
+        website = 'https://github.com/Brook007/DependencyLayout'
+    }
 }
 
 android {
@@ -27,7 +37,26 @@ android {
     }
     productFlavors {
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
+
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    //加上这些
+    tasks.withType(Javadoc) {
+        options{ encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
+    }
+}
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
