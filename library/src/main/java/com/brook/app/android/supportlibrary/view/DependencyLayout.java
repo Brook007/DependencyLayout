@@ -332,10 +332,8 @@ public class DependencyLayout extends ViewGroup {
                             // 指定了宽度值
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
                         }
-                        //                    child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
                         // 计算高度
                         layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                        //                    child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
                     } else {
                         if (layoutParams.selfHeight == null) {
                             // 指定了自定义宽度，未指定高度
@@ -347,10 +345,8 @@ public class DependencyLayout extends ViewGroup {
                                 // 指定了宽度值
                                 layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
                             }
-                            //                        child.measure(MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
                             // 计算高度
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                            //                    child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
                         } else {
                             // 指定了自定义宽高 layoutParams.selfHeight != null
                             if (layoutParams.selfWidth.endsWith("%mh")) {
