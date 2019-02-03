@@ -21,13 +21,14 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@null"
         android:includeFontPadding="false"
         android:text="手机验证登录"
         android:textColor="#333333"
         android:textSize="48px"
         android:textStyle="bold"
+        android:gravity="center"
         app:belowTo="@id/close"
         app:centerInParentHorizontal="true"
         app:dependency_marginTop="102px" />

@@ -115,12 +115,6 @@ public class DependencyLayout extends ViewGroup {
     public DependencyLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display defaultDisplay = wm.getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        defaultDisplay.getMetrics(metrics);
-        screenWidth = metrics.widthPixels;
-        screenHeight = metrics.heightPixels;
 
         this.metrics = new Metrics();
 
@@ -160,6 +154,37 @@ public class DependencyLayout extends ViewGroup {
                 systemPaddingBottom = typedArray.getDimension(R.styleable.DependencyLayout_android_paddingBottom, 0);
             }
             typedArray.recycle();
+        }
+
+        WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        Display defaultDisplay = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        defaultDisplay.getMetrics(metrics);
+        if (metrics.widthPixels <= 0) {
+            String value = Util.getValue(mDesignWidth);
+            String unit = value.substring(value.length());
+            if ("dp".equals(unit) || "dip".equals(unit)) {
+                screenWidth = (int) Util.dp2px(Util.toFloat(value));
+            } else if ("px".equals(unit)) {
+                screenWidth = (int) Util.toFloat(value);
+            } else {
+                screenWidth = 1080;
+            }
+        } else {
+            screenWidth = metrics.widthPixels;
+        }
+        if (metrics.heightPixels <= 0) {
+            String value = Util.getValue(mDesignHeight);
+            String unit = value.substring(value.length());
+            if ("dp".equals(unit) || "dip".equals(unit)) {
+                screenHeight = (int) Util.dp2px(Util.toFloat(value));
+            } else if ("px".equals(unit)) {
+                screenHeight = (int) Util.toFloat(value);
+            } else {
+                screenHeight = 1920;
+            }
+        } else {
+            screenHeight = metrics.heightPixels;
         }
     }
 
