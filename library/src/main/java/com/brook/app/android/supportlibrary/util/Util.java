@@ -180,8 +180,8 @@ public class Util {
      * @param spVal
      * @return
      */
-    public static int sp2px(float spVal) {
+    public static float sp2px(float spVal) {
         final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spVal * fontScale + 0.5f);
+        return (spVal * fontScale + 0.5f);
     }
 }

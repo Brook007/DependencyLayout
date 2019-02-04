@@ -942,13 +942,16 @@ public class DependencyLayout extends ViewGroup {
         private float calculationSystem(TypedArray typedArray, int attr, DisplayMetrics displayMetrics) {
             String text = Util.getText(typedArray, attr);
             String value = Util.getValue(text);
-            String unit = text.substring(value.length(), text.length()).toLowerCase();
-            if ("dip".equals(unit)) {
-                return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, Float.valueOf(value), displayMetrics);
+            String unit = text.substring(value.length()).toLowerCase();
+            if ("dip".equals(unit) || "dp".equals(unit)) {
+                return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, Util.toFloat(value), displayMetrics);
             } else if ("px".endsWith(unit)) {
-                return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, Float.valueOf(value), displayMetrics);
+                return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, Util.toFloat(value), displayMetrics);
+            } else if ("sp".endsWith(unit)) {
+                return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, Util.toFloat(value), displayMetrics);
+            } else {
+                return Util.toFloat(value);
             }
-            return Float.valueOf(value);
         }
 
         /**
