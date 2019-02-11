@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.brook.app.android.supportlibrary.view.DependencyLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -70,6 +71,7 @@
         android:maxLines="1"
         android:singleLine="true"
         android:textColor="#333333"
+        android:textColorHint="#999999"
         android:textSize="30px"
         app:aboveTo="@id/phone_number_line"
         app:alignRight="@id/phone_number_line"
@@ -124,6 +126,7 @@
         android:maxLines="1"
         android:singleLine="true"
         android:textColor="#333333"
+        android:textColorHint="#999999"
         android:textSize="30px"
         app:alignLeft="@id/phone_number"
         app:belowTo="@id/phone_number_line"
