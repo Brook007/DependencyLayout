@@ -74,6 +74,10 @@ app:designWidth="750px"
 
 [![](/picture/comparison.png)](https://github.com/Brook007/DependencyLayout)
 
+这里附带了27款真机的运行效果图
+
+<a href="/picture/preview" alt="真机预览">真机预览</a>
+
 ### 示例下载
 
 <a href="/demo/demo.apk" download="Demo.apk" alt="Demo.apk">Demo.apk</a>
