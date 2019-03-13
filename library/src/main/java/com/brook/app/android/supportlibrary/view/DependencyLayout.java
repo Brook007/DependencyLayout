@@ -53,9 +53,9 @@ public class DependencyLayout extends ViewGroup {
      */
 
     // 设计图的宽度
-    private String mDesignWidth;
+    private LayoutParams.Attribute mDesignWidth;
     // 设计图的高度
-    private String mDesignHeight;
+    private LayoutParams.Attribute mDesignHeight;
 
     // 屏幕的宽度
     private int screenWidth;
@@ -69,13 +69,13 @@ public class DependencyLayout extends ViewGroup {
     public static final int HORIZONTAL = 1;
 
     // 左边距的设置参数
-    private String paddingLeftSource;
+    private LayoutParams.Attribute paddingLeftSource;
     // 上边距的设置参数
-    private String paddingTopSource;
+    private LayoutParams.Attribute paddingTopSource;
     // 右边距的设置参数
-    private String paddingRightSource;
+    private LayoutParams.Attribute paddingRightSource;
     // 下边距的设置参数
-    private String paddingBottomSource;
+    private LayoutParams.Attribute paddingBottomSource;
 
     // 系统左边距的值
     private float systemPaddingLeft;
@@ -124,24 +124,24 @@ public class DependencyLayout extends ViewGroup {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DependencyLayout);
             String designWidth = typedArray.getString(R.styleable.DependencyLayout_designWidth);
             if (designWidth == null) {
-                mDesignWidth = DependencyLayoutConfig.getInstance().getDesignWidth();
+                mDesignWidth = Util.unbox(DependencyLayoutConfig.getInstance().getDesignWidth());
             } else {
-                mDesignWidth = designWidth;
+                mDesignWidth = Util.unbox(designWidth);
             }
             String designHeight = typedArray.getString(R.styleable.DependencyLayout_designHeight);
             if (designHeight == null) {
-                mDesignHeight = DependencyLayoutConfig.getInstance().getDesignHeight();
+                mDesignHeight = Util.unbox(DependencyLayoutConfig.getInstance().getDesignHeight());
             } else {
-                mDesignHeight = designHeight;
+                mDesignHeight = Util.unbox(designHeight);
             }
             String padding = typedArray.getString(R.styleable.DependencyLayout_dependency_padding);
             if (padding != null) {
-                paddingLeftSource = paddingTopSource = paddingRightSource = paddingBottomSource = padding;
+                paddingLeftSource = paddingTopSource = paddingRightSource = paddingBottomSource = Util.unbox(padding);
             } else {
-                paddingLeftSource = typedArray.getString(R.styleable.DependencyLayout_dependency_paddingLeft);
-                paddingTopSource = typedArray.getString(R.styleable.DependencyLayout_dependency_paddingTop);
-                paddingRightSource = typedArray.getString(R.styleable.DependencyLayout_dependency_paddingRight);
-                paddingBottomSource = typedArray.getString(R.styleable.DependencyLayout_dependency_paddingBottom);
+                paddingLeftSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_dependency_paddingLeft));
+                paddingTopSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_dependency_paddingTop));
+                paddingRightSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_dependency_paddingRight));
+                paddingBottomSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_dependency_paddingBottom));
             }
 
             float systemPadding = typedArray.getDimension(R.styleable.DependencyLayout_android_padding, 0);
@@ -161,12 +161,10 @@ public class DependencyLayout extends ViewGroup {
         DisplayMetrics metrics = new DisplayMetrics();
         defaultDisplay.getMetrics(metrics);
         if (metrics.widthPixels <= 0) {
-            String value = Util.getValue(mDesignWidth);
-            String unit = value.substring(value.length());
-            if ("dp".equals(unit) || "dip".equals(unit)) {
-                screenWidth = (int) Util.dp2px(Util.toFloat(value));
-            } else if ("px".equals(unit)) {
-                screenWidth = (int) Util.toFloat(value);
+            if (mDesignWidth.unit == LayoutParams.Attribute.DIP) {
+                screenWidth = (int) Util.dp2px(mDesignWidth.value);
+            } else if (mDesignWidth.unit == LayoutParams.Attribute.PX) {
+                screenWidth = (int) mDesignWidth.value;
             } else {
                 screenWidth = 1080;
             }
@@ -174,12 +172,10 @@ public class DependencyLayout extends ViewGroup {
             screenWidth = metrics.widthPixels;
         }
         if (metrics.heightPixels <= 0) {
-            String value = Util.getValue(mDesignHeight);
-            String unit = value.substring(value.length());
-            if ("dp".equals(unit) || "dip".equals(unit)) {
-                screenHeight = (int) Util.dp2px(Util.toFloat(value));
-            } else if ("px".equals(unit)) {
-                screenHeight = (int) Util.toFloat(value);
+            if (mDesignHeight.unit == LayoutParams.Attribute.DIP) {
+                screenHeight = (int) Util.dp2px(mDesignHeight.value);
+            } else if (mDesignHeight.unit == LayoutParams.Attribute.PX) {
+                screenHeight = (int) mDesignHeight.value;
             } else {
                 screenHeight = 1920;
             }
@@ -374,8 +370,8 @@ public class DependencyLayout extends ViewGroup {
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                         } else {
                             // 指定了自定义宽高 layoutParams.selfHeight != null
-                            if (layoutParams.selfWidth.endsWith("%mh")) {
-                                if (layoutParams.selfHeight.endsWith("%mw")) {
+                            if (layoutParams.selfWidth.unit == LayoutParams.Attribute.MH) {
+                                if (layoutParams.selfHeight.unit == DependencyLayout.LayoutParams.Attribute.MW) {
                                     // ERROR，不能互相依赖自身的宽高
                                     throw new IllegalArgumentException("参数异常");
                                 } else {
@@ -384,7 +380,7 @@ public class DependencyLayout extends ViewGroup {
                                     layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                                 }
                             } else {
-                                if (layoutParams.selfHeight.endsWith("%mw")) {
+                                if (layoutParams.selfHeight.unit == LayoutParams.Attribute.MW) {
                                     layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
                                     child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST));
                                     layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
@@ -809,23 +805,23 @@ public class DependencyLayout extends ViewGroup {
         private int centerHorizontalOf;
         private int centerOf;
 
-        private String marginLeftSource;
-        private String marginTopSource;
-        private String marginRightSource;
-        private String marginBottomSource;
+        private Attribute marginLeftSource;
+        private Attribute marginTopSource;
+        private Attribute marginRightSource;
+        private Attribute marginBottomSource;
 
         private float systemMarginLeft;
         private float systemMarginTop;
         private float systemMarginRight;
         private float systemMarginBottom;
 
-        private String selfWidth;
-        private String selfHeight;
+        private Attribute selfWidth;
+        private Attribute selfHeight;
 
-        private String paddingLeftSource;
-        private String paddingTopSource;
-        private String paddingRightSource;
-        private String paddingBottomSource;
+        private Attribute paddingLeftSource;
+        private Attribute paddingTopSource;
+        private Attribute paddingRightSource;
+        private Attribute paddingBottomSource;
 
         private float systemPaddingLeft;
         private float systemPaddingTop;
@@ -900,13 +896,13 @@ public class DependencyLayout extends ViewGroup {
             centerHorizontalOf = typedArray.getResourceId(R.styleable.DependencyLayout_Layout_centerHorizontalOf, 0);
             centerOf = typedArray.getResourceId(R.styleable.DependencyLayout_Layout_centerOf, 0);
 
-            marginLeftSource = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_marginLeft);
-            marginTopSource = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_marginTop);
-            marginRightSource = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_marginRight);
-            marginBottomSource = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_marginBottom);
+            marginLeftSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_marginLeft));
+            marginTopSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_marginTop));
+            marginRightSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_marginRight));
+            marginBottomSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_marginBottom));
 
-            selfWidth = typedArray.getString(R.styleable.DependencyLayout_Layout_selfWidth);
-            selfHeight = typedArray.getString(R.styleable.DependencyLayout_Layout_selfHeight);
+            selfWidth = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_selfWidth));
+            selfHeight = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_selfHeight));
 
             systemWidth = calculationSystem(typedArray, R.styleable.DependencyLayout_Layout_android_layout_width, context.getResources().getDisplayMetrics());
             systemHeight = calculationSystem(typedArray, R.styleable.DependencyLayout_Layout_android_layout_height, context.getResources().getDisplayMetrics());
@@ -919,12 +915,12 @@ public class DependencyLayout extends ViewGroup {
             // padding
             String dependencyPadding = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_padding);
             if (dependencyPadding != null) {
-                paddingLeftSource = paddingTopSource = paddingRightSource = paddingBottomSource = dependencyPadding;
+                paddingLeftSource = paddingTopSource = paddingRightSource = paddingBottomSource = Util.unbox(dependencyPadding);
             } else {
-                paddingLeftSource = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_paddingLeft);
-                paddingTopSource = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_paddingTop);
-                paddingRightSource = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_paddingRight);
-                paddingBottomSource = typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_paddingBottom);
+                paddingLeftSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_paddingLeft));
+                paddingTopSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_paddingTop));
+                paddingRightSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_paddingRight));
+                paddingBottomSource = Util.unbox(typedArray.getString(R.styleable.DependencyLayout_Layout_dependency_paddingBottom));
             }
 
             float systemPadding = typedArray.getDimension(R.styleable.DependencyLayout_Layout_android_padding, 0);
@@ -952,6 +948,26 @@ public class DependencyLayout extends ViewGroup {
             } else {
                 return Util.toFloat(value);
             }
+        }
+
+        public static class Attribute {
+            public static final int UNIT_NOT_SET = -1;
+            public static final int DIP = 0;
+            public static final int SP = 1;
+            public static final int PX = 2;
+
+            //%sw
+            public static final int SW = 0x1001;
+            public static final int SH = 0x1002;
+            public static final int PW = 0x1003;
+            public static final int PH = 0x1004;
+            public static final int MW = 0x1005;
+            public static final int MH = 0x1006;
+
+            public static final int ERROR = 0x8888;
+
+            public float value = 0F;
+            public int unit = UNIT_NOT_SET;
         }
 
         /**
@@ -1063,356 +1079,5 @@ public class DependencyLayout extends ViewGroup {
             return leftCount > 0 && rightCount > 0;
         }
 
-        public boolean isAlignParentLeft() {
-            return alignParentLeft;
-        }
-
-        public void setAlignParentLeft(boolean alignParentLeft) {
-            this.alignParentLeft = alignParentLeft;
-        }
-
-        public boolean isAlignParentTop() {
-            return alignParentTop;
-        }
-
-        public void setAlignParentTop(boolean alignParentTop) {
-            this.alignParentTop = alignParentTop;
-        }
-
-        public boolean isAlignParentRight() {
-            return alignParentRight;
-        }
-
-        public void setAlignParentRight(boolean alignParentRight) {
-            this.alignParentRight = alignParentRight;
-        }
-
-        public boolean isAlignParentBottom() {
-            return alignParentBottom;
-        }
-
-        public void setAlignParentBottom(boolean alignParentBottom) {
-            this.alignParentBottom = alignParentBottom;
-        }
-
-        public boolean isToParentCenterVerticalLeft() {
-            return toParentCenterVerticalLeft;
-        }
-
-        public void setToParentCenterVerticalLeft(boolean toParentCenterVerticalLeft) {
-            this.toParentCenterVerticalLeft = toParentCenterVerticalLeft;
-        }
-
-        public boolean isToParentCenterVerticalRight() {
-            return toParentCenterVerticalRight;
-        }
-
-        public void setToParentCenterVerticalRight(boolean toParentCenterVerticalRight) {
-            this.toParentCenterVerticalRight = toParentCenterVerticalRight;
-        }
-
-        public boolean isAlignParentCenterHorizontalTop() {
-            return alignParentCenterHorizontalTop;
-        }
-
-        public void setAlignParentCenterHorizontalTop(boolean alignParentCenterHorizontalTop) {
-            this.alignParentCenterHorizontalTop = alignParentCenterHorizontalTop;
-        }
-
-        public boolean isAlignParentCenterHorizontalBottom() {
-            return alignParentCenterHorizontalBottom;
-        }
-
-        public void setAlignParentCenterHorizontalBottom(boolean alignParentCenterHorizontalBottom) {
-            this.alignParentCenterHorizontalBottom = alignParentCenterHorizontalBottom;
-        }
-
-        public boolean isCenterInParentHorizontal() {
-            return centerInParentHorizontal;
-        }
-
-        public void setCenterInParentHorizontal(boolean centerInParentHorizontal) {
-            this.centerInParentHorizontal = centerInParentHorizontal;
-        }
-
-        public boolean isCenterInParentVertical() {
-            return centerInParentVertical;
-        }
-
-        public void setCenterInParentVertical(boolean centerInParentVertical) {
-            this.centerInParentVertical = centerInParentVertical;
-        }
-
-        public boolean isCenterInParent() {
-            return centerInParent;
-        }
-
-        public void setCenterInParent(boolean centerInParent) {
-            this.centerInParent = centerInParent;
-        }
-
-        public int getAboveTo() {
-            return aboveTo;
-        }
-
-        public void setAboveTo(int aboveTo) {
-            this.aboveTo = aboveTo;
-        }
-
-        public int getToRightOf() {
-            return toRightOf;
-        }
-
-        public void setToRightOf(int toRightOf) {
-            this.toRightOf = toRightOf;
-        }
-
-        public int getBelowTo() {
-            return belowTo;
-        }
-
-        public void setBelowTo(int belowTo) {
-            this.belowTo = belowTo;
-        }
-
-        public int getToLeftOf() {
-            return toLeftOf;
-        }
-
-        public void setToLeftOf(int toLeftOf) {
-            this.toLeftOf = toLeftOf;
-        }
-
-        public int getAlignTop() {
-            return alignTop;
-        }
-
-        public void setAlignTop(int alignTop) {
-            this.alignTop = alignTop;
-        }
-
-        public int getAlignRight() {
-            return alignRight;
-        }
-
-        public void setAlignRight(int alignRight) {
-            this.alignRight = alignRight;
-        }
-
-        public int getAlignBottom() {
-            return alignBottom;
-        }
-
-        public void setAlignBottom(int alignBottom) {
-            this.alignBottom = alignBottom;
-        }
-
-        public int getAlignLeft() {
-            return alignLeft;
-        }
-
-        public void setAlignLeft(int alignLeft) {
-            this.alignLeft = alignLeft;
-        }
-
-        public int getToCenterVerticalLeft() {
-            return toCenterVerticalLeft;
-        }
-
-        public void setToCenterVerticalLeft(int toCenterVerticalLeft) {
-            this.toCenterVerticalLeft = toCenterVerticalLeft;
-        }
-
-        public int getToCenterVerticalRight() {
-            return toCenterVerticalRight;
-        }
-
-        public void setToCenterVerticalRight(int toCenterVerticalRight) {
-            this.toCenterVerticalRight = toCenterVerticalRight;
-        }
-
-        public int getAlignCenterHorizontalTop() {
-            return alignCenterHorizontalTop;
-        }
-
-        public void setAlignCenterHorizontalTop(int alignCenterHorizontalTop) {
-            this.alignCenterHorizontalTop = alignCenterHorizontalTop;
-        }
-
-        public int getAlignCenterHorizontalBottom() {
-            return alignCenterHorizontalBottom;
-        }
-
-        public void setAlignCenterHorizontalBottom(int alignCenterHorizontalBottom) {
-            this.alignCenterHorizontalBottom = alignCenterHorizontalBottom;
-        }
-
-        public int getCenterVerticalOf() {
-            return centerVerticalOf;
-        }
-
-        public void setCenterVerticalOf(int centerVerticalOf) {
-            this.centerVerticalOf = centerVerticalOf;
-        }
-
-        public int getCenterHorizontalOf() {
-            return centerHorizontalOf;
-        }
-
-        public void setCenterHorizontalOf(int centerHorizontalOf) {
-            this.centerHorizontalOf = centerHorizontalOf;
-        }
-
-        public int getCenterOf() {
-            return centerOf;
-        }
-
-        public void setCenterOf(int centerOf) {
-            this.centerOf = centerOf;
-        }
-
-        public String getMarginLeftSource() {
-            return marginLeftSource;
-        }
-
-        public void setMarginLeftSource(String marginLeftSource) {
-            this.marginLeftSource = marginLeftSource;
-        }
-
-        public String getMarginTopSource() {
-            return marginTopSource;
-        }
-
-        public void setMarginTopSource(String marginTopSource) {
-            this.marginTopSource = marginTopSource;
-        }
-
-        public String getMarginRightSource() {
-            return marginRightSource;
-        }
-
-        public void setMarginRightSource(String marginRightSource) {
-            this.marginRightSource = marginRightSource;
-        }
-
-        public String getMarginBottomSource() {
-            return marginBottomSource;
-        }
-
-        public void setMarginBottomSource(String marginBottomSource) {
-            this.marginBottomSource = marginBottomSource;
-        }
-
-        public float getSystemMarginLeft() {
-            return systemMarginLeft;
-        }
-
-        public void setSystemMarginLeft(float systemMarginLeft) {
-            this.systemMarginLeft = systemMarginLeft;
-        }
-
-        public float getSystemMarginTop() {
-            return systemMarginTop;
-        }
-
-        public void setSystemMarginTop(float systemMarginTop) {
-            this.systemMarginTop = systemMarginTop;
-        }
-
-        public float getSystemMarginRight() {
-            return systemMarginRight;
-        }
-
-        public void setSystemMarginRight(float systemMarginRight) {
-            this.systemMarginRight = systemMarginRight;
-        }
-
-        public float getSystemMarginBottom() {
-            return systemMarginBottom;
-        }
-
-        public void setSystemMarginBottom(float systemMarginBottom) {
-            this.systemMarginBottom = systemMarginBottom;
-        }
-
-        public String getSelfWidth() {
-            return selfWidth;
-        }
-
-        public void setSelfWidth(String selfWidth) {
-            this.selfWidth = selfWidth;
-        }
-
-        public String getSelfHeight() {
-            return selfHeight;
-        }
-
-        public void setSelfHeight(String selfHeight) {
-            this.selfHeight = selfHeight;
-        }
-
-        public String getPaddingLeftSource() {
-            return paddingLeftSource;
-        }
-
-        public void setPaddingLeftSource(String paddingLeftSource) {
-            this.paddingLeftSource = paddingLeftSource;
-        }
-
-        public String getPaddingTopSource() {
-            return paddingTopSource;
-        }
-
-        public void setPaddingTopSource(String paddingTopSource) {
-            this.paddingTopSource = paddingTopSource;
-        }
-
-        public String getPaddingRightSource() {
-            return paddingRightSource;
-        }
-
-        public void setPaddingRightSource(String paddingRightSource) {
-            this.paddingRightSource = paddingRightSource;
-        }
-
-        public String getPaddingBottomSource() {
-            return paddingBottomSource;
-        }
-
-        public void setPaddingBottomSource(String paddingBottomSource) {
-            this.paddingBottomSource = paddingBottomSource;
-        }
-
-        public float getSystemPaddingLeft() {
-            return systemPaddingLeft;
-        }
-
-        public void setSystemPaddingLeft(float systemPaddingLeft) {
-            this.systemPaddingLeft = systemPaddingLeft;
-        }
-
-        public float getSystemPaddingTop() {
-            return systemPaddingTop;
-        }
-
-        public void setSystemPaddingTop(float systemPaddingTop) {
-            this.systemPaddingTop = systemPaddingTop;
-        }
-
-        public float getSystemPaddingRight() {
-            return systemPaddingRight;
-        }
-
-        public void setSystemPaddingRight(float systemPaddingRight) {
-            this.systemPaddingRight = systemPaddingRight;
-        }
-
-        public float getSystemPaddingBottom() {
-            return systemPaddingBottom;
-        }
-
-        public void setSystemPaddingBottom(float systemPaddingBottom) {
-            this.systemPaddingBottom = systemPaddingBottom;
-        }
     }
 }

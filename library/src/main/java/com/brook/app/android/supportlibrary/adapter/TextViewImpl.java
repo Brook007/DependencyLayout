@@ -23,50 +23,48 @@ import android.widget.TextView;
 import com.brook.app.android.supportlibrary.util.AttributeMap;
 import com.brook.app.android.supportlibrary.util.Metrics;
 import com.brook.app.android.supportlibrary.util.Util;
+import com.brook.app.android.supportlibrary.view.DependencyLayout;
 
 /**
+ *
  * @author Brook
  * @time 2018/12/5 15:58
  * @target DependencyLayout
  */
 public class TextViewImpl implements ViewAdapter<TextView> {
 
-    private String designWidthUnit = null;
-    private float designWidth = 0;
+    private DependencyLayout.LayoutParams.Attribute designWidth = null;
 
     @Override
     public void convert(Context context, TextView view, AttributeMap attr, Metrics metrics) {
+        // fixme 计算方式有待调整
         // 获取XML中的属性原始值，字符串形式，大小写敏感
         String textSize = attr.getString("textSize");
         if (textSize != null) {
-            String value = Util.getValue(textSize);
-            String unit = textSize.substring(value.length());
-            if (designWidthUnit == null) {
-                String designValue = Util.getValue(metrics.parentDesignWidth);
-                designWidth = Float.parseFloat(designValue);
-                designWidthUnit = metrics.parentDesignWidth.substring(designValue.length());
+            DependencyLayout.LayoutParams.Attribute attribute = Util.unbox(textSize);
+            if (designWidth == null) {
+                designWidth = metrics.parentDesignWidth;
             }
             float size = 0;
-            if (unit.equals(designWidthUnit)) {
+            if (attribute.unit == designWidth.unit) {
                 // 尺寸单位相同
-                float px = Float.parseFloat(value);
-                size = px * (metrics.screenWidth / designWidth);
-            } else if (unit.equals("sp") || unit.equals("dip")) {
+                float px = attribute.value;
+                size = px * (metrics.screenWidth / designWidth.value);
+            } else if (attribute.unit == DependencyLayout.LayoutParams.Attribute.SP
+                    || attribute.unit == DependencyLayout.LayoutParams.Attribute.DIP) {
                 float px;
-                if (designWidthUnit.equals("dp")) {
+                if (designWidth.unit == DependencyLayout.LayoutParams.Attribute.DIP) {
                     // dp
-                    px = Float.parseFloat(value);
+                    px = attribute.value;
                 } else {
                     // px
-                    px = Util.sp2px(Float.parseFloat(value));
+                    px = Util.sp2px(attribute.value);
                 }
-                size = px * (metrics.screenWidth / designWidth);
+                size = px * (metrics.screenWidth / designWidth.value);
             } else {
-                float px = Float.parseFloat(value);
-                size = px * (metrics.screenWidth / designWidth);
+                size = attribute.value * (metrics.screenWidth / designWidth.value);
             }
             view.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         }
-
     }
 }

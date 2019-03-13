@@ -73,58 +73,58 @@ public class Util {
      * xx%mw
      * xx%mh
      */
-    public static float calculation(String source, String pdw, String pdh, float screenWidth, float screenHeight, View parent, View child, int orientation) {
+    public static float calculation(DependencyLayout.LayoutParams.Attribute source, DependencyLayout.LayoutParams.Attribute pdw, DependencyLayout.LayoutParams.Attribute pdh, float screenWidth, float screenHeight, View parent, View child, int orientation) {
         float size = 0;
         float parentWidth = parent.getMeasuredWidth();
         float parentHeight = parent.getMeasuredHeight();
         float myWidth = child.getMeasuredWidth();
         float myHeight = child.getMeasuredHeight();
 
-        if (source.endsWith("%sw")) {
-            size = Util.getValueToFloat(source) / 100F * screenWidth;
-        } else if (source.endsWith("%sh")) {
-            size = Util.getValueToFloat(source) / 100F * screenHeight;
-        } else if (source.endsWith("%pw")) {
-            size = Util.getValueToFloat(source) / 100F * parentWidth;
-        } else if (source.endsWith("%ph")) {
-            size = Util.getValueToFloat(source) / 100F * parentHeight;
-        } else if (source.endsWith("%mw")) {
-            size = Util.getValueToFloat(source) / 100F * myWidth;
-        } else if (source.endsWith("%mh")) {
-            size = Util.getValueToFloat(source) / 100F * myHeight;
-        } else if (source.endsWith("px")) {
+        if (source.unit == DependencyLayout.LayoutParams.Attribute.SW) {
+            size = source.value / 100F * screenWidth;
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.SH) {
+            size = source.value / 100F * screenHeight;
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.PW) {
+            size = source.value / 100F * parentWidth;
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.PH) {
+            size = source.value / 100F * parentHeight;
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.MW) {
+            size = source.value / 100F * myWidth;
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.MH) {
+            size = source.value / 100F * myHeight;
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.PX) {
             if (orientation == DependencyLayout.VERTICAL) {
-                if (pdh.endsWith("px")) {
-                    size = parentHeight / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
-                } else if (pdh.endsWith("dp") || pdh.endsWith("dip")) {
-                    size = parentHeight / Util.dp2px(Util.getValueToFloat(pdh)) * Util.getValueToFloat(source);
+                if (pdh.unit == DependencyLayout.LayoutParams.Attribute.PX) {
+                    size = parentHeight / pdh.value * source.value;
+                } else if (pdh.unit == DependencyLayout.LayoutParams.Attribute.DIP) {
+                    size = parentHeight / Util.dp2px(pdh.value) * source.value;
                 }
             } else {
-                if (pdw.endsWith("px")) {
-                    size = parentWidth / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
-                } else if (pdw.endsWith("dp") || pdw.endsWith("dip")) {
-                    size = parentWidth / Util.dp2px(Util.getValueToFloat(pdw)) * Util.getValueToFloat(source);
+                if (pdw.unit == DependencyLayout.LayoutParams.Attribute.PX) {
+                    size = parentWidth / pdw.value * source.value;
+                } else if (pdw.unit == DependencyLayout.LayoutParams.Attribute.DIP) {
+                    size = parentWidth / Util.dp2px(pdw.value) * source.value;
                 }
             }
-        } else if (source.endsWith("dp") || source.endsWith("dip")) {
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.DIP) {
             if (orientation == DependencyLayout.VERTICAL) {
-                if (pdh.endsWith("px")) {
-                    size = parentHeight / Util.getValueToFloat(pdh) * Util.dp2px(Util.getValueToFloat(source));
-                } else if (pdh.endsWith("dp") || pdh.endsWith("dip")) {
-                    size = parentHeight / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
+                if (pdh.unit == DependencyLayout.LayoutParams.Attribute.PX) {
+                    size = parentHeight / pdh.value * Util.dp2px(source.value);
+                } else if (pdh.unit == DependencyLayout.LayoutParams.Attribute.DIP) {
+                    size = parentHeight / pdh.value * source.value;
                 }
             } else {
-                if (pdw.endsWith("px")) {
-                    size = parentWidth / Util.getValueToFloat(pdw) * Util.dp2px(Util.getValueToFloat(source));
-                } else if (pdw.endsWith("dp") || pdw.endsWith("dip")) {
-                    size = parentWidth / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
+                if (pdw.unit == DependencyLayout.LayoutParams.Attribute.PX) {
+                    size = parentWidth / pdw.value * Util.dp2px(source.value);
+                } else if (pdw.unit == DependencyLayout.LayoutParams.Attribute.DIP){
+                    size = parentWidth / pdw.value * source.value;
                 }
             }
-        } else if (source.matches("^\\d+$")) {
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.ERROR) {
             if (orientation == DependencyLayout.VERTICAL) {
-                size = parentHeight / Util.getValueToFloat(pdh) * Util.getValueToFloat(source);
+                size = parentHeight / pdh.value * source.value;
             } else {
-                size = parentWidth / Util.getValueToFloat(pdw) * Util.getValueToFloat(source);
+                size = parentWidth / pdw.value * source.value;
             }
         } else {
             throw new IllegalArgumentException("参数错误");
@@ -149,9 +149,8 @@ public class Util {
     }
 
     /**
-     *
      * @param typedArray
-     * @param index @StyleableRes
+     * @param index      @StyleableRes
      * @return
      */
     public static String getText(TypedArray typedArray, int index) {
@@ -161,6 +160,39 @@ public class Util {
         } else {
             return temp.toString();
         }
+    }
+
+
+    public static DependencyLayout.LayoutParams.Attribute unbox(String text) {
+        if (text == null) {
+            return null;
+        }
+        DependencyLayout.LayoutParams.Attribute attribute = new DependencyLayout.LayoutParams.Attribute();
+        String value = getValue(text);
+        attribute.value = toFloat(value);
+        String unit = text.substring(value.length()).toLowerCase();
+        if ("dip".equals(unit) || "dp".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.DIP;
+        } else if ("sp".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.SP;
+        } else if ("px".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+        } else if ("%sw".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+        } else if ("%sh".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+        } else if ("%pw".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+        } else if ("%ph".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+        } else if ("%mw".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+        } else if ("%mh".equals(unit)) {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+        } else {
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.ERROR;
+        }
+        return attribute;
     }
 
     /**

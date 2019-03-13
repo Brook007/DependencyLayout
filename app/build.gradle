@@ -18,6 +18,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            if (true) {
+                res.srcDirs = ['src/main/res']
+                java.srcDirs = ['src/main/java']
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            } else {
+                res.srcDirs = ['src/main/debug/res', 'src/main/res']
+                java.srcDirs = ['src/main/debug/java', 'src/main/java']
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            }
+        }
+    }
 }
 
 dependencies {

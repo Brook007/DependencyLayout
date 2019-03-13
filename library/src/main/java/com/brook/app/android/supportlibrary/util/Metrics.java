@@ -16,6 +16,8 @@
 
 package com.brook.app.android.supportlibrary.util;
 
+import com.brook.app.android.supportlibrary.view.DependencyLayout;
+
 /**
  * @author Brook
  * @time 2018/12/8 16:15
@@ -23,9 +25,9 @@ package com.brook.app.android.supportlibrary.util;
  */
 public class Metrics {
     // 父View设计的宽度
-    public String parentDesignWidth;
+    public DependencyLayout.LayoutParams.Attribute parentDesignWidth;
     // 父View设计的高度
-    public String parentDesignHeight;
+    public DependencyLayout.LayoutParams.Attribute parentDesignHeight;
     // 屏幕宽度
     public int screenWidth;
     // 屏幕高度

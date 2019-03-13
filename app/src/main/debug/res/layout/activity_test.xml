@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="com.brook.app.android.testapp.TestActivity">
+
+    <com.brook.app.android.supportlibrary.view.DependencyLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#9460F1"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        app:designHeight="1294px"
+        app:designWidth="750px"
+        tools:ignore="MissingPrefix">
+
+        <ImageView
+            android:id="@+id/user_head_img"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/ic_launcher" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:includeFontPadding="false"
+            android:text="用户名"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            app:alignTop="@id/user_head_img"
+            app:toRightOf="@id/user_head_img" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:includeFontPadding="false"
+            android:text="品种"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            app:centerVerticalOf="@id/user_head_img"
+            app:toRightOf="@id/user_head_img" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="20dp"
+            android:includeFontPadding="false"
+            android:text="女"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            app:alignBottom="@id/user_head_img"
+            app:toRightOf="@id/user_head_img" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingLeft="30dp"
+            android:paddingTop="7dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="7dp"
+            android:text="关注"
+            android:textColor="#323232"
+            android:textSize="15dp"
+            app:alignParentRight="true"
+            app:centerInParentVertical="true" />
+
+    </com.brook.app.android.supportlibrary.view.DependencyLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="#9460F1"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp">
+
+
+        <ImageView
+            android:id="@+id/user_head"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/ic_launcher" />
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:background="#009688"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/user_head"
+            android:layout_alignBottom="@id/user_head"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/user_head">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="用户名"
+                android:textColor="#ffffff"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:text="品种"
+                android:textColor="#ffffff"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:includeFontPadding="false"
+                android:text="女"
+                android:textColor="#ffffff"
+                android:textSize="14dp" />
+
+        </FrameLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:includeFontPadding="false"
+            android:paddingLeft="30dp"
+            android:paddingTop="7dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="7dp"
+            android:text="关注"
+            android:textColor="#323232"
+            android:textSize="15dp" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

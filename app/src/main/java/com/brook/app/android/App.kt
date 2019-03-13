@@ -18,6 +18,6 @@ class App : Application() {
         DependencyLayoutConfig.getInstance()
                 .setDesignWidth("750px")
                 .setDesignHeight("1294px")
-                .addViewAdapterHandler(TextView::class.java, TextViewImpl())
+//                .addViewAdapterHandler(TextView::class.java, TextViewImpl())
     }
 }
