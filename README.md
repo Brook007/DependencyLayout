@@ -15,7 +15,7 @@
 #### 方式一：使用jcenter仓库，在build.gradle中添加（推荐）
 
 ```groovy
-implementation 'com.brook.android:DependencyLayout:1.0.3'
+implementation 'com.brook.android:DependencyLayout:1.1.0'
 ```
 
 #### 方式二：使用jetpack仓库，在根项目的build.gradle中添加下面的代码
