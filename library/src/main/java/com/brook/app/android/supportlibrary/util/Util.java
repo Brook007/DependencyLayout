@@ -116,7 +116,7 @@ public class Util {
             } else {
                 if (pdw.unit == DependencyLayout.LayoutParams.Attribute.PX) {
                     size = parentWidth / pdw.value * Util.dp2px(source.value);
-                } else if (pdw.unit == DependencyLayout.LayoutParams.Attribute.DIP){
+                } else if (pdw.unit == DependencyLayout.LayoutParams.Attribute.DIP) {
                     size = parentWidth / pdw.value * source.value;
                 }
             }
@@ -178,17 +178,17 @@ public class Util {
         } else if ("px".equals(unit)) {
             attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
         } else if ("%sw".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.SW;
         } else if ("%sh".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.SH;
         } else if ("%pw".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PW;
         } else if ("%ph".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.PH;
         } else if ("%mw".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.MW;
         } else if ("%mh".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.MH;
         } else {
             attribute.unit = DependencyLayout.LayoutParams.Attribute.ERROR;
         }

@@ -79,7 +79,8 @@
             android:textColor="#323232"
             android:textSize="15dp"
             app:alignParentRight="true"
-            app:centerInParentVertical="true" />
+            app:centerInParentVertical="true"
+            app:selfWidth="50%pw" />
 
     </com.brook.app.android.supportlibrary.view.DependencyLayout>
 
@@ -104,12 +105,12 @@
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:background="#009688"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/user_head"
             android:layout_alignBottom="@id/user_head"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/user_head">
+            android:layout_toRightOf="@id/user_head"
+            android:background="#009688">
 
 
             <TextView
@@ -145,10 +146,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:background="#ffffff"
             android:gravity="center"
-            android:layout_centerVertical="true"
             android:includeFontPadding="false"
             android:paddingLeft="30dp"
             android:paddingTop="7dp"
