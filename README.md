@@ -1,6 +1,7 @@
 # DependencyLayout
 
 ## 概述
+[![Download](https://api.bintray.com/packages/brook007/maven/DependencyLayout/images/download.svg?version=1.1.1) ](https://bintray.com/brook007/maven/DependencyLayout/1.1.1/link)
 [![](https://jitpack.io/v/Brook007/DependencyLayout.svg)](https://github.com/Brook007/DependencyLayout)
 [![](https://img.shields.io/badge/Platform-Android-brightgreen.svg)](https://github.com/Brook007/DependencyLayout)
 [![](https://img.shields.io/badge/API_Live-14+-brightgreen.svg)](https://github.com/Brook007/DependencyLayout)
@@ -15,7 +16,7 @@
 #### 方式一：使用jcenter仓库，在build.gradle中添加（推荐）
 
 ```groovy
-implementation 'com.brook.android:DependencyLayout:1.1.1'
+implementation 'com.brook.android:DependencyLayout:1.1.2'
 ```
 
 #### 方式二：使用jetpack仓库，在根项目的build.gradle中添加下面的代码
@@ -29,7 +30,7 @@ allprojects {
 然后在需要使用的模块的build.gradle中添加以下代码
 ```groovy
 dependencies {
-    implementation 'com.github.Brook007:DependencyLayout:1.1.1'
+    implementation 'com.github.Brook007:DependencyLayout:1.1.2'
 }
 ```
 

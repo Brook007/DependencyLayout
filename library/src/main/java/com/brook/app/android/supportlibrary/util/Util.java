@@ -120,7 +120,7 @@ public class Util {
                     size = parentWidth / pdw.value * source.value;
                 }
             }
-        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.ERROR) {
+        } else if (source.unit == DependencyLayout.LayoutParams.Attribute.OTHER) {
             if (orientation == DependencyLayout.VERTICAL) {
                 size = parentHeight / pdh.value * source.value;
             } else {
@@ -190,7 +190,7 @@ public class Util {
         } else if ("%mh".equals(unit)) {
             attribute.unit = DependencyLayout.LayoutParams.Attribute.MH;
         } else {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.ERROR;
+            attribute.unit = DependencyLayout.LayoutParams.Attribute.OTHER;
         }
         return attribute;
     }

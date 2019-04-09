@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
@@ -283,6 +284,10 @@ public class DependencyLayout extends ViewGroup {
         int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
         int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
 
+
+        int tempParentWidth = parentWidthMode != MeasureSpec.EXACTLY ? 0 : parentWidth;
+        int tempParentHeight = parentHeightMode != MeasureSpec.EXACTLY ? 0 : parentHeight;
+
         maxWidth = 0;
         maxHeight = 0;
 
@@ -316,7 +321,7 @@ public class DependencyLayout extends ViewGroup {
                             layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
                             layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
                         } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
+                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST);
                             layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
                         } else {
                             // 高度设置了指定值
@@ -372,7 +377,7 @@ public class DependencyLayout extends ViewGroup {
                             // 指定了自定义宽高 layoutParams.selfHeight != null
                             if (layoutParams.selfWidth.unit == LayoutParams.Attribute.MH) {
                                 if (layoutParams.selfHeight.unit == DependencyLayout.LayoutParams.Attribute.MW) {
-                                    // ERROR，不能互相依赖自身的宽高
+                                    // OTHER，不能互相依赖自身的宽高
                                     throw new IllegalArgumentException("参数异常");
                                 } else {
                                     layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
@@ -467,8 +472,8 @@ public class DependencyLayout extends ViewGroup {
             float tempLeft = getPaddingLeft() + layoutParams.marginLeft;
             float tempRight = tempLeft + child.getMeasuredWidth();
             layoutParams.left = tempLeft;
-            if (parentWidth > 0 && tempRight > parentWidth - layoutParams.marginRight) {
-                layoutParams.right = parentWidth - layoutParams.marginRight;
+            if (parentWidthMode == MeasureSpec.EXACTLY && tempParentWidth > 0 && tempRight > tempParentWidth - layoutParams.marginRight) {
+                layoutParams.right = tempParentWidth - layoutParams.marginRight;
             } else {
                 layoutParams.right = tempRight;
             }
@@ -478,8 +483,8 @@ public class DependencyLayout extends ViewGroup {
             float tempBottom = tempTop + child.getMeasuredHeight();
 
             layoutParams.top = tempTop;
-            if (parentHeight > 0 && tempBottom > parentHeight - layoutParams.marginBottom) {
-                layoutParams.bottom = parentHeight - layoutParams.marginBottom;
+            if (parentHeightMode == MeasureSpec.EXACTLY && tempParentHeight > 0 && tempBottom > tempParentHeight - layoutParams.marginBottom) {
+                layoutParams.bottom = tempParentHeight - layoutParams.marginBottom;
             } else {
                 layoutParams.bottom = tempBottom;
             }
@@ -493,21 +498,21 @@ public class DependencyLayout extends ViewGroup {
             boolean hasVerticalAttr = !layoutParams.hasVerticalAttr(layoutParams);
 
             if (layoutParams.alignParentBottom) {
-                layoutParams.bottom = parentHeight - getPaddingBottom() - layoutParams.marginBottom;
+                layoutParams.bottom = tempParentHeight - getPaddingBottom() - layoutParams.marginBottom;
                 if (hasVerticalAttr) {
                     layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
 
             if (layoutParams.alignParentCenterHorizontalTop) {
-                layoutParams.bottom = parentHeight / 2F - layoutParams.marginBottom;
+                layoutParams.bottom = tempParentHeight / 2F - layoutParams.marginBottom;
                 if (hasVerticalAttr) {
                     layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
                 }
             }
 
             if (layoutParams.alignParentCenterHorizontalBottom) {
-                layoutParams.top = parentHeight / 2F + layoutParams.marginTop;
+                layoutParams.top = tempParentHeight / 2F + layoutParams.marginTop;
                 if (hasVerticalAttr) {
                     layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
                 }
@@ -515,7 +520,7 @@ public class DependencyLayout extends ViewGroup {
 
             // 与父View的水平中间对齐
             if (layoutParams.centerInParentVertical) {
-                layoutParams.top = parentHeight / 2F - child.getMeasuredHeight() / 2F + layoutParams.marginTop;
+                layoutParams.top = tempParentHeight / 2F - child.getMeasuredHeight() / 2F + layoutParams.marginTop;
                 layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
             }
 
@@ -593,14 +598,14 @@ public class DependencyLayout extends ViewGroup {
             }
 
             if (layoutParams.alignParentRight) {
-                layoutParams.right = parentWidth - getPaddingRight() - layoutParams.marginRight;
+                layoutParams.right = tempParentWidth - getPaddingRight() - layoutParams.marginRight;
                 if (hasHorizontalAttr) {
                     layoutParams.left = layoutParams.right - child.getMeasuredWidth();
                 }
             }
 
             if (layoutParams.toParentCenterVerticalLeft) {
-                layoutParams.right = parentWidth / 2F - layoutParams.marginRight;
+                layoutParams.right = tempParentWidth / 2F - layoutParams.marginRight;
                 if (hasHorizontalAttr) {
                     layoutParams.left = layoutParams.right - child.getMeasuredWidth();
                 }
@@ -608,15 +613,15 @@ public class DependencyLayout extends ViewGroup {
 
             // 对齐父View水平中线的右边
             if (layoutParams.toParentCenterVerticalRight) {
-                layoutParams.left = parentWidth / 2F + layoutParams.marginLeft;
+                layoutParams.left = tempParentWidth / 2F + layoutParams.marginLeft;
                 if (hasHorizontalAttr) {
                     layoutParams.right = layoutParams.left + child.getMeasuredWidth();
                 }
             }
 
             if (layoutParams.centerInParentHorizontal) {
-                if (parentWidth > 0) {
-                    layoutParams.left = parentWidth / 2F - child.getMeasuredWidth() / 2F + layoutParams.marginLeft;
+                if (tempParentWidth > 0) {
+                    layoutParams.left = tempParentWidth / 2F - child.getMeasuredWidth() / 2F + layoutParams.marginLeft;
                 } else {
                     layoutParams.left = layoutParams.marginLeft;
                 }
@@ -695,10 +700,10 @@ public class DependencyLayout extends ViewGroup {
 
             // 影响水平与垂直的属性
             if (layoutParams.centerInParent) {
-                layoutParams.left = parentWidth / 2F - child.getMeasuredWidth() / 2F;
+                layoutParams.left = tempParentWidth / 2F - child.getMeasuredWidth() / 2F;
                 layoutParams.right = layoutParams.left + child.getMeasuredWidth();
 
-                layoutParams.top = parentHeight / 2F - child.getMeasuredHeight() / 2F;
+                layoutParams.top = tempParentHeight / 2F - child.getMeasuredHeight() / 2F;
                 layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
             }
 
@@ -723,17 +728,19 @@ public class DependencyLayout extends ViewGroup {
             }
 
             if (parentWidthMode != MeasureSpec.EXACTLY) {
-                parentWidth = (int) maxHeight;
+                tempParentWidth = (int) maxHeight;
             }
 
             if (parentHeightMode != MeasureSpec.EXACTLY) {
-                parentHeight = (int) maxHeight;
+                tempParentHeight = (int) maxHeight;
             }
 
             layoutParams.width = (int) Math.ceil(layoutParams.right - layoutParams.left);
             layoutParams.height = (int) Math.ceil(layoutParams.bottom - layoutParams.top);
             child.setLayoutParams(layoutParams);
 
+
+            Log.d("TAG", "Height:" + tempParentHeight);
 
             if (Math.ceil(tempRight - tempLeft) != layoutParams.width || Math.ceil(tempBottom - tempTop) != layoutParams.height) {
                 child.measure(MeasureSpec.makeMeasureSpec(layoutParams.width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(layoutParams.height, MeasureSpec.EXACTLY));
@@ -965,7 +972,7 @@ public class DependencyLayout extends ViewGroup {
             public static final int MW = 0x1005;
             public static final int MH = 0x1006;
 
-            public static final int ERROR = 0x8888;
+            public static final int OTHER = 0x8888;
 
             public float value = 0F;
             public int unit = UNIT_NOT_SET;
@@ -978,6 +985,10 @@ public class DependencyLayout extends ViewGroup {
          * @return
          */
         private boolean hasVerticalAttr(LayoutParams layoutParams) {
+            if (layoutParams.centerVerticalOf > 0 || layoutParams.centerOf > 0) {
+                return true;
+            }
+
             int topCount = 0;
             int bottomCount = 0;
             if (layoutParams.alignParentTop) {
@@ -1022,10 +1033,6 @@ public class DependencyLayout extends ViewGroup {
                 topCount++;
             }
 
-            if (layoutParams.centerVerticalOf > 0 || layoutParams.centerOf > 0) {
-                topCount++;
-                bottomCount++;
-            }
             return topCount > 0 && bottomCount > 0;
         }
 
@@ -1036,6 +1043,10 @@ public class DependencyLayout extends ViewGroup {
          * @return
          */
         private boolean hasHorizontalAttr(LayoutParams layoutParams) {
+            if (layoutParams.centerHorizontalOf > 0 || layoutParams.centerOf > 0) {
+                return true;
+            }
+
             int leftCount = 0;
             int rightCount = 0;
 
@@ -1073,10 +1084,7 @@ public class DependencyLayout extends ViewGroup {
             if (layoutParams.toCenterVerticalRight > 0) {
                 leftCount++;
             }
-            if (layoutParams.centerHorizontalOf > 0 || layoutParams.centerOf > 0) {
-                leftCount++;
-                rightCount++;
-            }
+
             return leftCount > 0 && rightCount > 0;
         }
 
