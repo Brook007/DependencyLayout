@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
@@ -738,9 +737,6 @@ public class DependencyLayout extends ViewGroup {
             layoutParams.width = (int) Math.ceil(layoutParams.right - layoutParams.left);
             layoutParams.height = (int) Math.ceil(layoutParams.bottom - layoutParams.top);
             child.setLayoutParams(layoutParams);
-
-
-            Log.d("TAG", "Height:" + tempParentHeight);
 
             if (Math.ceil(tempRight - tempLeft) != layoutParams.width || Math.ceil(tempBottom - tempTop) != layoutParams.height) {
                 child.measure(MeasureSpec.makeMeasureSpec(layoutParams.width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(layoutParams.height, MeasureSpec.EXACTLY));
