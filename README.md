@@ -1,7 +1,7 @@
 # DependencyLayout
 
 ## 概述
-[![Download](https://api.bintray.com/packages/brook007/maven/DependencyLayout/images/download.svg?version=1.1.1) ](https://bintray.com/brook007/maven/DependencyLayout/1.1.1/link)
+[ ![Download](https://api.bintray.com/packages/brook007/maven/DependencyLayout/images/download.svg?version=1.1.2) ](https://bintray.com/brook007/maven/DependencyLayout/1.1.2/link)
 [![](https://jitpack.io/v/Brook007/DependencyLayout.svg)](https://github.com/Brook007/DependencyLayout)
 [![](https://img.shields.io/badge/Platform-Android-brightgreen.svg)](https://github.com/Brook007/DependencyLayout)
 [![](https://img.shields.io/badge/API_Live-14+-brightgreen.svg)](https://github.com/Brook007/DependencyLayout)
