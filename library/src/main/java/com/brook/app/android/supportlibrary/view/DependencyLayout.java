@@ -283,7 +283,6 @@ public class DependencyLayout extends ViewGroup {
         int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
         int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
 
-
         int tempParentWidth = parentWidthMode != MeasureSpec.EXACTLY ? 0 : parentWidth;
         int tempParentHeight = parentHeightMode != MeasureSpec.EXACTLY ? 0 : parentHeight;
 
@@ -301,102 +300,7 @@ public class DependencyLayout extends ViewGroup {
                 layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
             } else {
                 // 需要先临时测量一下子View的宽高
-                if (layoutParams.selfWidth == null && layoutParams.selfHeight == null) {
-                    // 没有设置自定义宽高，使用系统的宽高
-                    if (layoutParams.systemWidth == ViewGroup.LayoutParams.MATCH_PARENT) {
-                        if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
-                        } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
-                        } else {
-                            // 高度设置了指定值
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
-                        }
-                    } else if (layoutParams.systemWidth == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                        if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
-                        } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
-                        } else {
-                            // 高度设置了指定值
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
-                        }
-                    } else {
-                        // 指定了宽度值
-                        if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
-                        } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
-                        } else {
-                            // 高度和宽度设置了指定值
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
-                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
-                        }
-                    }
-                } else {
-                    /*
-                     * 仅支持xxxdp,xxxpx,xxxdip,xx%sw,xx%sh,xx%pw,xx%ph,xx%mw,xx%mh
-                     */
-                    // 设置自定义宽高
-                    if (layoutParams.selfWidth == null) {
-                        // layoutParams.selfHeight != null
-                        // 指定了自定义高度，未指定宽度
-                        if (layoutParams.systemWidth == ViewGroup.LayoutParams.MATCH_PARENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
-                        } else if (layoutParams.systemWidth == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
-                        } else {
-                            // 指定了宽度值
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
-                        }
-                        // 计算高度
-                        layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                    } else {
-                        if (layoutParams.selfHeight == null) {
-                            // 指定了自定义宽度，未指定高度
-                            if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
-                            } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
-                            } else {
-                                // 指定了宽度值
-                                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
-                            }
-                            // 计算高度
-                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                        } else {
-                            // 指定了自定义宽高 layoutParams.selfHeight != null
-                            if (layoutParams.selfWidth.unit == LayoutParams.Attribute.MH) {
-                                if (layoutParams.selfHeight.unit == DependencyLayout.LayoutParams.Attribute.MW) {
-                                    // OTHER，不能互相依赖自身的宽高
-                                    throw new IllegalArgumentException("参数异常");
-                                } else {
-                                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                    child.measure(MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
-                                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                }
-                            } else {
-                                if (layoutParams.selfHeight.unit == LayoutParams.Attribute.MW) {
-                                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                    child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST));
-                                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                } else {
-                                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
-                                }
-                            }
-                        }
-                    }
-                }
-
+                preMeasure(parentWidth, parentHeight, child, layoutParams);
 
                 // Padding
                 if (layoutParams.paddingLeftSource != null) {
@@ -490,211 +394,9 @@ public class DependencyLayout extends ViewGroup {
             tempBottom = layoutParams.bottom;
 
             // dependencies
-            if (layoutParams.alignParentTop) {
-                layoutParams.top = getPaddingLeft() + layoutParams.marginLeft;
-            }
+            verticalDependencies(tempParentHeight, child, layoutParams);
 
-            boolean hasVerticalAttr = !layoutParams.hasVerticalAttr(layoutParams);
-
-            if (layoutParams.alignParentBottom) {
-                layoutParams.bottom = tempParentHeight - getPaddingBottom() - layoutParams.marginBottom;
-                if (hasVerticalAttr) {
-                    layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
-                }
-            }
-
-            if (layoutParams.alignParentCenterHorizontalTop) {
-                layoutParams.bottom = tempParentHeight / 2F - layoutParams.marginBottom;
-                if (hasVerticalAttr) {
-                    layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
-                }
-            }
-
-            if (layoutParams.alignParentCenterHorizontalBottom) {
-                layoutParams.top = tempParentHeight / 2F + layoutParams.marginTop;
-                if (hasVerticalAttr) {
-                    layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
-                }
-            }
-
-            // 与父View的水平中间对齐
-            if (layoutParams.centerInParentVertical) {
-                layoutParams.top = tempParentHeight / 2F - child.getMeasuredHeight() / 2F + layoutParams.marginTop;
-                layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
-            }
-
-            // 在某个View的上面
-            if (layoutParams.aboveTo > 0) {
-                View dependencies = findViewById(layoutParams.aboveTo);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.bottom = params.top - params.marginTop - layoutParams.marginBottom;
-                if (hasVerticalAttr) {
-                    layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
-                }
-            }
-            // 在某个View的下面
-            if (layoutParams.belowTo > 0) {
-                View dependencies = findViewById(layoutParams.belowTo);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.top = params.bottom + params.marginBottom + layoutParams.marginTop;
-                if (hasVerticalAttr) {
-                    layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
-                }
-            }
-            // 对齐某个View的顶部
-            if (layoutParams.alignTop > 0) {
-                View dependencies = findViewById(layoutParams.alignTop);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.top = params.top + layoutParams.marginTop;
-                if (hasVerticalAttr) {
-                    layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
-                }
-            }
-            // 对齐某个View的底部
-            if (layoutParams.alignBottom > 0) {
-                View dependencies = findViewById(layoutParams.alignBottom);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.bottom = params.bottom - layoutParams.marginBottom;
-                if (hasVerticalAttr) {
-                    layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
-                }
-            }
-
-            // 在某个View水平中线的的上面
-            if (layoutParams.alignCenterHorizontalTop > 0) {
-                View dependencies = findViewById(layoutParams.alignCenterHorizontalTop);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.bottom = params.top + dependencies.getMeasuredHeight() / 2F - layoutParams.marginBottom;
-                if (hasVerticalAttr) {
-                    layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
-                }
-            }
-            // 在某个View水平中线的的下面
-            if (layoutParams.alignCenterHorizontalBottom > 0) {
-                View dependencies = findViewById(layoutParams.alignCenterHorizontalBottom);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.top = params.top + dependencies.getMeasuredHeight() / 2F + layoutParams.marginTop;
-                if (hasVerticalAttr) {
-                    layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
-                }
-            }
-
-            if (layoutParams.centerVerticalOf > 0) {
-                View dependencies = findViewById(layoutParams.centerVerticalOf);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.top = params.top + dependencies.getMeasuredHeight() / 2F - child.getMeasuredHeight() / 2F;
-                layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
-            }
-
-            ////////////////////////////////////////////////////////////////
-            boolean hasHorizontalAttr = !layoutParams.hasHorizontalAttr(layoutParams);
-            // 水平属性
-            if (layoutParams.alignParentLeft) {
-                layoutParams.left = getPaddingLeft() + layoutParams.marginLeft;
-                if (hasHorizontalAttr) {
-                    layoutParams.right = layoutParams.left + child.getMeasuredWidth();
-                }
-            }
-
-            if (layoutParams.alignParentRight) {
-                layoutParams.right = tempParentWidth - getPaddingRight() - layoutParams.marginRight;
-                if (hasHorizontalAttr) {
-                    layoutParams.left = layoutParams.right - child.getMeasuredWidth();
-                }
-            }
-
-            if (layoutParams.toParentCenterVerticalLeft) {
-                layoutParams.right = tempParentWidth / 2F - layoutParams.marginRight;
-                if (hasHorizontalAttr) {
-                    layoutParams.left = layoutParams.right - child.getMeasuredWidth();
-                }
-            }
-
-            // 对齐父View水平中线的右边
-            if (layoutParams.toParentCenterVerticalRight) {
-                layoutParams.left = tempParentWidth / 2F + layoutParams.marginLeft;
-                if (hasHorizontalAttr) {
-                    layoutParams.right = layoutParams.left + child.getMeasuredWidth();
-                }
-            }
-
-            if (layoutParams.centerInParentHorizontal) {
-                if (tempParentWidth > 0) {
-                    layoutParams.left = tempParentWidth / 2F - child.getMeasuredWidth() / 2F + layoutParams.marginLeft;
-                } else {
-                    layoutParams.left = layoutParams.marginLeft;
-                }
-                layoutParams.right = layoutParams.left + child.getMeasuredWidth();
-            }
-
-            // 左边对齐某个View的右边
-            if (layoutParams.toRightOf > 0) {
-                View dependencies = findViewById(layoutParams.toRightOf);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.left = params.right + params.marginRight + layoutParams.marginLeft;
-                if (hasHorizontalAttr) {
-                    layoutParams.right = layoutParams.left + child.getMeasuredWidth();
-                }
-            }
-
-            // 右边对齐某个View的左边
-            if (layoutParams.toLeftOf > 0) {
-                View dependencies = findViewById(layoutParams.toLeftOf);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.right = params.left - params.marginLeft - layoutParams.marginRight;
-                if (hasHorizontalAttr) {
-                    layoutParams.left = layoutParams.right - child.getMeasuredWidth();
-                }
-            }
-
-            // 对齐某个View的右边
-            if (layoutParams.alignRight > 0) {
-                View dependencies = findViewById(layoutParams.alignRight);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.right = params.right - layoutParams.marginRight;
-                if (hasHorizontalAttr) {
-                    layoutParams.left = layoutParams.right - child.getMeasuredWidth();
-                }
-            }
-
-            // 对齐某个View的左边
-            if (layoutParams.alignLeft > 0) {
-                View dependencies = findViewById(layoutParams.alignLeft);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.left = params.left + layoutParams.marginLeft;
-                if (hasHorizontalAttr) {
-                    layoutParams.right = layoutParams.left + child.getMeasuredWidth();
-                }
-            }
-
-            // 右边对齐某个View垂直中线的左边
-            if (layoutParams.toCenterVerticalLeft > 0) {
-                View dependencies = findViewById(layoutParams.toCenterVerticalLeft);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.right = params.left + dependencies.getMeasuredWidth() / 2F - layoutParams.marginLeft;
-                if (hasHorizontalAttr) {
-                    layoutParams.left = layoutParams.right - child.getMeasuredWidth();
-                }
-            }
-
-            // 左边对齐某个View垂直中线的右边
-            if (layoutParams.toCenterVerticalRight > 0) {
-                View dependencies = findViewById(layoutParams.toCenterVerticalRight);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.left = params.left + dependencies.getMeasuredWidth() / 2F;
-                if (hasHorizontalAttr) {
-                    layoutParams.right = layoutParams.left + child.getMeasuredWidth();
-                }
-            }
-
-
-            // 与某个View的水平居中
-            if (layoutParams.centerHorizontalOf > 0) {
-                View dependencies = findViewById(layoutParams.centerHorizontalOf);
-                LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-                layoutParams.left = (params.left + dependencies.getMeasuredWidth() / 2F) - child.getMeasuredWidth() / 2F;
-                layoutParams.right = layoutParams.left + child.getMeasuredWidth();
-            }
+            horizontalDependencies(tempParentWidth, child, layoutParams);
 
 
             // 影响水平与垂直的属性
@@ -741,6 +443,336 @@ public class DependencyLayout extends ViewGroup {
             if (Math.ceil(tempRight - tempLeft) != layoutParams.width || Math.ceil(tempBottom - tempTop) != layoutParams.height) {
                 child.measure(MeasureSpec.makeMeasureSpec(layoutParams.width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(layoutParams.height, MeasureSpec.EXACTLY));
             }
+        }
+    }
+
+    /**
+     * 预先测量一下子View，对于那些未使用固定大小的View，需要预先测量的大小
+     *
+     * @param parentWidth
+     * @param parentHeight
+     * @param child
+     * @param layoutParams
+     */
+    private void preMeasure(int parentWidth, int parentHeight, View child, LayoutParams layoutParams) {
+        if (layoutParams.selfWidth == null && layoutParams.selfHeight == null) {
+            // 没有设置自定义宽高，使用系统的宽高
+            if (layoutParams.systemWidth == ViewGroup.LayoutParams.MATCH_PARENT) {
+                if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
+                } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
+                } else {
+                    // 高度设置了指定值
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
+                }
+            } else if (layoutParams.systemWidth == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
+                } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
+                } else {
+                    // 高度设置了指定值
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
+                }
+            } else {
+                // 指定了宽度值
+                if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
+                } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
+                } else {
+                    // 高度和宽度设置了指定值
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
+                    layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
+                }
+            }
+        } else {
+            /*
+             * 仅支持xxxdp,xxxpx,xxxdip,xx%sw,xx%sh,xx%pw,xx%ph,xx%mw,xx%mh
+             */
+            // 设置自定义宽高
+            if (layoutParams.selfWidth == null) {
+                // layoutParams.selfHeight != null
+                // 指定了自定义高度，未指定宽度
+                if (layoutParams.systemWidth == ViewGroup.LayoutParams.MATCH_PARENT) {
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
+                } else if (layoutParams.systemWidth == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST);
+                } else {
+                    // 指定了宽度值
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) layoutParams.systemWidth, MeasureSpec.EXACTLY);
+                }
+                // 计算高度
+                layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+            } else {
+                if (layoutParams.selfHeight == null) {
+                    // 指定了自定义宽度，未指定高度
+                    if (layoutParams.systemHeight == ViewGroup.LayoutParams.MATCH_PARENT) {
+                        layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
+                    } else if (layoutParams.systemHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                        layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST);
+                    } else {
+                        // 指定了宽度值
+                        layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) layoutParams.systemHeight, MeasureSpec.EXACTLY);
+                    }
+                    // 计算高度
+                    layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                } else {
+                    // 指定了自定义宽高 layoutParams.selfHeight != null
+                    if (layoutParams.selfWidth.unit == LayoutParams.Attribute.MH) {
+                        if (layoutParams.selfHeight.unit == LayoutParams.Attribute.MW) {
+                            // OTHER，不能互相依赖自身的宽高
+                            throw new IllegalArgumentException("参数异常");
+                        } else {
+                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                            child.measure(MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.AT_MOST), layoutParams.resultHeight);
+                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                        }
+                    } else {
+                        if (layoutParams.selfHeight.unit == LayoutParams.Attribute.MW) {
+                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                            child.measure(layoutParams.resultWidth, MeasureSpec.makeMeasureSpec(screenHeight, MeasureSpec.AT_MOST));
+                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                        } else {
+                            layoutParams.resultWidth = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfWidth, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                            layoutParams.resultHeight = MeasureSpec.makeMeasureSpec((int) Util.calculation(layoutParams.selfHeight, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, child, HORIZONTAL), MeasureSpec.EXACTLY);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 计算水平依赖
+     *
+     * @param tempParentWidth
+     * @param child
+     * @param layoutParams
+     */
+    private void horizontalDependencies(int tempParentWidth, View child, LayoutParams layoutParams) {
+        boolean hasHorizontalAttr = !layoutParams.hasHorizontalAttr(layoutParams);
+        // 水平属性
+        if (layoutParams.alignParentLeft) {
+            layoutParams.left = getPaddingLeft() + layoutParams.marginLeft;
+            if (hasHorizontalAttr) {
+                layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+            }
+        }
+
+        if (layoutParams.alignParentRight) {
+            layoutParams.right = tempParentWidth - getPaddingRight() - layoutParams.marginRight;
+            if (hasHorizontalAttr) {
+                layoutParams.left = layoutParams.right - child.getMeasuredWidth();
+            }
+        }
+
+        if (layoutParams.toParentCenterVerticalLeft) {
+            layoutParams.right = tempParentWidth / 2F - layoutParams.marginRight;
+            if (hasHorizontalAttr) {
+                layoutParams.left = layoutParams.right - child.getMeasuredWidth();
+            }
+        }
+
+        // 对齐父View水平中线的右边
+        if (layoutParams.toParentCenterVerticalRight) {
+            layoutParams.left = tempParentWidth / 2F + layoutParams.marginLeft;
+            if (hasHorizontalAttr) {
+                layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+            }
+        }
+
+        if (layoutParams.centerInParentHorizontal) {
+            if (tempParentWidth > 0) {
+                layoutParams.left = tempParentWidth / 2F - child.getMeasuredWidth() / 2F + layoutParams.marginLeft;
+            } else {
+                layoutParams.left = layoutParams.marginLeft;
+            }
+            layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+        }
+
+        // 左边对齐某个View的右边
+        if (layoutParams.toRightOf > 0) {
+            View dependencies = findViewById(layoutParams.toRightOf);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.left = params.right + params.marginRight + layoutParams.marginLeft;
+            if (hasHorizontalAttr) {
+                layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+            }
+        }
+
+        // 右边对齐某个View的左边
+        if (layoutParams.toLeftOf > 0) {
+            View dependencies = findViewById(layoutParams.toLeftOf);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.right = params.left - params.marginLeft - layoutParams.marginRight;
+            if (hasHorizontalAttr) {
+                layoutParams.left = layoutParams.right - child.getMeasuredWidth();
+            }
+        }
+
+        // 对齐某个View的右边
+        if (layoutParams.alignRight > 0) {
+            View dependencies = findViewById(layoutParams.alignRight);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.right = params.right - layoutParams.marginRight;
+            if (hasHorizontalAttr) {
+                layoutParams.left = layoutParams.right - child.getMeasuredWidth();
+            }
+        }
+
+        // 对齐某个View的左边
+        if (layoutParams.alignLeft > 0) {
+            View dependencies = findViewById(layoutParams.alignLeft);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.left = params.left + layoutParams.marginLeft;
+            if (hasHorizontalAttr) {
+                layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+            }
+        }
+
+        // 右边对齐某个View垂直中线的左边
+        if (layoutParams.toCenterVerticalLeft > 0) {
+            View dependencies = findViewById(layoutParams.toCenterVerticalLeft);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.right = params.left + dependencies.getMeasuredWidth() / 2F - layoutParams.marginLeft;
+            if (hasHorizontalAttr) {
+                layoutParams.left = layoutParams.right - child.getMeasuredWidth();
+            }
+        }
+
+        // 左边对齐某个View垂直中线的右边
+        if (layoutParams.toCenterVerticalRight > 0) {
+            View dependencies = findViewById(layoutParams.toCenterVerticalRight);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.left = params.left + dependencies.getMeasuredWidth() / 2F;
+            if (hasHorizontalAttr) {
+                layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+            }
+        }
+
+
+        // 与某个View的水平居中
+        if (layoutParams.centerHorizontalOf > 0) {
+            View dependencies = findViewById(layoutParams.centerHorizontalOf);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.left = (params.left + dependencies.getMeasuredWidth() / 2F) - child.getMeasuredWidth() / 2F;
+            layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+        }
+    }
+
+
+    /**
+     * 计算垂直依赖
+     *
+     * @param tempParentHeight
+     * @param child
+     * @param layoutParams
+     */
+    private void verticalDependencies(int tempParentHeight, View child, LayoutParams layoutParams) {
+        if (layoutParams.alignParentTop) {
+            layoutParams.top = getPaddingLeft() + layoutParams.marginLeft;
+        }
+
+        boolean hasVerticalAttr = !layoutParams.hasVerticalAttr(layoutParams);
+
+        if (layoutParams.alignParentBottom) {
+            layoutParams.bottom = tempParentHeight - getPaddingBottom() - layoutParams.marginBottom;
+            if (hasVerticalAttr) {
+                layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
+            }
+        }
+
+        if (layoutParams.alignParentCenterHorizontalTop) {
+            layoutParams.bottom = tempParentHeight / 2F - layoutParams.marginBottom;
+            if (hasVerticalAttr) {
+                layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
+            }
+        }
+
+        if (layoutParams.alignParentCenterHorizontalBottom) {
+            layoutParams.top = tempParentHeight / 2F + layoutParams.marginTop;
+            if (hasVerticalAttr) {
+                layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
+            }
+        }
+
+        // 与父View的水平中间对齐
+        if (layoutParams.centerInParentVertical) {
+            layoutParams.top = tempParentHeight / 2F - child.getMeasuredHeight() / 2F + layoutParams.marginTop;
+            layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
+        }
+
+        // 在某个View的上面
+        if (layoutParams.aboveTo > 0) {
+            View dependencies = findViewById(layoutParams.aboveTo);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.bottom = params.top - params.marginTop - layoutParams.marginBottom;
+            if (hasVerticalAttr) {
+                layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
+            }
+        }
+        // 在某个View的下面
+        if (layoutParams.belowTo > 0) {
+            View dependencies = findViewById(layoutParams.belowTo);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.top = params.bottom + params.marginBottom + layoutParams.marginTop;
+            if (hasVerticalAttr) {
+                layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
+            }
+        }
+        // 对齐某个View的顶部
+        if (layoutParams.alignTop > 0) {
+            View dependencies = findViewById(layoutParams.alignTop);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.top = params.top + layoutParams.marginTop;
+            if (hasVerticalAttr) {
+                layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
+            }
+        }
+        // 对齐某个View的底部
+        if (layoutParams.alignBottom > 0) {
+            View dependencies = findViewById(layoutParams.alignBottom);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.bottom = params.bottom - layoutParams.marginBottom;
+            if (hasVerticalAttr) {
+                layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
+            }
+        }
+
+        // 在某个View水平中线的的上面
+        if (layoutParams.alignCenterHorizontalTop > 0) {
+            View dependencies = findViewById(layoutParams.alignCenterHorizontalTop);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.bottom = params.top + dependencies.getMeasuredHeight() / 2F - layoutParams.marginBottom;
+            if (hasVerticalAttr) {
+                layoutParams.top = layoutParams.bottom - child.getMeasuredHeight();
+            }
+        }
+        // 在某个View水平中线的的下面
+        if (layoutParams.alignCenterHorizontalBottom > 0) {
+            View dependencies = findViewById(layoutParams.alignCenterHorizontalBottom);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.top = params.top + dependencies.getMeasuredHeight() / 2F + layoutParams.marginTop;
+            if (hasVerticalAttr) {
+                layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
+            }
+        }
+
+        if (layoutParams.centerVerticalOf > 0) {
+            View dependencies = findViewById(layoutParams.centerVerticalOf);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.top = params.top + dependencies.getMeasuredHeight() / 2F - child.getMeasuredHeight() / 2F;
+            layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
         }
     }
 
