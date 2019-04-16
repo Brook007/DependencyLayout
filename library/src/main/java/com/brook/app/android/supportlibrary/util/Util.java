@@ -171,28 +171,32 @@ public class Util {
         String value = getValue(text);
         attribute.value = toFloat(value);
         String unit = text.substring(value.length()).toLowerCase();
-        if ("dip".equals(unit) || "dp".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.DIP;
-        } else if ("sp".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.SP;
-        } else if ("px".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PX;
-        } else if ("%sw".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.SW;
-        } else if ("%sh".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.SH;
-        } else if ("%pw".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PW;
-        } else if ("%ph".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.PH;
-        } else if ("%mw".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.MW;
-        } else if ("%mh".equals(unit)) {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.MH;
-        } else {
-            attribute.unit = DependencyLayout.LayoutParams.Attribute.OTHER;
-        }
+        attribute.unit = getUnit(unit);
         return attribute;
+    }
+
+    public static int getUnit(String unit) {
+        if ("dip".equals(unit) || "dp".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.DIP;
+        } else if ("sp".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.SP;
+        } else if ("px".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.PX;
+        } else if ("%sw".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.SW;
+        } else if ("%sh".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.SH;
+        } else if ("%pw".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.PW;
+        } else if ("%ph".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.PH;
+        } else if ("%mw".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.MW;
+        } else if ("%mh".equals(unit)) {
+            return DependencyLayout.LayoutParams.Attribute.MH;
+        } else {
+            return DependencyLayout.LayoutParams.Attribute.OTHER;
+        }
     }
 
     /**

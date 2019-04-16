@@ -19,6 +19,7 @@ package com.brook.app.android.supportlibrary.util;
 import android.view.View;
 
 import com.brook.app.android.supportlibrary.adapter.ViewAdapter;
+import com.brook.app.android.supportlibrary.view.DependencyLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,11 +34,11 @@ public class DependencyLayoutConfig {
     private static DependencyLayoutConfig config;
 
     // 设计图的宽度
-    private String designWidth = "750px";
+    private DependencyLayout.LayoutParams.Attribute designWidth = new DependencyLayout.LayoutParams.Attribute("750px");
     // 设计图的高度
-    private String designHeight = "1294px";
+    private DependencyLayout.LayoutParams.Attribute designHeight = new DependencyLayout.LayoutParams.Attribute("1294px");
 
-    private Map<Class<? extends View>, ViewAdapter> viewAdapterMap = new HashMap();
+    private Map<Class<? extends View>, ViewAdapter> viewAdapterMap = new HashMap<Class<? extends View>, ViewAdapter>();
 
     private DependencyLayoutConfig() {
 
@@ -54,21 +55,29 @@ public class DependencyLayoutConfig {
         return config;
     }
 
-    public String getDesignWidth() {
+    public String getDesignWidthSource() {
+        return designWidth.toString();
+    }
+
+    public DependencyLayout.LayoutParams.Attribute getDesignWidth() {
         return designWidth;
     }
 
     public DependencyLayoutConfig setDesignWidth(String designWidth) {
-        this.designWidth = designWidth;
+        this.designWidth = new DependencyLayout.LayoutParams.Attribute(designWidth);
         return this;
     }
 
-    public String getDesignHeight() {
+    public DependencyLayout.LayoutParams.Attribute getDesignHeight() {
         return designHeight;
     }
 
+    public String getDesignHeightSource() {
+        return designHeight.toString();
+    }
+
     public DependencyLayoutConfig setDesignHeight(String designHeight) {
-        this.designHeight = designHeight;
+        this.designHeight = new DependencyLayout.LayoutParams.Attribute(designHeight);
         return this;
     }
 

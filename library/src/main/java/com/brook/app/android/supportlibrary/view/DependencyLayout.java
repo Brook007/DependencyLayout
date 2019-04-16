@@ -115,25 +115,27 @@ public class DependencyLayout extends ViewGroup {
     public DependencyLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-
         this.metrics = new Metrics();
 
         Util.setContext(this.getContext());
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DependencyLayout);
+
             String designWidth = typedArray.getString(R.styleable.DependencyLayout_designWidth);
             if (designWidth == null) {
-                mDesignWidth = Util.unbox(DependencyLayoutConfig.getInstance().getDesignWidth());
+                mDesignWidth = DependencyLayoutConfig.getInstance().getDesignWidth();
             } else {
                 mDesignWidth = Util.unbox(designWidth);
             }
+
             String designHeight = typedArray.getString(R.styleable.DependencyLayout_designHeight);
             if (designHeight == null) {
-                mDesignHeight = Util.unbox(DependencyLayoutConfig.getInstance().getDesignHeight());
+                mDesignHeight = DependencyLayoutConfig.getInstance().getDesignHeight();
             } else {
                 mDesignHeight = Util.unbox(designHeight);
             }
+
             String padding = typedArray.getString(R.styleable.DependencyLayout_dependency_padding);
             if (padding != null) {
                 paddingLeftSource = paddingTopSource = paddingRightSource = paddingBottomSource = Util.unbox(padding);
@@ -153,10 +155,11 @@ public class DependencyLayout extends ViewGroup {
                 systemPaddingRight = typedArray.getDimension(R.styleable.DependencyLayout_android_paddingRight, 0);
                 systemPaddingBottom = typedArray.getDimension(R.styleable.DependencyLayout_android_paddingBottom, 0);
             }
+
             typedArray.recycle();
         }
 
-        WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display defaultDisplay = wm.getDefaultDisplay();
         DisplayMetrics metrics = new DisplayMetrics();
         defaultDisplay.getMetrics(metrics);
@@ -171,6 +174,7 @@ public class DependencyLayout extends ViewGroup {
         } else {
             screenWidth = metrics.widthPixels;
         }
+
         if (metrics.heightPixels <= 0) {
             if (mDesignHeight.unit == LayoutParams.Attribute.DIP) {
                 screenHeight = (int) Util.dp2px(mDesignHeight.value);
@@ -300,7 +304,7 @@ public class DependencyLayout extends ViewGroup {
                 layoutParams.resultHeight = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
             } else {
                 // 需要先临时测量一下子View的宽高
-                preMeasure(parentWidth, parentHeight, child, layoutParams);
+                preMeasureChild(parentWidth, parentHeight, child, layoutParams);
 
                 // Padding
                 if (layoutParams.paddingLeftSource != null) {
@@ -454,7 +458,7 @@ public class DependencyLayout extends ViewGroup {
      * @param child
      * @param layoutParams
      */
-    private void preMeasure(int parentWidth, int parentHeight, View child, LayoutParams layoutParams) {
+    private void preMeasureChild(int parentWidth, int parentHeight, View child, LayoutParams layoutParams) {
         if (layoutParams.selfWidth == null && layoutParams.selfHeight == null) {
             // 没有设置自定义宽高，使用系统的宽高
             if (layoutParams.systemWidth == ViewGroup.LayoutParams.MATCH_PARENT) {
@@ -1002,8 +1006,24 @@ public class DependencyLayout extends ViewGroup {
 
             public static final int OTHER = 0x8888;
 
+            public String source = null;
             public float value = 0F;
             public int unit = UNIT_NOT_SET;
+
+            public Attribute() {
+            }
+
+            public Attribute(String attr) {
+                this.source = attr;
+                String stringValue = Util.getValue(attr);
+                this.unit = Util.getUnit(stringValue);
+                this.value = Util.toFloat(stringValue);
+            }
+
+            @Override
+            public String toString() {
+                return source;
+            }
         }
 
         /**
