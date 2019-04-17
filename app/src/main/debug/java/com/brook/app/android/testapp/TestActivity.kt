@@ -16,6 +16,6 @@ class TestActivity : AppCompatActivity() {
                 .setDesignHeight("1294px")
 //                .addViewAdapterHandler(TextView::class.java, TextViewImpl())
 
-        setContentView(R.layout.activity_test)
+        setContentView(R.layout.activity_test1)
     }
 }

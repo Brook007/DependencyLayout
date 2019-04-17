@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.brook.app.android.supportlibrary.view.DependencyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="30dp"
+    android:background="#80DEEA"
+    android:orientation="horizontal"
+    tools:ignore="MissingPrefix">
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="-15dp"
+        android:layout_weight="0.8"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="false"
+        android:src="@mipmap/ic_close"
+        app:centerInParentVertical="true" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/close"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:text="开始\n时间"
+        android:textColor="#ff9000"
+        android:textSize="12dp"
+        app:selfWidth="80px"
+        app:toRightOf="@id/close" />
+
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="-15dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dp"
+        android:background="#ff9000"
+        app:centerInParentVertical="true"
+        app:toRightOf="@id/time" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="0.5dp"
+        android:layout_weight="6"
+        android:orientation="vertical"
+        app:alignParentRight="true"
+        app:dependency_marginLeft="3dp"
+        app:toRightOf="@id/time">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/time"
+            android:orientation="horizontal">
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#943231"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp"
+                    android:singleLine="true"
+                    android:text="主队"
+                    android:textColor="#0d0d0d"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp"
+                    android:singleLine="true"
+                    android:text="0%"
+                    android:textColor="#ffffff"
+                    android:textSize="12dp" />
+
+
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/yaojin_forecast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#9C6B08"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp"
+                    android:singleLine="true"
+                    android:text="结果"
+                    android:textColor="#0d0d0d"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp"
+                    android:singleLine="true"
+                    android:text="0%"
+                    android:textColor="#ffffff"
+                    android:textSize="12dp" />
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#3B4875"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp"
+                    android:singleLine="true"
+                    android:text="客队"
+                    android:textColor="#0d0d0d"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp"
+                    android:singleLine="true"
+                    android:text="0%"
+                    android:textColor="#ffffff"
+                    android:textSize="12dp" />
+
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="结果"
+            android:textColor="#212578"
+            android:textSize="12dp" />
+
+
+    </LinearLayout>
+
+
+</com.brook.app.android.supportlibrary.view.DependencyLayout>
+

@@ -33,6 +33,7 @@ import com.brook.app.android.supportlibrary.util.DependencyLayoutConfig;
 import com.brook.app.android.supportlibrary.util.Metrics;
 import com.brook.app.android.supportlibrary.util.Util;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -341,7 +342,6 @@ public class DependencyLayout extends ViewGroup {
                         value.convert(getContext(), child, layoutParams.attrs, metrics);
                     }
                 }
-
             }
 
             child.measure(layoutParams.resultWidth, layoutParams.resultHeight);
@@ -892,6 +892,9 @@ public class DependencyLayout extends ViewGroup {
 
         private AttributeMap attrs;
 
+        private List adapters;
+
+
         public LayoutParams(int width, int height) {
             super(width, height);
         }
@@ -973,6 +976,8 @@ public class DependencyLayout extends ViewGroup {
                 systemPaddingBottom = typedArray.getDimension(R.styleable.DependencyLayout_Layout_android_paddingBottom, 0);
             }
             typedArray.recycle();
+
+
         }
 
         private float calculationSystem(TypedArray typedArray, int attr, DisplayMetrics displayMetrics) {
@@ -1016,7 +1021,7 @@ public class DependencyLayout extends ViewGroup {
             public Attribute(String attr) {
                 this.source = attr;
                 String stringValue = Util.getValue(attr);
-                this.unit = Util.getUnit(stringValue);
+                this.unit = Util.getUnit(attr.substring(stringValue.length()).toLowerCase());
                 this.value = Util.toFloat(stringValue);
             }
 
