@@ -339,6 +339,7 @@ public class DependencyLayout extends ViewGroup {
                 for (Map.Entry<Class<? extends View>, ViewAdapter> next : viewAdapterMap.entrySet()) {
                     if (next.getKey().isInstance(child)) {
                         ViewAdapter value = next.getValue();
+                        //noinspection unchecked
                         value.convert(getContext(), child, layoutParams.attrs, metrics);
                     }
                 }
