@@ -86,23 +86,12 @@ public class DependencyLayout extends ViewGroup {
     // 系统下边距的值
     private float systemPaddingBottom;
 
-    // 最终的左边距结果
-    private int paddingLeft;
-    // 最终的上边距结果
-    private int paddingTop;
-    // 最终的右边距结果
-    private int paddingRight;
-    // 最终的下边距结果
-    private int paddingBottom;
-
     // 设置WarpContent时的最大宽度
     private float maxWidth;
     // 设置WarpContent时最大的高度
     private float maxHeight;
 
     private Metrics metrics;
-    private int parentWidth;
-    private int parentHeight;
 
     public DependencyLayout(Context context) {
         this(context, null);
@@ -195,9 +184,9 @@ public class DependencyLayout extends ViewGroup {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
         // 自身的宽度
-        parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
         // 自身的高度
-        parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+        int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
 
         if (widthMode != MeasureSpec.EXACTLY) {
             // 宽度warp_content， 高度必须指定
@@ -213,24 +202,32 @@ public class DependencyLayout extends ViewGroup {
                     MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY));
         }
 
+        // 最终的左边距结果
+        int paddingLeft;
         if (paddingLeftSource != null) {
             paddingLeft = (int) Util.calculation(paddingLeftSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
         } else {
             paddingLeft = (int) systemPaddingLeft;
         }
 
+        // 最终的上边距结果
+        int paddingTop;
         if (paddingTopSource != null) {
             paddingTop = (int) Util.calculation(paddingTopSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
         } else {
             paddingTop = (int) systemPaddingTop;
         }
 
+        // 最终的右边距结果
+        int paddingRight;
         if (paddingRightSource != null) {
             paddingRight = (int) Util.calculation(paddingRightSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
         } else {
             paddingRight = (int) systemPaddingRight;
         }
 
+        // 最终的下边距结果
+        int paddingBottom;
         if (paddingBottomSource != null) {
             paddingBottom = (int) Util.calculation(paddingBottomSource, mDesignWidth, mDesignHeight, screenWidth, screenHeight, this, this, HORIZONTAL);
         } else {
@@ -564,6 +561,27 @@ public class DependencyLayout extends ViewGroup {
      * @param layoutParams    子View的LayoutParams
      */
     private void horizontalDependencies(int tempParentWidth, View child, LayoutParams layoutParams) {
+        if (layoutParams.centerInParentHorizontal) {
+//            if (tempParentWidth > 0) {
+            layoutParams.left = tempParentWidth / 2F - child.getMeasuredWidth() / 2F + layoutParams.marginLeft;
+//            } else {
+//                layoutParams.left = layoutParams.marginLeft;
+//            }
+            layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+
+            return;
+        }
+
+        // 与某个View的水平居中
+        if (layoutParams.centerHorizontalOf > 0) {
+            View dependencies = findViewById(layoutParams.centerHorizontalOf);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.left = (params.left + dependencies.getMeasuredWidth() / 2F) - child.getMeasuredWidth() / 2F;
+            layoutParams.right = layoutParams.left + child.getMeasuredWidth();
+
+            return;
+        }
+
         boolean hasHorizontalAttr = !layoutParams.hasHorizontalAttr(layoutParams);
         // 水平属性
         if (layoutParams.alignParentLeft) {
@@ -593,15 +611,6 @@ public class DependencyLayout extends ViewGroup {
             if (hasHorizontalAttr) {
                 layoutParams.right = layoutParams.left + child.getMeasuredWidth();
             }
-        }
-
-        if (layoutParams.centerInParentHorizontal) {
-            if (tempParentWidth > 0) {
-                layoutParams.left = tempParentWidth / 2F - child.getMeasuredWidth() / 2F + layoutParams.marginLeft;
-            } else {
-                layoutParams.left = layoutParams.marginLeft;
-            }
-            layoutParams.right = layoutParams.left + child.getMeasuredWidth();
         }
 
         // 左边对齐某个View的右边
@@ -664,14 +673,6 @@ public class DependencyLayout extends ViewGroup {
             }
         }
 
-
-        // 与某个View的水平居中
-        if (layoutParams.centerHorizontalOf > 0) {
-            View dependencies = findViewById(layoutParams.centerHorizontalOf);
-            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-            layoutParams.left = (params.left + dependencies.getMeasuredWidth() / 2F) - child.getMeasuredWidth() / 2F;
-            layoutParams.right = layoutParams.left + child.getMeasuredWidth();
-        }
     }
 
 
@@ -683,6 +684,21 @@ public class DependencyLayout extends ViewGroup {
      * @param layoutParams     子View的LayoutParams
      */
     private void verticalDependencies(int tempParentHeight, View child, LayoutParams layoutParams) {
+        // 与父View的水平中间对齐
+        if (layoutParams.centerInParentVertical) {
+            layoutParams.top = tempParentHeight / 2F - child.getMeasuredHeight() / 2F + layoutParams.marginTop;
+            layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
+            return;
+        }
+
+        if (layoutParams.centerVerticalOf > 0) {
+            View dependencies = findViewById(layoutParams.centerVerticalOf);
+            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
+            layoutParams.top = params.top + dependencies.getMeasuredHeight() / 2F - child.getMeasuredHeight() / 2F;
+            layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
+            return;
+        }
+
         if (layoutParams.alignParentTop) {
             layoutParams.top = getPaddingLeft() + layoutParams.marginLeft;
         }
@@ -708,12 +724,6 @@ public class DependencyLayout extends ViewGroup {
             if (hasVerticalAttr) {
                 layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
             }
-        }
-
-        // 与父View的水平中间对齐
-        if (layoutParams.centerInParentVertical) {
-            layoutParams.top = tempParentHeight / 2F - child.getMeasuredHeight() / 2F + layoutParams.marginTop;
-            layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
         }
 
         // 在某个View的上面
@@ -770,13 +780,6 @@ public class DependencyLayout extends ViewGroup {
             if (hasVerticalAttr) {
                 layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
             }
-        }
-
-        if (layoutParams.centerVerticalOf > 0) {
-            View dependencies = findViewById(layoutParams.centerVerticalOf);
-            LayoutParams params = (LayoutParams) dependencies.getLayoutParams();
-            layoutParams.top = params.top + dependencies.getMeasuredHeight() / 2F - child.getMeasuredHeight() / 2F;
-            layoutParams.bottom = layoutParams.top + child.getMeasuredHeight();
         }
     }
 

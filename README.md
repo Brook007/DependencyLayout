@@ -1,7 +1,7 @@
 # DependencyLayout
 
 ## 概述
-[ ![Download](https://api.bintray.com/packages/brook007/maven/DependencyLayout/images/download.svg?version=1.1.2) ](https://bintray.com/brook007/maven/DependencyLayout/1.1.2/link)
+[ ![Download](https://api.bintray.com/packages/brook007/maven/DependencyLayout/images/download.svg?version=1.1.3) ](https://bintray.com/brook007/maven/DependencyLayout/1.1.2/link)
 [![](https://jitpack.io/v/Brook007/DependencyLayout.svg)](https://github.com/Brook007/DependencyLayout)
 [![](https://img.shields.io/badge/Platform-Android-brightgreen.svg)](https://github.com/Brook007/DependencyLayout)
 [![](https://img.shields.io/badge/API_Live-14+-brightgreen.svg)](https://github.com/Brook007/DependencyLayout)
@@ -218,10 +218,10 @@ QQ群交流：651080648 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?
 
 ## 关于屏幕适配的前辈方案
 
-1. AutoLayout https://github.com/hongyangAndroid/AndroidAutoLayout
-2. ScaleLayout https://github.com/gavinliu/Android-ScaleLayout
-3. percent-support-lib https://github.com/JulienGenoud/android-percent-support-lib-sample
-4. AutoSize https://github.com/JessYanCoding/AndroidAutoSize
+1. AutoLayout <https://github.com/hongyangAndroid/AndroidAutoLayout>
+2. ScaleLayout <https://github.com/gavinliu/Android-ScaleLayout>
+3. percent-support-lib <https://github.com/JulienGenoud/android-percent-support-lib-sample>
+4. AutoSize <https://github.com/JessYanCoding/AndroidAutoSize>
 
 ## 开源协议  LICENSE
 
