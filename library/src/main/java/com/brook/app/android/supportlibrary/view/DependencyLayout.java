@@ -33,7 +33,6 @@ import com.brook.app.android.supportlibrary.util.DependencyLayoutConfig;
 import com.brook.app.android.supportlibrary.util.Metrics;
 import com.brook.app.android.supportlibrary.util.Util;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -454,10 +453,10 @@ public class DependencyLayout extends ViewGroup {
     /**
      * 预先测量一下子View，对于那些未使用固定大小的View，需要预先测量的大小
      *
-     * @param parentWidth
-     * @param parentHeight
-     * @param child
-     * @param layoutParams
+     * @param parentWidth  父View的宽度
+     * @param parentHeight 父View的高度
+     * @param child        需要测量的子View
+     * @param layoutParams 子View的LayoutParams
      */
     private void preMeasureChild(int parentWidth, int parentHeight, View child, LayoutParams layoutParams) {
         if (layoutParams.selfWidth == null && layoutParams.selfHeight == null) {
@@ -560,9 +559,9 @@ public class DependencyLayout extends ViewGroup {
     /**
      * 计算水平依赖
      *
-     * @param tempParentWidth
-     * @param child
-     * @param layoutParams
+     * @param tempParentWidth 父View当前最大的宽度
+     * @param child           需要计算水平方向依赖的子View
+     * @param layoutParams    子View的LayoutParams
      */
     private void horizontalDependencies(int tempParentWidth, View child, LayoutParams layoutParams) {
         boolean hasHorizontalAttr = !layoutParams.hasHorizontalAttr(layoutParams);
@@ -679,9 +678,9 @@ public class DependencyLayout extends ViewGroup {
     /**
      * 计算垂直依赖
      *
-     * @param tempParentHeight
-     * @param child
-     * @param layoutParams
+     * @param tempParentHeight 父View当前最大的宽度
+     * @param child            需要计算垂直方向依赖的子View
+     * @param layoutParams     子View的LayoutParams
      */
     private void verticalDependencies(int tempParentHeight, View child, LayoutParams layoutParams) {
         if (layoutParams.alignParentTop) {
@@ -893,11 +892,95 @@ public class DependencyLayout extends ViewGroup {
 
         private AttributeMap attrs;
 
-        private List adapters;
-
-
         public LayoutParams(int width, int height) {
             super(width, height);
+        }
+
+        public LayoutParams(ViewGroup.LayoutParams source) {
+            super(source);
+            if (source instanceof LayoutParams) {
+                LayoutParams params = (LayoutParams) source;
+
+                this.alignParentLeft = params.alignParentLeft;
+                this.alignParentTop = params.alignParentTop;
+                this.alignParentRight = params.alignParentRight;
+                this.alignParentBottom = params.alignParentBottom;
+
+                this.toParentCenterVerticalLeft = params.toParentCenterVerticalLeft;
+                this.toParentCenterVerticalRight = params.toParentCenterVerticalRight;
+                this.alignParentCenterHorizontalTop = params.alignParentCenterHorizontalTop;
+                this.alignParentCenterHorizontalBottom = params.alignParentCenterHorizontalBottom;
+
+                this.centerInParentHorizontal = params.centerInParentHorizontal;
+                this.centerInParentVertical = params.centerInParentVertical;
+                this.centerInParent = params.centerInParent;
+
+                this.aboveTo = params.aboveTo;
+                this.toRightOf = params.toRightOf;
+                this.belowTo = params.belowTo;
+                this.toLeftOf = params.toLeftOf;
+
+                this.alignTop = params.alignTop;
+                this.alignRight = params.alignRight;
+                this.alignBottom = params.alignBottom;
+                this.alignLeft = params.alignLeft;
+
+                this.toCenterVerticalLeft = params.toCenterVerticalLeft;
+                this.toCenterVerticalRight = params.toCenterVerticalRight;
+                this.alignCenterHorizontalTop = params.alignCenterHorizontalTop;
+                this.alignCenterHorizontalBottom = params.alignCenterHorizontalBottom;
+
+                this.centerVerticalOf = params.centerVerticalOf;
+                this.centerHorizontalOf = params.centerHorizontalOf;
+                this.centerOf = params.centerOf;
+
+                this.marginLeftSource = params.marginLeftSource;
+                this.marginTopSource = params.marginTopSource;
+                this.marginRightSource = params.marginRightSource;
+                this.marginBottomSource = params.marginBottomSource;
+
+                this.systemMarginLeft = params.systemMarginLeft;
+                this.systemMarginTop = params.systemMarginTop;
+                this.systemMarginRight = params.systemMarginRight;
+                this.systemMarginBottom = params.systemMarginBottom;
+
+                this.selfWidth = params.selfWidth;
+                this.selfHeight = params.selfHeight;
+
+                this.paddingLeftSource = params.paddingLeftSource;
+                this.paddingTopSource = params.paddingTopSource;
+                this.paddingRightSource = params.paddingRightSource;
+                this.paddingBottomSource = params.paddingBottomSource;
+
+                this.systemPaddingLeft = params.systemPaddingLeft;
+                this.systemPaddingTop = params.systemPaddingTop;
+                this.systemPaddingRight = params.systemPaddingRight;
+                this.systemPaddingBottom = params.systemPaddingBottom;
+
+                // 以下值均需计算得出
+                this.marginLeft = params.marginLeft;
+                this.marginTop = params.marginTop;
+                this.marginRight = params.marginRight;
+                this.marginBottom = params.marginBottom;
+
+                this.left = params.left;
+                this.top = params.top;
+                this.right = params.right;
+                this.bottom = params.bottom;
+
+                this.paddingLeft = params.paddingLeft;
+                this.paddingTop = params.paddingTop;
+                this.paddingRight = params.paddingRight;
+                this.paddingBottom = params.paddingBottom;
+
+                this.resultWidth = params.resultWidth;
+                this.resultHeight = params.resultHeight;
+
+                this.systemWidth = params.systemWidth;
+                this.systemHeight = params.systemHeight;
+
+                this.attrs = params.attrs;
+            }
         }
 
         public LayoutParams(Context context, AttributeSet attrs) {
@@ -1035,11 +1118,15 @@ public class DependencyLayout extends ViewGroup {
         /**
          * 判断是否存在两个及以上的反向属性
          *
-         * @param layoutParams
-         * @return
+         * @param layoutParams 需要判断的LayoutParams
+         * @return true表示存在两个及以上的反向属性，false表示不存在
          */
         private boolean hasVerticalAttr(LayoutParams layoutParams) {
             if (layoutParams.centerVerticalOf > 0 || layoutParams.centerOf > 0) {
+                return true;
+            }
+
+            if (layoutParams.centerInParentVertical || layoutParams.centerInParent) {
                 return true;
             }
 
@@ -1051,26 +1138,18 @@ public class DependencyLayout extends ViewGroup {
             if (layoutParams.alignParentBottom) {
                 bottomCount++;
             }
-
             if (layoutParams.alignParentCenterHorizontalTop) {
                 bottomCount++;
             }
             if (layoutParams.alignParentCenterHorizontalBottom) {
                 topCount++;
             }
-            if (layoutParams.centerInParentVertical || layoutParams.centerInParent) {
-                topCount++;
-                bottomCount++;
-            }
-
             if (layoutParams.aboveTo > 0) {
                 bottomCount++;
             }
-
             if (layoutParams.belowTo > 0) {
                 topCount++;
             }
-
             if (layoutParams.alignTop > 0) {
                 topCount++;
             }
@@ -1078,32 +1157,32 @@ public class DependencyLayout extends ViewGroup {
             if (layoutParams.alignBottom > 0) {
                 bottomCount++;
             }
-
             if (layoutParams.alignCenterHorizontalTop > 0) {
                 bottomCount++;
             }
-
             if (layoutParams.alignCenterHorizontalBottom > 0) {
                 topCount++;
             }
-
             return topCount > 0 && bottomCount > 0;
         }
 
         /**
          * 判断是否存在两个及以上的反向属性
          *
-         * @param layoutParams
-         * @return
+         * @param layoutParams 需要判断的LayoutParams
+         * @return true表示存在两个及以上的反向属性，false表示不存在
          */
         private boolean hasHorizontalAttr(LayoutParams layoutParams) {
             if (layoutParams.centerHorizontalOf > 0 || layoutParams.centerOf > 0) {
                 return true;
             }
 
+            if (layoutParams.centerInParentHorizontal || layoutParams.centerInParent) {
+                return true;
+            }
+
             int leftCount = 0;
             int rightCount = 0;
-
             if (layoutParams.alignParentLeft) {
                 leftCount++;
             }
@@ -1115,10 +1194,6 @@ public class DependencyLayout extends ViewGroup {
             }
             if (layoutParams.toParentCenterVerticalRight) {
                 leftCount++;
-            }
-            if (layoutParams.centerInParentHorizontal || layoutParams.centerInParent) {
-                leftCount++;
-                rightCount++;
             }
             if (layoutParams.toRightOf > 0) {
                 leftCount++;
@@ -1138,7 +1213,6 @@ public class DependencyLayout extends ViewGroup {
             if (layoutParams.toCenterVerticalRight > 0) {
                 leftCount++;
             }
-
             return leftCount > 0 && rightCount > 0;
         }
 
