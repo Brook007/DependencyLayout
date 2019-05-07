@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.brook.app.android.supportlibrary.adapter;
+package com.brook.app.android.adapter;
 
 import android.content.Context;
 import android.view.View;
 
-import com.android.annotations.NonNull;
-import com.brook.app.android.supportlibrary.util.AttributeMap;
-import com.brook.app.android.supportlibrary.util.Metrics;
+import com.brook.app.android.util.AttributeMap;
+import com.brook.app.android.util.Metrics;
 
 /**
  * See also {@link TextViewImpl}
@@ -40,6 +39,5 @@ public interface ViewAdapter<T extends View> {
      * @param attr    XML配置的属性
      * @param metrics 配置信息
      */
-    @NonNull
     void convert(Context context, T view, AttributeMap attr, Metrics metrics);
 }

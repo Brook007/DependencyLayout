@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.brook.app.android.supportlibrary.view.DependencyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.brook.app.android.view.DependencyLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -247,4 +246,4 @@
         app:selfWidth="150px"
         app:toRightOf="@id/other_login" />
 
-</com.brook.app.android.supportlibrary.view.DependencyLayout>
+</com.brook.app.android.view.DependencyLayout>

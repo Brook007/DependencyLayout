@@ -8,7 +8,7 @@
     android:padding="10dp"
     tools:context="com.brook.app.android.testapp.TestActivity">
 
-    <com.brook.app.android.supportlibrary.view.DependencyLayout
+    <com.brook.app.android.view.DependencyLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#9460F1"
@@ -82,7 +82,7 @@
             app:centerInParentVertical="true"
             app:selfWidth="50%pw" />
 
-    </com.brook.app.android.supportlibrary.view.DependencyLayout>
+    </com.brook.app.android.view.DependencyLayout>
 
 
     <RelativeLayout

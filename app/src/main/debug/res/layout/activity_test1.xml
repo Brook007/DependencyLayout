@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.brook.app.android.supportlibrary.view.DependencyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.brook.app.android.view.DependencyLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="30dp"
     android:background="#80DEEA"
     android:orientation="horizontal"
+    android:paddingBottom="30dp"
     tools:ignore="MissingPrefix">
 
     <ImageView
@@ -43,8 +43,8 @@
     <View
         android:layout_width="1dp"
         android:layout_height="35dp"
-        android:layout_marginTop="-15dp"
         android:layout_gravity="center_vertical"
+        android:layout_marginTop="-15dp"
         android:layout_marginRight="5dp"
         android:background="#ff9000"
         app:centerInParentVertical="true"
@@ -201,5 +201,5 @@
     </LinearLayout>
 
 
-</com.brook.app.android.supportlibrary.view.DependencyLayout>
+</com.brook.app.android.view.DependencyLayout>
 

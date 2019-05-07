@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.brook.app.android.supportlibrary.util;
+package com.brook.app.android.util;
 
 import android.graphics.Color;
 import android.util.AttributeSet;

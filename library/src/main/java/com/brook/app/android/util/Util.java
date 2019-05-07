@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.brook.app.android.supportlibrary.util;
+package com.brook.app.android.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.view.View;
 
-import com.brook.app.android.supportlibrary.view.DependencyLayout;
+import com.brook.app.android.view.DependencyLayout;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,6 +44,7 @@ public class Util {
      */
 
     private static Context sContext;
+    private static Pattern pattern = Pattern.compile("(^-\\d+\\.\\d+)|(^\\d+\\.\\d+)|(^\\d+)|(^-\\d+)");
 
     public static Context getContext() {
         return sContext;
@@ -52,8 +53,6 @@ public class Util {
     public static void setContext(Context context) {
         sContext = context.getApplicationContext();
     }
-
-    private static Pattern pattern = Pattern.compile("(^-\\d+\\.\\d+)|(^\\d+\\.\\d+)|(^\\d+)|(^-\\d+)");
 
     public static String getValue(String text) {
         Matcher matcher = pattern.matcher(text);

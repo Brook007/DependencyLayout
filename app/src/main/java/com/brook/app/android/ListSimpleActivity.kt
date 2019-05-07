@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.brook.app.android.dependencylayout.R
+import com.brook.app.android.supportlibrary.dependencylayout.R
 
 
 class ListSimpleActivity : AppCompatActivity() {
@@ -32,7 +32,7 @@ class ListSimpleActivity : AppCompatActivity() {
             override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
                 val viewType = getItemViewType(position)
                 if (viewType == 0) {
-                    val viewHolder = holder as DependencyLayoutHolder
+                    //                    val viewHolder = holder as DependencyLayoutHolder
 
                 } else {
                     val relativeHolder = holder as RelativeHolder

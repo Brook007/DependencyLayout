@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.brook.app.android.supportlibrary.view;
+package com.brook.app.android.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -26,12 +26,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.brook.app.android.supportlibrary.adapter.ViewAdapter;
-import com.brook.app.android.supportlibrary.dependencylayout.R;
-import com.brook.app.android.supportlibrary.util.AttributeMap;
-import com.brook.app.android.supportlibrary.util.DependencyLayoutConfig;
-import com.brook.app.android.supportlibrary.util.Metrics;
-import com.brook.app.android.supportlibrary.util.Util;
+import com.brook.app.android.adapter.ViewAdapter;
+import com.brook.app.android.dependencylayout.R;
+import com.brook.app.android.util.AttributeMap;
+import com.brook.app.android.util.DependencyLayoutConfig;
+import com.brook.app.android.util.Metrics;
+import com.brook.app.android.util.Util;
 
 import java.util.Map;
 
@@ -41,6 +41,7 @@ import java.util.Map;
  * @time 2018/9/26 10:41
  * @target DependencyLayout
  */
+@SuppressWarnings("unchecked")
 public class DependencyLayout extends ViewGroup {
 
     /*
@@ -52,22 +53,19 @@ public class DependencyLayout extends ViewGroup {
      * 4、测量自身
      */
 
-    // 设计图的宽度
-    private LayoutParams.Attribute mDesignWidth;
-    // 设计图的高度
-    private LayoutParams.Attribute mDesignHeight;
-
-    // 屏幕的宽度
-    private int screenWidth;
-    // 屏幕的宽度
-    private int screenHeight;
-
     //方向
     // 垂直方向
     public static final int VERTICAL = 0;
     // 水平方向
     public static final int HORIZONTAL = 1;
-
+    // 设计图的宽度
+    private LayoutParams.Attribute mDesignWidth;
+    // 设计图的高度
+    private LayoutParams.Attribute mDesignHeight;
+    // 屏幕的宽度
+    private int screenWidth;
+    // 屏幕的宽度
+    private int screenHeight;
     // 左边距的设置参数
     private LayoutParams.Attribute paddingLeftSource;
     // 上边距的设置参数
@@ -562,11 +560,11 @@ public class DependencyLayout extends ViewGroup {
      */
     private void horizontalDependencies(int tempParentWidth, View child, LayoutParams layoutParams) {
         if (layoutParams.centerInParentHorizontal) {
-//            if (tempParentWidth > 0) {
+            //            if (tempParentWidth > 0) {
             layoutParams.left = tempParentWidth / 2F - child.getMeasuredWidth() / 2F + layoutParams.marginLeft;
-//            } else {
-//                layoutParams.left = layoutParams.marginLeft;
-//            }
+            //            } else {
+            //                layoutParams.left = layoutParams.marginLeft;
+            //            }
             layoutParams.right = layoutParams.left + child.getMeasuredWidth();
 
             return;
@@ -1082,42 +1080,6 @@ public class DependencyLayout extends ViewGroup {
             }
         }
 
-        public static class Attribute {
-            public static final int UNIT_NOT_SET = -1;
-            public static final int DIP = 0;
-            public static final int SP = 1;
-            public static final int PX = 2;
-
-            //%sw
-            public static final int SW = 0x1001;
-            public static final int SH = 0x1002;
-            public static final int PW = 0x1003;
-            public static final int PH = 0x1004;
-            public static final int MW = 0x1005;
-            public static final int MH = 0x1006;
-
-            public static final int OTHER = 0x8888;
-
-            public String source = null;
-            public float value = 0F;
-            public int unit = UNIT_NOT_SET;
-
-            public Attribute() {
-            }
-
-            public Attribute(String attr) {
-                this.source = attr;
-                String stringValue = Util.getValue(attr);
-                this.unit = Util.getUnit(attr.substring(stringValue.length()).toLowerCase());
-                this.value = Util.toFloat(stringValue);
-            }
-
-            @Override
-            public String toString() {
-                return source;
-            }
-        }
-
         /**
          * 判断是否存在两个及以上的反向属性
          *
@@ -1217,6 +1179,42 @@ public class DependencyLayout extends ViewGroup {
                 leftCount++;
             }
             return leftCount > 0 && rightCount > 0;
+        }
+
+        public static class Attribute {
+            public static final int UNIT_NOT_SET = -1;
+            public static final int DIP = 0;
+            public static final int SP = 1;
+            public static final int PX = 2;
+
+            //%sw
+            public static final int SW = 0x1001;
+            public static final int SH = 0x1002;
+            public static final int PW = 0x1003;
+            public static final int PH = 0x1004;
+            public static final int MW = 0x1005;
+            public static final int MH = 0x1006;
+
+            public static final int OTHER = 0x8888;
+
+            public String source = null;
+            public float value = 0F;
+            public int unit = UNIT_NOT_SET;
+
+            public Attribute() {
+            }
+
+            public Attribute(String attr) {
+                this.source = attr;
+                String stringValue = Util.getValue(attr);
+                this.unit = Util.getUnit(attr.substring(stringValue.length()).toLowerCase());
+                this.value = Util.toFloat(stringValue);
+            }
+
+            @Override
+            public String toString() {
+                return source;
+            }
         }
 
     }

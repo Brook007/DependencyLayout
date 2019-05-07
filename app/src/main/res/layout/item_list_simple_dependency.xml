@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.brook.app.android.supportlibrary.view.DependencyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.brook.app.android.view.DependencyLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,4 +25,4 @@
         app:centerInParent="true"
         app:toRightOf="@id/user_avatar" />
 
-</com.brook.app.android.supportlibrary.view.DependencyLayout>
+</com.brook.app.android.view.DependencyLayout>

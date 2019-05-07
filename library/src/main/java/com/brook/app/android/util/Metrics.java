@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.brook.app.android.supportlibrary.util;
+package com.brook.app.android.util;
 
-import com.brook.app.android.supportlibrary.view.DependencyLayout;
+import com.brook.app.android.view.DependencyLayout;
 
 /**
  * @author Brook

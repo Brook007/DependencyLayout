@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.brook.app.android.supportlibrary.util;
+package com.brook.app.android.util;
 
 import android.view.View;
 
-import com.brook.app.android.supportlibrary.adapter.ViewAdapter;
-import com.brook.app.android.supportlibrary.view.DependencyLayout;
+import com.android.annotations.NonNull;
+import com.brook.app.android.adapter.ViewAdapter;
+import com.brook.app.android.view.DependencyLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,13 +73,13 @@ public class DependencyLayoutConfig {
         return designHeight;
     }
 
-    public String getDesignHeightSource() {
-        return designHeight.toString();
-    }
-
     public DependencyLayoutConfig setDesignHeight(String designHeight) {
         this.designHeight = new DependencyLayout.LayoutParams.Attribute(designHeight);
         return this;
+    }
+
+    public String getDesignHeightSource() {
+        return designHeight.toString();
     }
 
     /**
@@ -86,7 +87,7 @@ public class DependencyLayoutConfig {
      * @param viewAdapter 实现了ViewAdapter接口的实现类
      * @return
      */
-    public DependencyLayoutConfig addViewAdapterHandler(Class<? extends View> target, ViewAdapter viewAdapter) {
+    public DependencyLayoutConfig addViewAdapterHandler(Class<? extends View> target, @NonNull ViewAdapter viewAdapter) {
         viewAdapterMap.put(target, viewAdapter);
         return this;
     }

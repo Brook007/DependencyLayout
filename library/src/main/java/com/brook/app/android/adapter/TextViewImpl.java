@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.brook.app.android.supportlibrary.adapter;
+package com.brook.app.android.adapter;
 
 import android.content.Context;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import com.brook.app.android.supportlibrary.util.AttributeMap;
-import com.brook.app.android.supportlibrary.util.Metrics;
-import com.brook.app.android.supportlibrary.util.Util;
-import com.brook.app.android.supportlibrary.view.DependencyLayout;
+import com.brook.app.android.util.AttributeMap;
+import com.brook.app.android.util.Metrics;
+import com.brook.app.android.util.Util;
+import com.brook.app.android.view.DependencyLayout;
 
 /**
- *
  * @author Brook
  * @time 2018/12/5 15:58
  * @target DependencyLayout

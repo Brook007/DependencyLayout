@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 try {
     rootProject.ext.android
     println "无需插件"
-} catch(e) {
+} catch (e) {
     apply plugin: 'com.novoda.bintray-release'
     println "添加插件"
     //这个跟Jcenter一样的插件
@@ -55,7 +55,8 @@ allprojects {
     }
     //加上这些
     tasks.withType(Javadoc) {
-        options{ encoding "UTF-8"
+        options {
+            encoding "UTF-8"
             charSet 'UTF-8'
             links "http://docs.oracle.com/javase/7/docs/api"
         }
